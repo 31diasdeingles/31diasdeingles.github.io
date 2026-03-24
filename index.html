@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>31 días de inglés real</title>
+  <meta name="description" content="31 días de inglés real: un desafío diario con lecciones estructuradas, ejercicios prácticos y acompañamiento de tu profesora. Para todos los niveles." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --orange: #FF6B35;
+      --orange-dark: #e85a25;
+      --orange-light: #FFF0E8;
+      --orange-pale: #FFF9F0;
+      --yellow: #FFD580;
+      --navy: #1A1A2E;
+      --gray: #666;
+      --gray-light: #f5f5f5;
+      --white: #fff;
+      --pink-bg: #FFF0F5; --pink-border: #F4B8CC; --pink-text: #993356;
+      --blue-bg: #F0F8FF; --blue-border: #85B7EB; --blue-text: #185FA5;
+      --green-bg: #F0FFF4; --green-border: #97C459; --green-text: #3B6D11;
+      --amber-bg: #FFFAF0; --amber-border: #FAC775; --amber-text: #854F0B;
+      --purple-bg: #F5F0FF; --purple-border: #AFA9EC; --purple-text: #534AB7;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #FDFAF5;
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(253, 250, 245, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1.5px solid var(--yellow);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--navy);
+    }
+    .nav-logo span { color: var(--orange); }
+    .nav-cta {
+      background: var(--orange);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.88rem;
+      padding: 9px 22px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.15s;
+      display: inline-block;
+    }
+    .nav-cta:hover { background: var(--orange-dark); transform: scale(1.03); }
+
+    /* SECTIONS */
+    section { padding: 5rem 1.5rem; max-width: 860px; margin: 0 auto; }
+
+    /* HERO */
+    .hero-section {
+      text-align: center;
+      padding-top: 6rem;
+      padding-bottom: 4rem;
+      position: relative;
+    }
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 3rem; right: -2rem;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, #FFE4B5 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: -1;
+      opacity: 0.6;
+    }
+    .hero-section::after {
+      content: '';
+      position: absolute;
+      bottom: 2rem; left: -3rem;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, #FFD580 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: -1;
+      opacity: 0.4;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--orange);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 18px;
+      border-radius: 20px;
+      margin-bottom: 1.2rem;
+      animation: fadeDown 0.6s ease both;
+    }
+
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.6rem, 7vw, 4.2rem);
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--navy);
+      margin-bottom: 1rem;
+      animation: fadeDown 0.6s 0.1s ease both;
+    }
+    h1 em {
+      color: var(--orange);
+      font-style: italic;
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--gray);
+      max-width: 480px;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+      animation: fadeDown 0.6s 0.2s ease both;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: var(--orange);
+      color: #fff;
+      font-weight: 600;
+      font-size: 1.05rem;
+      padding: 16px 40px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+      animation: fadeDown 0.6s 0.3s ease both;
+      box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
+    }
+    .hero-cta:hover {
+      background: var(--orange-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(255, 107, 53, 0.4);
+    }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.7s 0.4s ease both;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Fraunces', serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--orange);
+      line-height: 1;
+    }
+    .stat-label { font-size: 0.8rem; color: #aaa; margin-top: 2px; }
+
+    /* DIVIDER */
+    .divider {
+      border: none;
+      border-top: 1.5px dashed var(--yellow);
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* SECTION HEADINGS */
+    .section-head { text-align: center; margin-bottom: 2.5rem; }
+    .section-head h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 0.4rem;
+    }
+    .section-head p { font-size: 0.92rem; color: #aaa; }
+
+    /* STEPS */
+    .steps { display: flex; flex-direction: column; gap: 14px; }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      background: var(--white);
+      border: 1.5px solid #eee;
+      border-radius: 18px;
+      padding: 1.3rem 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .step:hover { border-color: var(--orange); transform: translateX(4px); }
+    .step-num {
+      min-width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    .step:nth-child(1) .step-num { background: var(--pink-bg); color: var(--pink-text); }
+    .step:nth-child(2) .step-num { background: var(--blue-bg); color: var(--blue-text); }
+    .step:nth-child(3) .step-num { background: var(--green-bg); color: var(--green-text); }
+    .step:nth-child(4) .step-num { background: var(--amber-bg); color: var(--amber-text); }
+    .step:nth-child(5) .step-num { background: var(--purple-bg); color: var(--purple-text); }
+
+    .step-tag {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 3px;
+    }
+    .step:nth-child(1) .step-tag { color: var(--pink-text); }
+    .step:nth-child(2) .step-tag { color: var(--blue-text); }
+    .step:nth-child(3) .step-tag { color: var(--green-text); }
+    .step:nth-child(4) .step-tag { color: var(--amber-text); }
+    .step:nth-child(5) .step-tag { color: var(--purple-text); }
+
+    .step-title { font-family: 'Fraunces', serif; font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+    .step-desc { font-size: 0.83rem; color: var(--gray); line-height: 1.5; }
+
+    /* PREVIEW */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 1.2rem;
+    }
+    .tab-btn {
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 7px 16px;
+      border-radius: 30px;
+      border: 1.5px solid #ddd;
+      background: #fff;
+      cursor: pointer;
+      color: #999;
+      transition: all 0.15s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .tab-btn.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+
+    .preview-panel { display: none; }
+    .preview-panel.active { display: block; }
+
+    .preview-box {
+      background: var(--orange-pale);
+      border: 1.5px solid var(--yellow);
+      border-radius: 16px;
+      padding: 1.4rem;
+    }
+    .preview-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--orange);
+      margin-bottom: 10px;
+    }
+    .preview-q {
+      font-size: 0.98rem;
+      font-weight: 500;
+      color: var(--navy);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    textarea {
+      width: 100%;
+      border: 1.5px solid var(--yellow);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      color: #333;
+      resize: vertical;
+      min-height: 80px;
+      background: #fff;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    textarea:focus { border-color: var(--orange); }
+    .word-count { font-size: 0.75rem; color: #bbb; text-align: right; margin-top: 5px; }
+    .word-count.goal { color: var(--green-text); font-weight: 600; }
+
+    .vocab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .vocab-card {
+      background: #fff;
+      border: 1.5px solid #eee;
+      border-radius: 12px;
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .vocab-card:hover { border-color: var(--orange); }
+    .vocab-card .eng { font-size: 0.92rem; font-weight: 600; color: var(--navy); }
+    .vocab-card .spa { font-size: 0.8rem; color: var(--gray); margin-top: 2px; display: none; }
+    .vocab-card.revealed { border-color: var(--orange); background: var(--orange-light); }
+    .vocab-card.revealed .spa { display: block; }
+    .vocab-hint { font-size: 0.75rem; color: #ccc; text-align: center; margin-top: 10px; }
+
+    .options { display: flex; flex-direction: column; gap: 8px; }
+    .opt-btn {
+      text-align: left;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1.5px solid #ddd;
+      background: #fff;
+      cursor: pointer;
+      color: #333;
+      transition: all 0.12s;
+    }
+    .opt-btn:hover:not(:disabled) { border-color: var(--orange); color: var(--orange); background: var(--orange-light); }
+    .opt-btn.correct { border-color: var(--green-text); background: var(--green-bg); color: var(--green-text); }
+    .opt-btn.wrong { border-color: #A32D2D; background: #FCEBEB; color: #A32D2D; }
+    .feedback { margin-top: 10px; font-size: 0.85rem; font-weight: 500; display: none; }
+    .feedback.show { display: block; }
+    .feedback.ok { color: var(--green-text); }
+    .feedback.no { color: #A32D2D; }
+
+    /* WEEKS */
+    .weeks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+    }
+    .week-card {
+      border-radius: 16px;
+      padding: 1.3rem;
+      border: 1.5px solid;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .week-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.07); }
+    .week-card.w1 { background: var(--pink-bg); border-color: var(--pink-border); }
+    .week-card.w2 { background: var(--blue-bg); border-color: var(--blue-border); }
+    .week-card.w3 { background: var(--green-bg); border-color: var(--green-border); }
+    .week-card.w4 { background: var(--amber-bg); border-color: var(--amber-border); }
+    .week-card.w5 { background: var(--purple-bg); border-color: var(--purple-border); }
+    .week-num {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 5px;
+    }
+    .w1 .week-num { color: var(--pink-text); }
+    .w2 .week-num { color: var(--blue-text); }
+    .w3 .week-num { color: var(--green-text); }
+    .w4 .week-num { color: var(--amber-text); }
+    .w5 .week-num { color: var(--purple-text); }
+    .week-title { font-family: 'Fraunces', serif; font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .week-desc { font-size: 0.8rem; color: var(--gray); line-height: 1.5; }
+
+    /* INCLUDES */
+    .includes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .include-card {
+      background: var(--white);
+      border: 2px solid var(--orange);
+      border-radius: 18px;
+      padding: 1.6rem;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .include-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(255,107,53,0.15); }
+    .include-icon { font-size: 2.2rem; margin-bottom: 10px; }
+    .include-title { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .include-desc { font-size: 0.83rem; color: var(--gray); line-height: 1.6; }
+
+    /* CAMILA */
+    .camila-card {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      background: var(--orange-pale);
+      border: 2px solid var(--yellow);
+      border-radius: 20px;
+      padding: 1.8rem;
+      flex-wrap: wrap;
+    }
+    .camila-avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: var(--orange);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Fraunces', serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #fff;
+      flex-shrink: 0;
+      box-shadow: 0 6px 16px rgba(255,107,53,0.35);
+    }
+    .camila-role { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--orange); margin-bottom: 4px; }
+    .camila-name { font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 900; color: var(--navy); margin-bottom: 6px; }
+    .camila-bio { font-size: 0.88rem; color: var(--gray); line-height: 1.6; }
+
+    /* CTA BOTTOM */
+    .cta-section {
+      text-align: center;
+      background: var(--navy);
+      border-radius: 24px;
+      padding: 4rem 2rem;
+      margin: 0 1.5rem 4rem;
+      max-width: 860px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 220px; height: 220px;
+      background: radial-gradient(circle, rgba(255,213,128,0.2) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .cta-section h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 0.8rem;
+    }
+    .cta-section h2 em { color: var(--yellow); font-style: italic; }
+    .cta-section p { color: rgba(255,255,255,0.65); font-size: 0.95rem; margin-bottom: 2rem; line-height: 1.6; }
+    .cta-section a {
+      display: inline-block;
+      background: var(--orange);
+      color: #fff;
+      font-weight: 600;
+      font-size: 1.05rem;
+      padding: 16px 42px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 8px 24px rgba(255,107,53,0.4);
+    }
+    .cta-section a:hover { background: var(--orange-dark); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(255,107,53,0.5); }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem 3rem;
+      font-size: 0.82rem;
+      color: #bbb;
+    }
+    footer strong { color: var(--orange); }
+
+    /* ANIMATIONS */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      nav { padding: 0.9rem 1.2rem; }
+      .stats { gap: 1.8rem; }
+      .camila-card { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">31 días de <span>inglés real</span></div>
+    <a href="#inscribirse" class="nav-cta">Quiero inscribirme</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero-section">
+    <div class="badge">Desafío · 31 días</div>
+    <h1>Una lección por día.<br><em>31 días</em> para cambiar<br>tu inglés para siempre.</h1>
+    <p class="hero-desc">
+      Un desafío estructurado con una lección nueva cada día. Para todos los niveles, con contenido auténtico, ejercicios prácticos y acompañamiento real de tu profesora.
+    </p>
+    <a href="#inscribirse" class="hero-cta">Quiero empezar el desafío</a>
+    <div class="stats">
+      <div class="stat"><div class="stat-num">31</div><div class="stat-label">lecciones</div></div>
+      <div class="stat"><div class="stat-num">5</div><div class="stat-label">pasos por lección</div></div>
+      <div class="stat"><div class="stat-num">1</div><div class="stat-label">sesión en vivo</div></div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- CÓMO FUNCIONA -->
+  <section>
+    <div class="section-head">
+      <h2>Cómo funciona cada lección</h2>
+      <p>5 pasos diseñados para que aprendas de verdad</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-tag">Warm Up</div>
+          <div class="step-title">Activá tu mente</div>
+          <div class="step-desc">Una pregunta disparadora y un ejercicio de escritura de 50 palabras para introducir el tema del día.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-tag">Content</div>
+          <div class="step-title">Artículo, video, podcast o canción</div>
+          <div class="step-desc">Material auténtico en inglés con el vocabulario clave de la lección.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-tag">Deep Dive</div>
+          <div class="step-title">La tarea principal</div>
+          <div class="step-desc">Escritura extendida, listas, ejercicios de gramática u otras actividades más complejas.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-tag">Vocabulary Check</div>
+          <div class="step-title">Repasá las palabras clave</div>
+          <div class="step-desc">Ejercicio de repaso del vocabulario visto en el contenido del día para que quede grabado.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div>
+          <div class="step-tag">Checkpoint</div>
+          <div class="step-title">¿Entendiste todo?</div>
+          <div class="step-desc">Preguntas de comprensión para confirmar que incorporaste los conceptos del día.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- PREVIEW -->
+  <section>
+    <div class="section-head">
+      <h2>Preview de ejercicios</h2>
+      <p>Probá cómo se siente una lección real</p>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('warmup', this)">1 · Warm Up</button>
+      <button class="tab-btn" onclick="switchTab('vocab', this)">4 · Vocab Check</button>
+      <button class="tab-btn" onclick="switchTab('checkpoint', this)">5 · Checkpoint</button>
+    </div>
+
+    <div class="preview-panel active" id="panel-warmup">
+      <div class="preview-box">
+        <div class="preview-label">Warm Up · Día 1</div>
+        <div class="preview-q">Think about your daily routine. What's the first thing you do every morning? Write at least 50 words in English.</div>
+        <textarea id="warmup-text" placeholder="Start writing here..." oninput="countWords()"></textarea>
+        <div class="word-count" id="word-count">0 / 50 words</div>
+      </div>
+    </div>
+
+    <div class="preview-panel" id="panel-vocab">
+      <div class="preview-box">
+        <div class="preview-label">Vocabulary Check · Día 1</div>
+        <div class="preview-q" style="margin-bottom:14px;">Tocá cada palabra para revelar su significado en español.</div>
+        <div class="vocab-grid">
+          <div class="vocab-card" onclick="this.classList.toggle('revealed')">
+            <div class="eng">Routine</div><div class="spa">Rutina</div>
+          </div>
+          <div class="vocab-card" onclick="this.classList.toggle('revealed')">
+            <div class="eng">Commute</div><div class="spa">Viaje diario al trabajo</div>
+          </div>
+          <div class="vocab-card" onclick="this.classList.toggle('revealed')">
+            <div class="eng">Habit</div><div class="spa">Hábito</div>
+          </div>
+          <div class="vocab-card" onclick="this.classList.toggle('revealed')">
+            <div class="eng">Schedule</div><div class="spa">Horario / agenda</div>
+          </div>
+        </div>
+        <div class="vocab-hint">Tocá para revelar la traducción</div>
+      </div>
+    </div>
+
+    <div class="preview-panel" id="panel-checkpoint">
+      <div class="preview-box">
+        <div class="preview-label">Checkpoint · Día 1</div>
+        <div class="preview-q">Which sentence is in the Simple Present tense?</div>
+        <div class="options">
+          <button class="opt-btn" onclick="checkAns(this, false)">A) She was drinking coffee.</button>
+          <button class="opt-btn" onclick="checkAns(this, true)">B) She drinks coffee every morning.</button>
+          <button class="opt-btn" onclick="checkAns(this, false)">C) She will drink coffee later.</button>
+          <button class="opt-btn" onclick="checkAns(this, false)">D) She has drunk coffee already.</button>
+        </div>
+        <div class="feedback ok" id="fb-ok">¡Correcto! El Simple Present describe hábitos y rutinas.</div>
+        <div class="feedback no" id="fb-no">No es esa. La correcta es B — describe una acción habitual.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- LOS 31 DÍAS -->
+  <section>
+    <div class="section-head">
+      <h2>Los 31 días</h2>
+      <p>Cuatro semanas de progreso real + un cierre especial</p>
+    </div>
+    <div class="weeks-grid">
+      <div class="week-card w1">
+        <div class="week-num">Semana 1 · Días 1–7</div>
+        <div class="week-title">Fundamentos</div>
+        <div class="week-desc">Saludos, presentaciones y el verbo to be</div>
+      </div>
+      <div class="week-card w2">
+        <div class="week-num">Semana 2 · Días 8–14</div>
+        <div class="week-title">Vida cotidiana</div>
+        <div class="week-desc">Rutinas, familia, trabajo y tiempo</div>
+      </div>
+      <div class="week-card w3">
+        <div class="week-num">Semana 3 · Días 15–21</div>
+        <div class="week-title">Situaciones reales</div>
+        <div class="week-desc">Compras, viajes, restaurantes y más</div>
+      </div>
+      <div class="week-card w4">
+        <div class="week-num">Semana 4 · Días 22–28</div>
+        <div class="week-title">Fluidez express</div>
+        <div class="week-desc">Phrasal verbs, modales y conversaciones</div>
+      </div>
+      <div class="week-card w5">
+        <div class="week-num">Final · Días 29–31</div>
+        <div class="week-title">¡Desafío final!</div>
+        <div class="week-desc">Repaso, logros y próximos pasos</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- INCLUYE -->
+  <section>
+    <div class="section-head">
+      <h2>El curso incluye</h2>
+      <p>Todo lo que necesitás para completar el desafío</p>
+    </div>
+    <div class="includes-grid">
+      <div class="include-card">
+        <div class="include-icon">📊</div>
+        <div class="include-title">Excel de progreso</div>
+        <div class="include-desc">Un archivo personalizado para seguir tu avance día a día durante los 31 días del desafío.</div>
+      </div>
+      <div class="include-card">
+        <div class="include-icon">🎙️</div>
+        <div class="include-title">Sesión de speaking</div>
+        <div class="include-desc">Una clase en vivo con Camila para practicar conversación y resolver todas tus dudas al final del desafío.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- CAMILA -->
+  <section>
+    <div class="section-head">
+      <h2>Tu profesora</h2>
+    </div>
+    <div class="camila-card">
+      <div class="camila-avatar">C</div>
+      <div>
+        <div class="camila-role">Profesora del curso</div>
+        <div class="camila-name">Camila</div>
+        <div class="camila-bio">
+          Te acompaño durante los 31 días con contenido pensado para que aprendas inglés de verdad. No importa tu nivel — si podés dedicar unos minutos por día, podés hacer este desafío. Al final del mes, nos encontramos en vivo para practicar conversación juntos.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <div class="cta-section" id="inscribirse">
+    <h2>¿Empezamos<br>los <em>31 días</em>?</h2>
+    <p>Una lección por día. Resultados reales.<br>Con el acompañamiento de tu profesora.</p>
+    <a href="mailto:tu@email.com">Quiero inscribirme →</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 <strong>31 días de inglés real</strong> · Todos los derechos reservados</p>
+  </footer>
+
+  <script>
+    function switchTab(id, btn) {
+      document.querySelectorAll('.preview-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('panel-' + id).classList.add('active');
+      btn.classList.add('active');
+      document.getElementById('fb-ok').classList.remove('show');
+      document.getElementById('fb-no').classList.remove('show');
+    }
+
+    function countWords() {
+      const text = document.getElementById('warmup-text').value.trim();
+      const words = text === '' ? 0 : text.split(/\s+/).length;
+      const el = document.getElementById('word-count');
+      el.textContent = words + ' / 50 words';
+      el.className = 'word-count' + (words >= 50 ? ' goal' : '');
+    }
+
+    function checkAns(btn, correct) {
+      document.querySelectorAll('.opt-btn').forEach(b => { b.disabled = true; });
+      if (correct) {
+        btn.classList.add('correct');
+        document.getElementById('fb-ok').classList.add('show');
+      } else {
+        btn.classList.add('wrong');
+        document.getElementById('fb-no').classList.add('show');
+        document.querySelectorAll('.opt-btn').forEach(b => {
+          if (b.textContent.startsWith('B)')) b.classList.add('correct');
+        });
+      }
+    }
+  </script>
+
+</body>
+</html>
