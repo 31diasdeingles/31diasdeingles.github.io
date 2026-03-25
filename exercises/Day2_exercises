@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Day 2 · Interactive Exercises</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --cream:#F5EFE6;--sand:#E8DDD0;--linen:#F0E9DF;
+    --mocha:#7C5C45;--espresso:#4A2E1A;--caramel:#B07D56;
+    --stone:#9E8C7E;--dark:#2C1A0E;--white:#FDFAF6;
+    --green:#1A5C2A;--green-bg:#D4EDDA;--green-border:#9DC3A8;
+    --red:#721C24;--red-bg:#F8D7DA;--red-border:#E8A5A9;
+    --pink-bg:#FBEAF0;--pink:#993556;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--dark);}
+  .topbar{background:var(--espresso);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .topbar-brand{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--caramel);}
+  .topbar-label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(245,239,230,0.5);}
+  .tabs{display:flex;background:var(--sand);border-bottom:2px solid rgba(124,92,69,0.2);}
+  .tab{flex:1;padding:16px;text-align:center;cursor:pointer;font-size:13px;font-weight:500;letter-spacing:0.04em;color:var(--stone);border:none;background:none;border-bottom:3px solid transparent;transition:all 0.2s;}
+  .tab.active{color:var(--espresso);border-bottom-color:var(--pink);background:var(--cream);}
+  .tab:hover:not(.active){color:var(--mocha);background:rgba(176,125,86,0.06);}
+  .panel{display:none;padding:36px 32px;max-width:760px;margin:0 auto;}
+  .panel.active{display:block;}
+  .section-eyebrow{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--pink);margin-bottom:6px;}
+  .section-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--espresso);margin-bottom:6px;}
+  .section-sub{font-size:0.88rem;color:var(--stone);font-weight:300;line-height:1.6;margin-bottom:28px;}
+  .progress-wrap{margin-bottom:20px;}
+  .progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--stone);margin-bottom:5px;}
+  .progress-track{height:5px;background:var(--sand);border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--pink);border-radius:3px;transition:width 0.4s ease;}
+  .score-badge{display:inline-flex;align-items:center;gap:8px;background:var(--sand);border-radius:20px;padding:6px 16px;font-size:13px;font-weight:500;color:var(--espresso);margin-bottom:20px;}
+  .vocab-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
+  .vocab-word-card{background:var(--espresso);color:var(--cream);border-radius:12px;padding:16px 18px;cursor:pointer;font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;text-align:center;border:2px solid transparent;transition:all 0.18s;user-select:none;}
+  .vocab-word-card:hover{background:var(--mocha);transform:scale(1.02);}
+  .vocab-word-card.selected{border-color:var(--pink);background:var(--mocha);}
+  .vocab-word-card.correct{background:var(--green);border-color:var(--green-border);cursor:default;}
+  .vocab-word-card.wrong{background:var(--red);border-color:var(--red-border);animation:shake 0.3s;}
+  .vocab-defs-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+  .vocab-def-card{background:var(--white);border:1px solid rgba(124,92,69,0.2);border-radius:12px;padding:16px 18px;cursor:pointer;font-size:0.87rem;color:var(--dark);line-height:1.5;border-left:4px solid transparent;transition:all 0.18s;user-select:none;}
+  .vocab-def-card:hover{border-left-color:var(--pink);background:var(--pink-bg);}
+  .vocab-def-card.selected{border-left-color:var(--pink);background:var(--pink-bg);}
+  .vocab-def-card.correct{border-left-color:var(--green);background:var(--green-bg);cursor:default;}
+  .vocab-def-card.wrong{border-left-color:var(--red);background:var(--red-bg);animation:shake 0.3s;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+  .question-block{background:var(--white);border:1px solid rgba(124,92,69,0.18);border-radius:16px;padding:24px;margin-bottom:16px;}
+  .q-number{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--pink);margin-bottom:8px;}
+  .q-text{font-size:1rem;font-weight:500;color:var(--espresso);line-height:1.5;margin-bottom:16px;}
+  .options{display:flex;flex-direction:column;gap:8px;}
+  .option{padding:12px 16px;border-radius:10px;border:1px solid rgba(124,92,69,0.2);background:var(--white);cursor:pointer;font-size:0.88rem;color:var(--dark);transition:all 0.15s;text-align:left;}
+  .option:hover:not(:disabled){border-color:var(--pink);background:var(--pink-bg);color:var(--pink);}
+  .option.correct{background:var(--green-bg);border-color:var(--green-border);color:var(--green);font-weight:500;}
+  .option.wrong{background:var(--red-bg);border-color:var(--red-border);color:var(--red);}
+  .option.reveal{background:var(--green-bg);border-color:var(--green-border);color:var(--green);}
+  .option:disabled{cursor:default;}
+  .feedback{margin-top:10px;padding:10px 14px;border-radius:8px;font-size:0.83rem;line-height:1.5;display:none;}
+  .feedback.show{display:block;}
+  .feedback.ok{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+  .feedback.no{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border);}
+  .result-screen{text-align:center;padding:40px 20px;display:none;}
+  .result-screen.show{display:block;}
+  .result-emoji{font-size:60px;margin-bottom:16px;}
+  .result-score{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:var(--espresso);margin-bottom:6px;}
+  .result-msg{font-size:1rem;color:var(--stone);font-weight:300;margin-bottom:24px;line-height:1.6;}
+  .restart-btn{background:var(--espresso);color:var(--cream);border:none;border-radius:50px;font-family:'Jost',sans-serif;font-size:0.9rem;font-weight:500;padding:12px 32px;cursor:pointer;letter-spacing:0.04em;transition:background 0.2s;}
+  .restart-btn:hover{background:var(--mocha);}
+  .vocab-instruction{background:var(--pink-bg);border:1px solid rgba(153,53,86,0.2);border-radius:12px;padding:14px 18px;margin-bottom:24px;font-size:0.85rem;color:var(--pink);line-height:1.6;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">31 días de inglés real</div>
+  <div class="topbar-label">Day 2 · Culture & Entertainment · Interactive Exercises</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('vocab',this)">📖 Vocabulary Check</button>
+  <button class="tab" onclick="switchTab('checkpoint',this)">🎯 Checkpoint</button>
+</div>
+
+<!-- VOCAB -->
+<div class="panel active" id="panel-vocab">
+  <div class="section-eyebrow">Exercise 1 of 2</div>
+  <div class="section-title">Vocabulary Check</div>
+  <div class="section-sub">Match each word with its correct definition. Click a word, then click its meaning.</div>
+  <div class="vocab-instruction">💡 Tip: Think about the Hannah Montana story as you match — most of these words appeared in today's article!</div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progress</span><span id="vocab-progress-txt">0 / 8 matched</span></div>
+    <div class="progress-track"><div class="progress-fill" id="vocab-bar" style="width:0%"></div></div>
+  </div>
+  <div class="score-badge">Score: <strong id="vocab-score">0</strong> / 8</div>
+  <div id="vocab-game">
+    <div style="font-size:12px;color:var(--stone);margin-bottom:10px;font-weight:500;">WORDS</div>
+    <div class="vocab-grid" id="words-grid"></div>
+    <div style="font-size:12px;color:var(--stone);margin:16px 0 10px;font-weight:500;">DEFINITIONS</div>
+    <div class="vocab-defs-grid" id="defs-grid"></div>
+  </div>
+  <div class="result-screen" id="vocab-result">
+    <div class="result-emoji" id="vocab-emoji">🎉</div>
+    <div class="result-score" id="vocab-score-big">8 / 8</div>
+    <div class="result-msg" id="vocab-msg"></div>
+    <button class="restart-btn" onclick="initVocab()">Try again</button>
+  </div>
+</div>
+
+<!-- CHECKPOINT -->
+<div class="panel" id="panel-checkpoint">
+  <div class="section-eyebrow">Exercise 2 of 2</div>
+  <div class="section-title">Checkpoint</div>
+  <div class="section-sub">Answer the questions based on today's article and video.</div>
+  <div id="checkpoint-questions"></div>
+  <div class="result-screen" id="cp-result">
+    <div class="result-emoji" id="cp-emoji">🌟</div>
+    <div class="result-score" id="cp-score-big">4 / 4</div>
+    <div class="result-msg" id="cp-msg"></div>
+    <button class="restart-btn" onclick="initCheckpoint()">Try again</button>
+  </div>
+</div>
+
+<script>
+function switchTab(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+var vocabPairs=[
+  {word:'Anniversary',  def:'The date on which something important happened in a previous year.'},
+  {word:'Double life',  def:'When someone secretly lives two very different lives at the same time.'},
+  {word:'Nostalgia',    def:'A warm, happy feeling when you think about things from the past.'},
+  {word:'Iconic',       def:'Famous and highly admired, representing a whole era or generation.'},
+  {word:'Legacy',       def:'Something that stays important or remembered long after it happened.'},
+  {word:'Reboot',       def:'A new version of an old TV show, movie or franchise.'},
+  {word:'To premiere',  def:'To be shown or performed in public for the very first time.'},
+  {word:'Superfan',     def:'A person who is extremely passionate and devoted to something.'},
+];
+
+var selectedWord=null,vocabScore=0,matched=0;
+
+function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+
+function initVocab(){
+  selectedWord=null;vocabScore=0;matched=0;
+  document.getElementById('vocab-score').textContent='0';
+  document.getElementById('vocab-progress-txt').textContent='0 / 8 matched';
+  document.getElementById('vocab-bar').style.width='0%';
+  document.getElementById('vocab-result').classList.remove('show');
+  document.getElementById('vocab-game').style.display='';
+  var sw=shuffle(vocabPairs),sd=shuffle(vocabPairs.map(function(p){return p.def;}));
+  var wg=document.getElementById('words-grid');wg.innerHTML='';
+  sw.forEach(function(pair){
+    var btn=document.createElement('button');btn.className='vocab-word-card';
+    btn.textContent=pair.word;btn.dataset.word=pair.word;
+    btn.onclick=function(){selectWord(this);};wg.appendChild(btn);
+  });
+  var dg=document.getElementById('defs-grid');dg.innerHTML='';
+  sd.forEach(function(def){
+    var btn=document.createElement('button');btn.className='vocab-def-card';
+    btn.textContent=def;btn.dataset.def=def;
+    btn.onclick=function(){selectDef(this);};dg.appendChild(btn);
+  });
+}
+
+function selectWord(el){
+  if(el.classList.contains('correct')||el.disabled)return;
+  document.querySelectorAll('.vocab-word-card').forEach(function(c){c.classList.remove('selected');});
+  el.classList.add('selected');selectedWord=el.dataset.word;
+}
+
+function selectDef(el){
+  if(!selectedWord||el.classList.contains('correct')||el.disabled)return;
+  var correctDef=vocabPairs.find(function(p){return p.word===selectedWord;}).def;
+  if(el.dataset.def===correctDef){
+    el.classList.add('correct');el.disabled=true;
+    var we=document.querySelector('[data-word="'+selectedWord+'"]');
+    we.classList.remove('selected');we.classList.add('correct');we.disabled=true;
+    matched++;vocabScore++;
+    document.getElementById('vocab-score').textContent=vocabScore;
+    document.getElementById('vocab-progress-txt').textContent=matched+' / 8 matched';
+    document.getElementById('vocab-bar').style.width=Math.round((matched/8)*100)+'%';
+    selectedWord=null;
+    if(matched===8)setTimeout(showVocabResult,600);
+  } else {
+    el.classList.add('wrong');
+    var we=document.querySelector('[data-word="'+selectedWord+'"]');
+    we.classList.add('wrong');
+    setTimeout(function(){el.classList.remove('wrong','selected');we.classList.remove('wrong','selected');selectedWord=null;},700);
+  }
+}
+
+function showVocabResult(){
+  document.getElementById('vocab-game').style.display='none';
+  document.getElementById('vocab-result').classList.add('show');
+  var e={8:'🎉',7:'🌟',6:'👍',5:'💪'};
+  document.getElementById('vocab-emoji').textContent=e[vocabScore]||'☕';
+  document.getElementById('vocab-score-big').textContent=vocabScore+' / 8';
+  var m={8:'Perfect! You matched all 8 words. Ready for the Deep Dive!',
+         7:'Almost there! One more try to get them all.',
+         6:'Good work! Review the ones you missed.',
+         5:'Keep going — try again to beat your score!'};
+  document.getElementById('vocab-msg').textContent=m[vocabScore]||'Practice makes perfect — try again!';
+}
+
+var questions=[
+  {q:'When did Hannah Montana originally premiere on Disney Channel?',
+   opts:['1999','2006','2011'],correct:1,
+   feedback_ok:'Correct! ✓ Hannah Montana premiered in March 2006 and ran until 2011.',
+   feedback_no:'Not quite. The correct answer is B — Hannah Montana premiered in 2006.'},
+  {q:'What is the name of the character Miley Cyrus played in Hannah Montana?',
+   opts:['Hannah Stewart','Miley Montana','Miley Stewart'],correct:2,
+   feedback_ok:'Correct! ✓ Miley Cyrus played Miley Stewart, a teenager with a secret double life as pop star Hannah Montana.',
+   feedback_no:'Not quite. The correct answer is C — her character\'s real name was Miley Stewart.'},
+  {q:'What did Miley Cyrus say when asked about a Hannah Montana reboot?',
+   opts:['"I would love to do a reboot!"','"Girl, I\'m already tired. This has already been a lot."','"Maybe in 10 more years."'],correct:1,
+   feedback_ok:'Correct! ✓ Miley shut down reboot talk with a very relatable answer — she was exhausted just from the anniversary special!',
+   feedback_no:'Not quite. The correct answer is B — Miley said she was already tired from the anniversary special alone.'},
+  {q:'How many hours of Hannah Montana have been streamed on Disney+ this decade?',
+   opts:['More than 500 million hours','More than 50 million hours','More than 1 billion hours'],correct:0,
+   feedback_ok:'Correct! ✓ More than half a billion hours — proof that the show\'s legacy is still very much alive.',
+   feedback_no:'Not quite. The correct answer is A — more than 500 million (half a billion) hours have been streamed.'},
+];
+
+var cpAnswered=[],cpScore=0;
+
+function initCheckpoint(){
+  cpAnswered=[];cpScore=0;
+  document.getElementById('cp-result').classList.remove('show');
+  var container=document.getElementById('checkpoint-questions');
+  container.style.display='';container.innerHTML='';
+  questions.forEach(function(q,idx){
+    cpAnswered[idx]=false;
+    var block=document.createElement('div');block.className='question-block';block.id='q-block-'+idx;
+    var opts=q.opts.map(function(o,i){
+      return '<button class="option" onclick="checkAnswer('+idx+','+i+')" id="q'+idx+'opt'+i+'">'+String.fromCharCode(65+i)+') '+o+'</button>';
+    }).join('');
+    block.innerHTML='<div class="q-number">Question '+(idx+1)+' of '+questions.length+'</div>'+
+      '<div class="q-text">'+q.q+'</div><div class="options">'+opts+'</div>'+
+      '<div class="feedback ok" id="fb-ok-'+idx+'">'+q.feedback_ok+'</div>'+
+      '<div class="feedback no" id="fb-no-'+idx+'">'+q.feedback_no+'</div>';
+    container.appendChild(block);
+  });
+}
+
+function checkAnswer(qIdx,optIdx){
+  if(cpAnswered[qIdx])return;cpAnswered[qIdx]=true;
+  var q=questions[qIdx];
+  document.querySelectorAll('#q-block-'+qIdx+' .option').forEach(function(o){o.disabled=true;});
+  var chosen=document.getElementById('q'+qIdx+'opt'+optIdx);
+  if(optIdx===q.correct){
+    chosen.classList.add('correct');document.getElementById('fb-ok-'+qIdx).classList.add('show');cpScore++;
+  } else {
+    chosen.classList.add('wrong');document.getElementById('fb-no-'+qIdx).classList.add('show');
+    document.getElementById('q'+qIdx+'opt'+q.correct).classList.add('reveal');
+  }
+  if(cpAnswered.every(Boolean))setTimeout(showCpResult,800);
+}
+
+function showCpResult(){
+  document.getElementById('checkpoint-questions').style.display='none';
+  document.getElementById('cp-result').classList.add('show');
+  var total=questions.length;
+  var emoji=cpScore===total?'🏆':cpScore>=total-1?'🌟':'💪';
+  document.getElementById('cp-emoji').textContent=emoji;
+  document.getElementById('cp-score-big').textContent=cpScore+' / '+total;
+  var msgs={};
+  msgs[total]='Perfect score! You really paid attention to today\'s content. ☕';
+  msgs[total-1]='Almost perfect! One small slip — try again for 100%.';
+  msgs[total-2]='Good effort! Re-read the article and try again.';
+  document.getElementById('cp-msg').textContent=msgs[cpScore]||'Keep reading and try again!';
+}
+
+initVocab();initCheckpoint();
+</script>
+</body>
+</html>
