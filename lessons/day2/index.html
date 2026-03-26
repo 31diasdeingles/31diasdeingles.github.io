@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Day 2 · Hannah Montana Is Back | 31 días de inglés real</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --cream:#F5EFE6; --sand:#E8DDD0; --linen:#F0E9DF;
+    --mocha:#7C5C45; --espresso:#4A2E1A; --caramel:#B07D56;
+    --stone:#9E8C7E; --dark:#2C1A0E; --white:#FDFAF6;
+    --pink:#993556; --pink-light:#FBEAF0; --pink-border:#ED93B1;
+  }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Jost',sans-serif; background:var(--cream); color:var(--dark); }
+
+  /* ── NAV ── */
+  nav {
+    background:var(--espresso); padding:14px 28px;
+    display:flex; align-items:center; justify-content:space-between;
+    position:sticky; top:0; z-index:100;
+  }
+  .nav-brand { font-family:'Playfair Display',serif; font-size:1rem; font-style:italic; color:var(--caramel); text-decoration:none; }
+  .nav-tag { font-size:10px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:rgba(245,239,230,0.45); }
+
+  /* ── HERO ── */
+  .hero {
+    background:var(--espresso); padding:60px 28px 0;
+    text-align:center; position:relative; overflow:hidden;
+  }
+  .hero::before {
+    content:''; position:absolute; top:-80px; left:50%; transform:translateX(-50%);
+    width:600px; height:600px; border-radius:50%;
+    background:radial-gradient(circle, rgba(153,53,86,0.15) 0%, transparent 65%);
+  }
+  .hero-eyebrow {
+    font-size:10px; font-weight:600; letter-spacing:3px;
+    text-transform:uppercase; color:var(--pink); margin-bottom:12px;
+  }
+  .hero-title {
+    font-family:'Playfair Display',serif;
+    font-size:clamp(2rem,6vw,3.4rem); font-weight:900;
+    color:var(--cream); line-height:1.1; margin-bottom:14px;
+  }
+  .hero-title em { color:var(--pink-border); font-style:italic; }
+  .hero-meta {
+    font-size:12px; color:rgba(245,239,230,0.45);
+    font-weight:300; letter-spacing:0.05em; margin-bottom:36px;
+  }
+  .hero-img {
+    width:100%; max-width:680px; margin:0 auto;
+    display:block; border-radius:16px 16px 0 0;
+    object-fit:cover; height:340px;
+    border:1px solid rgba(245,239,230,0.1);
+  }
+  .hero-img-placeholder {
+    width:100%; max-width:680px; margin:0 auto;
+    height:340px; border-radius:16px 16px 0 0;
+    background:linear-gradient(135deg,rgba(153,53,86,0.3),rgba(74,46,26,0.5));
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:12px;
+  }
+  .hero-img-placeholder .ph-icon { font-size:60px; opacity:0.5; }
+  .hero-img-placeholder .ph-text {
+    font-family:'Playfair Display',serif; font-size:1.2rem;
+    font-style:italic; color:rgba(245,239,230,0.4);
+  }
+
+  /* ── VOCAB LEGEND ── */
+  .vocab-legend {
+    background:var(--pink-light); border:1px solid var(--pink-border);
+    border-radius:12px; padding:14px 20px; margin-bottom:28px;
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  }
+  .vocab-legend-label {
+    font-size:11px; font-weight:600; letter-spacing:1.5px;
+    text-transform:uppercase; color:var(--pink);
+  }
+  .vocab-legend-text {
+    font-size:13px; color:var(--mocha); font-weight:300;
+  }
+  .highlight-sample {
+    background:rgba(153,53,86,0.12); color:var(--pink);
+    border-radius:4px; padding:2px 7px; font-weight:600;
+    font-size:13px; border-bottom:2px solid var(--pink);
+    cursor:pointer; transition:background 0.15s;
+  }
+
+  /* ── CONTENT ── */
+  .content-wrap { max-width:720px; margin:0 auto; padding:48px 28px 64px; }
+
+  /* ── ARTICLE BODY ── */
+  .article p {
+    font-size:1.05rem; line-height:1.85; color:var(--dark);
+    margin-bottom:1.4rem; font-weight:300;
+  }
+  .article p:first-child::first-letter {
+    font-family:'Playfair Display',serif;
+    font-size:4rem; font-weight:900; color:var(--pink);
+    float:left; line-height:0.8; margin:6px 10px 0 0;
+  }
+
+  /* KEY WORD HIGHLIGHT */
+  .kw {
+    background:rgba(153,53,86,0.1); color:var(--pink);
+    border-radius:4px; padding:1px 6px; font-weight:600;
+    border-bottom:2px solid rgba(153,53,86,0.4);
+    cursor:pointer; transition:all 0.15s; position:relative;
+    display:inline-block;
+  }
+  .kw:hover { background:rgba(153,53,86,0.18); }
+
+  /* TOOLTIP */
+  .kw .tooltip {
+    display:none; position:absolute; bottom:calc(100% + 8px); left:50%;
+    transform:translateX(-50%);
+    background:var(--espresso); color:var(--cream);
+    font-size:12px; font-weight:400; line-height:1.4;
+    padding:8px 12px; border-radius:8px; white-space:nowrap;
+    z-index:50; pointer-events:none; font-family:'Jost',sans-serif;
+    max-width:220px; white-space:normal; text-align:center;
+    box-shadow:0 4px 12px rgba(0,0,0,0.2);
+  }
+  .kw .tooltip::after {
+    content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%);
+    border:5px solid transparent; border-top-color:var(--espresso);
+  }
+  .kw:hover .tooltip, .kw.active .tooltip { display:block; }
+
+  /* PULL QUOTE */
+  .pull-quote {
+    border-left:4px solid var(--pink); margin:28px 0;
+    padding:16px 24px;
+    background:var(--pink-light);
+    border-radius:0 12px 12px 0;
+  }
+  .pull-quote p {
+    font-family:'Playfair Display',serif;
+    font-size:1.15rem; font-style:italic; color:var(--espresso);
+    line-height:1.5; margin:0 !important;
+  }
+  .pull-quote p::first-letter { all:unset; }
+  .pull-quote cite {
+    display:block; margin-top:8px; font-size:12px;
+    color:var(--pink); font-weight:600; letter-spacing:0.05em;
+    font-style:normal; font-family:'Jost',sans-serif;
+  }
+
+  /* FACT BOX */
+  .fact-box {
+    background:var(--espresso); border-radius:16px;
+    padding:24px 28px; margin:32px 0; color:var(--cream);
+  }
+  .fact-box-title {
+    font-size:10px; font-weight:600; letter-spacing:2px;
+    text-transform:uppercase; color:var(--pink-border); margin-bottom:14px;
+  }
+  .fact-list { list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .fact-list li {
+    font-size:0.88rem; color:rgba(245,239,230,0.75);
+    line-height:1.5; display:flex; gap:10px; align-items:flex-start;
+    font-weight:300;
+  }
+  .fact-list li::before {
+    content:'★'; color:var(--pink-border); font-size:10px;
+    flex-shrink:0; margin-top:3px;
+  }
+
+  /* SECTION DIVIDER */
+  .section-divider {
+    display:flex; align-items:center; gap:16px; margin:36px 0;
+  }
+  .section-divider::before, .section-divider::after {
+    content:''; flex:1; height:1px; background:rgba(153,53,86,0.2);
+  }
+  .section-divider span {
+    font-size:18px; color:var(--pink); opacity:0.5;
+  }
+
+  /* VOCAB GRID RECAP */
+  .vocab-recap {
+    background:var(--linen); border:1px solid rgba(153,53,86,0.15);
+    border-radius:16px; padding:28px; margin:40px 0;
+  }
+  .vocab-recap-title {
+    font-family:'Playfair Display',serif; font-size:1.2rem;
+    font-weight:700; color:var(--espresso); margin-bottom:4px;
+  }
+  .vocab-recap-sub {
+    font-size:12px; color:var(--stone); font-weight:300;
+    margin-bottom:20px;
+  }
+  .vocab-list { display:flex; flex-direction:column; gap:10px; }
+  .vocab-row {
+    display:flex; gap:12px; align-items:flex-start;
+    padding:10px 14px; background:var(--white);
+    border-radius:10px; border:1px solid rgba(124,92,69,0.15);
+  }
+  .vocab-row-word {
+    font-weight:600; color:var(--pink); min-width:130px;
+    font-size:0.9rem; flex-shrink:0;
+  }
+  .vocab-row-def {
+    font-size:0.85rem; color:var(--dark); font-weight:300; line-height:1.5;
+  }
+
+  /* EXERCISES CTA */
+  .exercises-cta {
+    background:var(--espresso); border-radius:20px;
+    padding:32px 28px; text-align:center; margin:40px 0;
+  }
+  .exercises-cta h3 {
+    font-family:'Playfair Display',serif; font-size:1.4rem;
+    font-weight:700; color:var(--cream); margin-bottom:8px;
+  }
+  .exercises-cta p {
+    font-size:0.88rem; color:rgba(245,239,230,0.6);
+    font-weight:300; margin-bottom:20px; line-height:1.6;
+  }
+  .exercises-cta a {
+    display:inline-block; background:var(--pink);
+    color:#fff; font-family:'Jost',sans-serif;
+    font-weight:500; font-size:0.95rem;
+    padding:13px 32px; border-radius:50px;
+    text-decoration:none; letter-spacing:0.04em;
+    transition:opacity 0.2s;
+  }
+  .exercises-cta a:hover { opacity:0.85; }
+
+  /* FOOTER */
+  footer {
+    text-align:center; padding:24px;
+    font-size:12px; color:var(--stone); font-weight:300;
+    border-top:1px solid rgba(124,92,69,0.15);
+  }
+  footer strong { color:var(--mocha); }
+
+  @media(max-width:600px) {
+    .hero { padding:40px 20px 0; }
+    .content-wrap { padding:32px 20px 48px; }
+    .vocab-row { flex-direction:column; gap:4px; }
+    .vocab-row-word { min-width:auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-brand">31 días de inglés real</a>
+  <span class="nav-tag">Day 2 · Culture & Entertainment</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Day 2 · Culture & Entertainment · Level B1</div>
+  <h1 class="hero-title">Hannah Montana Is Back —<br><em>And She Never Really Left</em></h1>
+  <div class="hero-meta">31 días de inglés real · March 2026 · 4 min read</div>
+
+  <!-- Image placeholder — replace src with a real image URL if you have one -->
+  <div class="hero-img-placeholder">
+    <div class="ph-icon">🎬</div>
+    <div class="ph-text">Hannah Montana · 20th Anniversary Special</div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- VOCAB LEGEND -->
+  <div class="vocab-legend">
+    <span class="vocab-legend-label">💡 Tip</span>
+    <span class="vocab-legend-text">Words in <span class="highlight-sample">pink</span> are today's vocabulary. Hover or tap them to see the meaning!</span>
+  </div>
+
+  <!-- ARTICLE -->
+  <div class="article">
+
+    <p>
+      Twenty years ago, a teenage girl with a big secret changed television forever.
+      Her name was Miley Stewart, but the world knew her as Hannah Montana — a pop star
+      with a blonde wig and an
+      <span class="kw">iconic<span class="tooltip">Famous and highly admired, representing a whole era.</span></span>
+      smile. The show
+      <span class="kw">premiered<span class="tooltip">To be shown or performed in public for the very first time.</span></span>
+      on Disney Channel in March 2006, and millions of kids around the world fell in love
+      with her
+      <span class="kw">double life<span class="tooltip">When someone secretly lives two very different lives at the same time.</span></span>.
+    </p>
+
+    <p>
+      The idea was simple but brilliant: Miley was a normal teenager at school, but at night,
+      she performed on stage as the famous Hannah Montana. Nobody knew her secret —
+      not her friends, not her classmates. Only her family.
+      This story of living a
+      <span class="kw">double life<span class="tooltip">When someone secretly lives two very different lives at the same time.</span></span>
+      became one of the most popular TV shows in Disney history.
+    </p>
+
+    <div class="section-divider"><span>✦</span></div>
+
+    <p>
+      Now, in 2026, Miley Cyrus — the real person behind Hannah Montana — is 33 years old.
+      And this week, she is celebrating the
+      <span class="kw">anniversary<span class="tooltip">The date on which something important happened in a previous year.</span></span>
+      of the show with a very special event on Disney+. In the
+      <em>Hannah Montana 20th Anniversary Special</em>, Miley goes back to the sets
+      of the original show, performs some of her most famous songs, and reunites with
+      her dad, Billy Ray Cyrus, who also acted in the series.
+    </p>
+
+    <p>
+      Miley also invited some very special guests. Selena Gomez made a surprise appearance,
+      arranged by podcast host Alex Cooper. And
+      <span class="kw">superfans<span class="tooltip">People who are extremely passionate and devoted to something.</span></span>
+      from all over the world — Brazil, France, Miami — flew to Los Angeles just to be
+      in the audience. For many of them, the experience was deeply emotional.
+    </p>
+
+    <div class="pull-quote">
+      <p>"It was healing for my inner child."</p>
+      <cite>— Axel Cazenave, superfan from Miami</cite>
+    </div>
+
+    <div class="fact-box">
+      <div class="fact-box-title">Hannah Montana by the numbers</div>
+      <ul class="fact-list">
+        <li>More than <strong>500 million hours</strong> streamed on Disney+ this decade</li>
+        <li>Season 1 album was the <strong>first TV soundtrack</strong> to reach #1 on Billboard 200</li>
+        <li>The 2007 Best of Both Worlds tour sold out <strong>71 arenas</strong> across North America</li>
+        <li>The show ran for <strong>4 seasons</strong> from 2006 to 2011</li>
+      </ul>
+    </div>
+
+    <p>
+      The show's
+      <span class="kw">legacy<span class="tooltip">Something that stays important or remembered long after it happened.</span></span>
+      is impossible to ignore. More than half a billion hours of Hannah Montana
+      have been streamed on Disney+ in recent years. The Season 1 album was the first
+      TV soundtrack to reach number one on the Billboard 200. And Miley's 2007 tour
+      sold out 71 arenas across North America.
+    </p>
+
+    <p>
+      But does this mean a
+      <span class="kw">reboot<span class="tooltip">A new version of an old TV show, movie or franchise.</span></span>
+      is coming? Probably not. When a reporter asked Miley about a new season,
+      she laughed and shut down the idea immediately.
+    </p>
+
+    <div class="pull-quote">
+      <p>"Girl, I'm already tired. This has already been a lot."</p>
+      <cite>— Miley Cyrus, red carpet interview, March 2026</cite>
+    </div>
+
+    <p>
+      The anniversary special
+      <span class="kw">premiered<span class="tooltip">To be shown or performed in public for the very first time.</span></span>
+      on Disney+ on March 24, 2026. Whether you watched it as a child or discovered it
+      later, one thing is clear: Hannah Montana was not just a TV show. It was a moment
+      in pop culture that a whole generation shared together. And thanks to the power of
+      <span class="kw">nostalgia<span class="tooltip">A warm, happy feeling when you think about things from the past.</span></span>,
+      that moment is alive again.
+    </p>
+
+    <p>
+      For Miley, this celebration is not just about the past. It is about accepting every
+      version of yourself.
+    </p>
+
+    <div class="pull-quote">
+      <p>"I'd rather be like a gorgeous patchwork blanket. I'd rather take every little piece
+      of all the things that I've been and create a mosaic of exactly who I am now."</p>
+      <cite>— Miley Cyrus, Variety, March 2026</cite>
+    </div>
+
+    <p>
+      That, perhaps, is Hannah Montana's greatest
+      <span class="kw">legacy<span class="tooltip">Something that stays important or remembered long after it happened.</span></span>
+      of all — not the wigs, not the songs, but the reminder that you don't have to
+      choose between who you were and who you are becoming.
+    </p>
+
+  </div>
+
+  <div class="section-divider"><span>✦</span></div>
+
+  <!-- VOCAB RECAP -->
+  <div class="vocab-recap">
+    <div class="vocab-recap-title">Today's vocabulary</div>
+    <div class="vocab-recap-sub">8 key words from this article — go back and find them!</div>
+    <div class="vocab-list">
+      <div class="vocab-row"><div class="vocab-row-word">Anniversary</div><div class="vocab-row-def">The date on which something important happened in a previous year.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Double life</div><div class="vocab-row-def">When someone secretly lives two very different lives at the same time.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Nostalgia</div><div class="vocab-row-def">A warm, happy feeling when you think about things from the past.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Iconic</div><div class="vocab-row-def">Famous and highly admired, representing a whole era or generation.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Legacy</div><div class="vocab-row-def">Something that stays important or remembered long after it happened.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Reboot</div><div class="vocab-row-def">A new version of an old TV show, movie or franchise.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">To premiere</div><div class="vocab-row-def">To be shown or performed in public for the very first time.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Superfan</div><div class="vocab-row-def">A person who is extremely passionate and devoted to something.</div></div>
+    </div>
+  </div>
+
+  <!-- EXERCISES CTA -->
+  <div class="exercises-cta">
+    <h3>Ready for the exercises?</h3>
+    <p>Test your vocabulary and comprehension with today's interactive activities.</p>
+    <a href="../day2_exercises.html">Go to exercises →</a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <strong>31 días de inglés real</strong> · con Camila Cabrera · Level B1</p>
+</footer>
+
+<script>
+  // Toggle tooltip on mobile tap
+  document.querySelectorAll('.kw').forEach(function(el) {
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var isActive = this.classList.contains('active');
+      document.querySelectorAll('.kw').forEach(function(k) { k.classList.remove('active'); });
+      if (!isActive) this.classList.add('active');
+    });
+  });
+  document.addEventListener('click', function() {
+    document.querySelectorAll('.kw').forEach(function(k) { k.classList.remove('active'); });
+  });
+</script>
+
+</body>
+</html>
