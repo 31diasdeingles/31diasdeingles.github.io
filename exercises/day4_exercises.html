@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Day 4 · Interactive Exercises</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --cream:#F5EFE6;--sand:#E8DDD0;--linen:#F0E9DF;
+    --mocha:#7C5C45;--espresso:#4A2E1A;--caramel:#B07D56;
+    --stone:#9E8C7E;--dark:#2C1A0E;--white:#FDFAF6;
+    --amber:#BA7517;--amber-light:#FAEEDA;--amber-border:#EF9F27;
+    --green:#1A5C2A;--green-bg:#D4EDDA;--green-border:#9DC3A8;
+    --red:#721C24;--red-bg:#F8D7DA;--red-border:#E8A5A9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--dark);}
+
+  .topbar{background:var(--espresso);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .topbar-brand{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--caramel);}
+  .topbar-label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(245,239,230,0.5);}
+
+  .tabs{display:flex;background:var(--sand);border-bottom:2px solid rgba(124,92,69,0.2);}
+  .tab{flex:1;padding:16px;text-align:center;cursor:pointer;font-size:13px;font-weight:500;letter-spacing:0.04em;color:var(--stone);border:none;background:none;border-bottom:3px solid transparent;transition:all 0.2s;}
+  .tab.active{color:var(--espresso);border-bottom-color:var(--amber);background:var(--cream);}
+  .tab:hover:not(.active){color:var(--mocha);background:rgba(186,117,23,0.05);}
+
+  .panel{display:none;padding:36px 32px;max-width:780px;margin:0 auto;}
+  .panel.active{display:block;}
+  .section-eyebrow{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:6px;}
+  .section-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--espresso);margin-bottom:6px;}
+  .section-sub{font-size:0.88rem;color:var(--stone);font-weight:300;line-height:1.6;margin-bottom:28px;}
+  .instruction-box{background:var(--amber-light);border:1px solid rgba(186,117,23,0.3);border-radius:12px;padding:14px 18px;margin-bottom:24px;font-size:0.85rem;color:var(--amber);line-height:1.6;}
+
+  /* ── MEMOTEST ── */
+  .memo-stats{display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap;}
+  .memo-stat{background:var(--sand);border-radius:20px;padding:6px 16px;font-size:13px;font-weight:500;color:var(--espresso);}
+  .memo-stat span{color:var(--amber);font-weight:600;}
+
+  .memo-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-bottom:24px;
+  }
+  .memo-card{
+    aspect-ratio:1/1.2;
+    border-radius:12px;
+    cursor:pointer;
+    perspective:600px;
+    position:relative;
+  }
+  .memo-inner{
+    width:100%;height:100%;
+    transform-style:preserve-3d;
+    transition:transform 0.4s ease;
+    position:relative;
+  }
+  .memo-card.flipped .memo-inner{transform:rotateY(180deg);}
+  .memo-card.matched .memo-inner{transform:rotateY(180deg);}
+
+  .memo-front,.memo-back{
+    position:absolute;inset:0;
+    border-radius:12px;
+    backface-visibility:hidden;
+    display:flex;align-items:center;justify-content:center;
+    padding:8px;text-align:center;
+  }
+  .memo-front{
+    background:var(--espresso);
+    font-size:1.6rem;
+    border:2px solid rgba(186,117,23,0.3);
+  }
+  .memo-back{
+    transform:rotateY(180deg);
+    font-size:0.75rem;font-weight:500;line-height:1.35;
+    border:2px solid var(--amber-border);
+  }
+  .memo-back.is-word{
+    background:var(--amber-light);
+    color:var(--amber);
+    font-family:'Playfair Display',serif;
+    font-size:0.9rem;font-weight:700;
+  }
+  .memo-back.is-def{
+    background:var(--white);
+    color:var(--dark);font-weight:400;
+  }
+  .memo-card.matched .memo-front{background:var(--green);}
+  .memo-card.matched .memo-back{border-color:var(--green-border);background:var(--green-bg);color:var(--green);}
+  .memo-card.wrong-flash .memo-inner{animation:wrongFlash 0.4s;}
+  @keyframes wrongFlash{0%,100%{opacity:1;}50%{opacity:0.35;}}
+
+  /* ── TRUE / FALSE ── */
+  .tf-card{background:var(--white);border:1px solid rgba(124,92,69,0.18);border-radius:16px;padding:22px 24px;margin-bottom:14px;}
+  .tf-num{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:8px;}
+  .tf-statement{font-size:1rem;font-weight:400;color:var(--espresso);line-height:1.55;margin-bottom:14px;}
+  .tf-btns{display:flex;gap:10px;}
+  .tf-btn{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(124,92,69,0.25);background:var(--white);cursor:pointer;font-size:0.9rem;font-weight:500;color:var(--dark);transition:all 0.15s;font-family:'Jost',sans-serif;}
+  .tf-btn:hover:not(:disabled){border-color:var(--amber);background:var(--amber-light);color:var(--amber);}
+  .tf-btn.correct{background:var(--green-bg);border-color:var(--green-border);color:var(--green);}
+  .tf-btn.wrong{background:var(--red-bg);border-color:var(--red-border);color:var(--red);}
+  .tf-btn.reveal{background:var(--green-bg);border-color:var(--green-border);color:var(--green);}
+  .tf-btn:disabled{cursor:default;}
+  .tf-feedback{margin-top:10px;padding:10px 14px;border-radius:8px;font-size:0.82rem;line-height:1.5;display:none;}
+  .tf-feedback.show{display:block;}
+  .tf-feedback.ok{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+  .tf-feedback.no{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border);}
+
+  /* ── RESULT ── */
+  .result-screen{text-align:center;padding:40px 20px;display:none;}
+  .result-screen.show{display:block;}
+  .result-emoji{font-size:60px;margin-bottom:16px;}
+  .result-score{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:var(--espresso);margin-bottom:6px;}
+  .result-msg{font-size:1rem;color:var(--stone);font-weight:300;margin-bottom:24px;line-height:1.6;}
+  .restart-btn{background:var(--espresso);color:var(--cream);border:none;border-radius:50px;font-family:'Jost',sans-serif;font-size:0.9rem;font-weight:500;padding:12px 32px;cursor:pointer;letter-spacing:0.04em;transition:background 0.2s;}
+  .restart-btn:hover{background:var(--mocha);}
+
+  @media(max-width:500px){
+    .memo-grid{grid-template-columns:repeat(4,1fr);gap:6px;}
+    .memo-back.is-word{font-size:0.75rem;}
+    .memo-back.is-def{font-size:0.65rem;}
+    .panel{padding:24px 16px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">31 días de inglés real</div>
+  <div class="topbar-label">Day 4 · Sports · Interactive Exercises</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('memo',this)">🃏 Memotest</button>
+  <button class="tab" onclick="switchTab('tf',this)">✅ True or False</button>
+</div>
+
+<!-- ══ MEMOTEST ══ -->
+<div class="panel active" id="panel-memo">
+  <div class="section-eyebrow">Exercise 1 of 2</div>
+  <div class="section-title">Memotest</div>
+  <div class="section-sub">Find the matching pairs — each word has one definition. Flip the cards and remember where they are!</div>
+  <div class="instruction-box">⚽ 8 words · 8 definitions = 16 cards. Find all 8 pairs to complete the game!</div>
+
+  <div class="memo-stats">
+    <div class="memo-stat">Pairs found: <span id="pairs-found">0</span> / 8</div>
+    <div class="memo-stat">Attempts: <span id="attempts">0</span></div>
+  </div>
+
+  <div class="memo-grid" id="memo-grid"></div>
+
+  <div class="result-screen" id="memo-result">
+    <div class="result-emoji" id="memo-emoji">🏆</div>
+    <div class="result-score" id="memo-score-big">8 / 8</div>
+    <div class="result-msg" id="memo-msg"></div>
+    <button class="restart-btn" onclick="initMemo()">Play again</button>
+  </div>
+</div>
+
+<!-- ══ TRUE OR FALSE ══ -->
+<div class="panel" id="panel-tf">
+  <div class="section-eyebrow">Exercise 2 of 2</div>
+  <div class="section-title">True or False?</div>
+  <div class="section-sub">Read each statement carefully. Is it true or false based on the article?</div>
+  <div id="tf-questions"></div>
+  <div class="result-screen" id="tf-result">
+    <div class="result-emoji" id="tf-emoji">🌟</div>
+    <div class="result-score" id="tf-score-big">6 / 6</div>
+    <div class="result-msg" id="tf-msg"></div>
+    <button class="restart-btn" onclick="initTF()">Try again</button>
+  </div>
+</div>
+
+<script>
+function switchTab(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ══ MEMOTEST ══════════════════════════════════════════════════════════════
+var memoPairs=[
+  {word:'To compete',   def:'To take part in a contest trying to win.'},
+  {word:'Coveted',      def:'Strongly desired by many people.'},
+  {word:'Appearances',  def:'Number of times a player has played in official matches.'},
+  {word:'Trophy',       def:'A prize given to the winner of a competition.'},
+  {word:'Squad',        def:'The group of players selected for a team.'},
+  {word:'To defend',    def:'To try to keep a title you already hold.'},
+  {word:'Campaign',     def:'A team\'s full run of matches in a tournament.'},
+  {word:'Hosted',       def:'Organised and held in a particular country.'},
+];
+
+var memoCards=[], flipped=[], matched=0, attempts=0, canFlip=true;
+
+function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+
+function initMemo(){
+  memoCards=[];flipped=[];matched=0;attempts=0;canFlip=true;
+  document.getElementById('pairs-found').textContent='0';
+  document.getElementById('attempts').textContent='0';
+  document.getElementById('memo-result').classList.remove('show');
+
+  var items=[];
+  memoPairs.forEach(function(p,i){
+    items.push({id:i,type:'word',text:p.word,pair:i});
+    items.push({id:i+8,type:'def',text:p.def,pair:i});
+  });
+  items=shuffle(items);
+
+  var grid=document.getElementById('memo-grid');
+  grid.innerHTML='';
+  items.forEach(function(item,idx){
+    var card=document.createElement('div');
+    card.className='memo-card';
+    card.dataset.idx=idx;
+    card.dataset.pair=item.pair;
+    card.dataset.type=item.type;
+    card.innerHTML=
+      '<div class="memo-inner">'+
+        '<div class="memo-front">⚽</div>'+
+        '<div class="memo-back is-'+item.type+'">'+item.text+'</div>'+
+      '</div>';
+    card.addEventListener('click',function(){flipCard(this);});
+    grid.appendChild(card);
+    memoCards.push(card);
+  });
+}
+
+function flipCard(card){
+  if(!canFlip)return;
+  if(card.classList.contains('flipped')||card.classList.contains('matched'))return;
+  if(flipped.length>=2)return;
+  card.classList.add('flipped');
+  flipped.push(card);
+  if(flipped.length===2){
+    attempts++;
+    document.getElementById('attempts').textContent=attempts;
+    canFlip=false;
+    setTimeout(checkMemoMatch,700);
+  }
+}
+
+function checkMemoMatch(){
+  var a=flipped[0],b=flipped[1];
+  var sameType=a.dataset.type===b.dataset.type;
+  var samePair=a.dataset.pair===b.dataset.pair;
+
+  if(samePair&&!sameType){
+    a.classList.add('matched');b.classList.add('matched');
+    matched++;
+    document.getElementById('pairs-found').textContent=matched;
+    flipped=[];canFlip=true;
+    if(matched===8)setTimeout(showMemoResult,500);
+  } else {
+    a.classList.add('wrong-flash');b.classList.add('wrong-flash');
+    setTimeout(function(){
+      a.classList.remove('flipped','wrong-flash');
+      b.classList.remove('flipped','wrong-flash');
+      flipped=[];canFlip=true;
+    },600);
+  }
+}
+
+function showMemoResult(){
+  document.getElementById('memo-result').classList.add('show');
+  var emoji=attempts<=10?'🏆':attempts<=14?'🌟':attempts<=18?'👍':'💪';
+  document.getElementById('memo-emoji').textContent=emoji;
+  document.getElementById('memo-score-big').textContent='8 / 8 pairs!';
+  var msg=attempts<=10?'Outstanding memory! Only '+attempts+' attempts.':
+          attempts<=14?'Great job! '+attempts+' attempts — very solid.':
+          attempts<=18?'Good work! '+attempts+' attempts. Try again to beat your score!':
+          'You got them all in '+attempts+' attempts. Practice makes perfect!';
+  document.getElementById('memo-msg').textContent=msg;
+}
+
+// ══ TRUE OR FALSE ══════════════════════════════════════════════════════════
+var tfData=[
+  {statement:'Messi has played in four World Cups before 2026.',
+   answer:false,
+   feedback_t:'Actually, this is FALSE. Messi has already played in FIVE World Cups — Germany 2006, South Africa 2010, Brazil 2014, Russia 2018, and Qatar 2022.',
+   feedback_f:'Correct! ✓ This is FALSE. Messi has played in five World Cups — making 2026 a potential sixth.'},
+  {statement:'The 2026 World Cup final will be played at MetLife Stadium in New Jersey.',
+   answer:true,
+   feedback_t:'Correct! ✓ TRUE. The final is scheduled for July 19 at MetLife Stadium in East Rutherford, New Jersey.',
+   feedback_f:'Actually, this is TRUE. The final will be held at MetLife Stadium in New Jersey on July 19.'},
+  {statement:'The 2026 World Cup is the first to feature 48 teams.',
+   answer:true,
+   feedback_t:'Correct! ✓ TRUE. The 2026 tournament expands from 32 to 48 teams — the largest World Cup in history.',
+   feedback_f:'Actually, this is TRUE. 2026 is the first World Cup with 48 teams, up from 32 in Qatar 2022.'},
+  {statement:'Argentina will play their first match against Brazil on June 16.',
+   answer:false,
+   feedback_t:'Actually, this is FALSE. Argentina plays their first match against ALGERIA on June 16, in Kansas City.',
+   feedback_f:'Correct! ✓ FALSE. Argentina opens against Algeria on June 16 — not Brazil.'},
+  {statement:'Messi holds the all-time record for World Cup appearances with 26 games.',
+   answer:true,
+   feedback_t:'Correct! ✓ TRUE. Messi surpassed Germany\'s Lothar Matthäus in 2022 and now holds the men\'s record with 26 World Cup appearances.',
+   feedback_f:'Actually, this is TRUE. Messi has played 26 World Cup matches — the men\'s all-time record.'},
+  {statement:'The opening match of the 2026 World Cup will be played in New York.',
+   answer:false,
+   feedback_t:'Actually, this is FALSE. The opening match is in MEXICO CITY at the Estadio Azteca on June 11.',
+   feedback_f:'Correct! ✓ FALSE. The opening match takes place at the Estadio Azteca in Mexico City, not New York.'},
+];
+
+var tfAnswered=[],tfScore=0;
+
+function initTF(){
+  tfAnswered=[];tfScore=0;
+  document.getElementById('tf-result').classList.remove('show');
+  var container=document.getElementById('tf-questions');
+  container.style.display='';container.innerHTML='';
+  tfData.forEach(function(q,idx){
+    tfAnswered[idx]=false;
+    var card=document.createElement('div');card.className='tf-card';card.id='tf-'+idx;
+    card.innerHTML=
+      '<div class="tf-num">Statement '+(idx+1)+' of '+tfData.length+'</div>'+
+      '<div class="tf-statement">'+q.statement+'</div>'+
+      '<div class="tf-btns">'+
+        '<button class="tf-btn" onclick="checkTF('+idx+',true)" id="tf'+idx+'t">✓ True</button>'+
+        '<button class="tf-btn" onclick="checkTF('+idx+',false)" id="tf'+idx+'f">✗ False</button>'+
+      '</div>'+
+      '<div class="tf-feedback ok" id="tffb-ok-'+idx+'">'+q.feedback_t+'</div>'+
+      '<div class="tf-feedback no" id="tffb-no-'+idx+'">'+q.feedback_f+'</div>';
+    container.appendChild(card);
+  });
+}
+
+function checkTF(idx,answer){
+  if(tfAnswered[idx])return;
+  tfAnswered[idx]=true;
+  var q=tfData[idx];
+  document.getElementById('tf'+idx+'t').disabled=true;
+  document.getElementById('tf'+idx+'f').disabled=true;
+  var correct=(answer===q.answer);
+  if(correct){
+    var btn=document.getElementById('tf'+idx+(answer?'t':'f'));
+    btn.classList.add('correct');
+    document.getElementById('tffb-ok-'+idx).classList.add('show');
+    tfScore++;
+  } else {
+    var wrongBtn=document.getElementById('tf'+idx+(answer?'t':'f'));
+    var rightBtn=document.getElementById('tf'+idx+(q.answer?'t':'f'));
+    wrongBtn.classList.add('wrong');
+    rightBtn.classList.add('reveal');
+    document.getElementById('tffb-no-'+idx).classList.add('show');
+  }
+  if(tfAnswered.every(Boolean))setTimeout(showTFResult,800);
+}
+
+function showTFResult(){
+  document.getElementById('tf-questions').style.display='none';
+  document.getElementById('tf-result').classList.add('show');
+  var total=tfData.length;
+  var emoji=tfScore===total?'🏆':tfScore>=total-1?'🌟':tfScore>=total/2?'💪':'📚';
+  document.getElementById('tf-emoji').textContent=emoji;
+  document.getElementById('tf-score-big').textContent=tfScore+' / '+total;
+  var msgs={};
+  msgs[total]='Perfect! You read every detail of the article. Ready for the Deep Dive! ☕';
+  msgs[total-1]='Almost perfect! One small slip — try again for 100%.';
+  msgs[total-2]='Good effort! Re-read the article and try again.';
+  document.getElementById('tf-msg').textContent=msgs[tfScore]||'Keep reading — you\'ll get there!';
+}
+
+initMemo();
+initTF();
+</script>
+</body>
+</html>
