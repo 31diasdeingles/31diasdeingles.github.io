@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Day 4 · Messi's Last Dance | 31 días de inglés real</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --cream:#F5EFE6;--sand:#E8DDD0;--linen:#F0E9DF;
+    --mocha:#7C5C45;--espresso:#4A2E1A;--caramel:#B07D56;
+    --stone:#9E8C7E;--dark:#2C1A0E;--white:#FDFAF6;
+    --amber:#BA7517;--amber-light:#FAEEDA;--amber-border:#EF9F27;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--dark);}
+
+  nav{background:var(--espresso);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .nav-brand{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--caramel);text-decoration:none;}
+  .nav-tag{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(245,239,230,0.45);}
+
+  .hero{background:var(--espresso);padding:60px 28px 0;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(186,117,23,0.2) 0%,transparent 65%);}
+  .hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber-border);margin-bottom:12px;}
+  .hero-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,3.4rem);font-weight:900;color:var(--cream);line-height:1.1;margin-bottom:14px;}
+  .hero-title em{color:var(--amber-border);font-style:italic;}
+  .hero-meta{font-size:12px;color:rgba(245,239,230,0.45);font-weight:300;letter-spacing:0.05em;margin-bottom:36px;}
+  .hero-img-placeholder{width:100%;max-width:680px;margin:0 auto;height:340px;border-radius:16px 16px 0 0;background:linear-gradient(135deg,rgba(186,117,23,0.35),rgba(74,46,26,0.6));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;}
+  .ph-icon{font-size:64px;opacity:0.55;}
+  .ph-text{font-family:'Playfair Display',serif;font-size:1.15rem;font-style:italic;color:rgba(245,239,230,0.45);}
+
+  .vocab-legend{background:var(--amber-light);border:1px solid var(--amber-border);border-radius:12px;padding:14px 20px;margin-bottom:28px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .vocab-legend-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber);}
+  .vocab-legend-text{font-size:13px;color:var(--mocha);font-weight:300;}
+  .hl-sample{background:rgba(186,117,23,0.13);color:var(--amber);border-radius:4px;padding:2px 7px;font-weight:600;font-size:13px;border-bottom:2px solid var(--amber-border);}
+
+  .content-wrap{max-width:720px;margin:0 auto;padding:48px 28px 64px;}
+  .article p{font-size:1.05rem;line-height:1.85;color:var(--dark);margin-bottom:1.4rem;font-weight:300;}
+  .article p:first-child::first-letter{font-family:'Playfair Display',serif;font-size:4rem;font-weight:900;color:var(--amber);float:left;line-height:0.8;margin:6px 10px 0 0;}
+
+  .kw{background:rgba(186,117,23,0.11);color:var(--amber);border-radius:4px;padding:1px 6px;font-weight:600;border-bottom:2px solid rgba(186,117,23,0.38);cursor:pointer;transition:all 0.15s;position:relative;display:inline-block;}
+  .kw:hover{background:rgba(186,117,23,0.2);}
+  .kw .tt{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--espresso);color:var(--cream);font-size:12px;font-weight:400;line-height:1.45;padding:8px 12px;border-radius:8px;white-space:normal;z-index:50;pointer-events:none;font-family:'Jost',sans-serif;max-width:220px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.2);min-width:160px;}
+  .kw .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--espresso);}
+  .kw:hover .tt,.kw.active .tt{display:block;}
+
+  .pull-quote{border-left:4px solid var(--amber);margin:28px 0;padding:16px 24px;background:var(--amber-light);border-radius:0 12px 12px 0;}
+  .pull-quote p{font-family:'Playfair Display',serif;font-size:1.15rem;font-style:italic;color:var(--espresso);line-height:1.5;margin:0!important;}
+  .pull-quote p::first-letter{all:unset;}
+  .pull-quote cite{display:block;margin-top:8px;font-size:12px;color:var(--amber);font-weight:600;letter-spacing:0.05em;font-style:normal;font-family:'Jost',sans-serif;}
+
+  .fact-box{background:var(--espresso);border-radius:16px;padding:24px 28px;margin:32px 0;color:var(--cream);}
+  .fact-box-title{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--amber-border);margin-bottom:14px;}
+  .fact-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .fact-list li{font-size:0.88rem;color:rgba(245,239,230,0.78);line-height:1.5;display:flex;gap:10px;align-items:flex-start;font-weight:300;}
+  .fact-list li::before{content:'★';color:var(--amber-border);font-size:10px;flex-shrink:0;margin-top:3px;}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0;}
+  .stat-card{background:var(--linen);border:1px solid rgba(186,117,23,0.2);border-radius:14px;padding:18px 20px;text-align:center;}
+  .stat-number{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:var(--amber);line-height:1;}
+  .stat-label{font-size:11px;color:var(--stone);font-weight:400;margin-top:6px;line-height:1.4;}
+
+  .section-divider{display:flex;align-items:center;gap:16px;margin:36px 0;}
+  .section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:rgba(186,117,23,0.2);}
+  .section-divider span{font-size:18px;color:var(--amber);opacity:0.5;}
+
+  .vocab-recap{background:var(--linen);border:1px solid rgba(186,117,23,0.15);border-radius:16px;padding:28px;margin:40px 0;}
+  .vocab-recap-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--espresso);margin-bottom:4px;}
+  .vocab-recap-sub{font-size:12px;color:var(--stone);font-weight:300;margin-bottom:20px;}
+  .vocab-list{display:flex;flex-direction:column;gap:10px;}
+  .vocab-row{display:flex;gap:12px;align-items:flex-start;padding:10px 14px;background:var(--white);border-radius:10px;border:1px solid rgba(124,92,69,0.15);}
+  .vocab-row-word{font-weight:600;color:var(--amber);min-width:140px;font-size:0.9rem;flex-shrink:0;}
+  .vocab-row-def{font-size:0.85rem;color:var(--dark);font-weight:300;line-height:1.5;}
+
+  .exercises-cta{background:var(--espresso);border-radius:20px;padding:32px 28px;text-align:center;margin:40px 0;}
+  .exercises-cta h3{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--cream);margin-bottom:8px;}
+  .exercises-cta p{font-size:0.88rem;color:rgba(245,239,230,0.6);font-weight:300;margin-bottom:20px;line-height:1.6;}
+  .exercises-cta a{display:inline-block;background:var(--amber);color:#fff;font-family:'Jost',sans-serif;font-weight:500;font-size:0.95rem;padding:13px 32px;border-radius:50px;text-decoration:none;letter-spacing:0.04em;transition:opacity 0.2s;}
+  .exercises-cta a:hover{opacity:0.85;}
+
+  footer{text-align:center;padding:24px;font-size:12px;color:var(--stone);font-weight:300;border-top:1px solid rgba(124,92,69,0.15);}
+  footer strong{color:var(--mocha);}
+
+  @media(max-width:600px){
+    .hero{padding:40px 20px 0;}
+    .content-wrap{padding:32px 20px 48px;}
+    .two-col{grid-template-columns:1fr 1fr;}
+    .vocab-row{flex-direction:column;gap:4px;}
+    .vocab-row-word{min-width:auto;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">31 días de inglés real</a>
+  <span class="nav-tag">Day 4 · Sports</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Day 4 · Sports · Level B1</div>
+  <h1 class="hero-title">One More Summer —<br><em>Messi's Last Dance?</em></h1>
+  <div class="hero-meta">31 días de inglés real · March 2026 · 5 min read</div>
+  <div class="hero-img-placeholder">
+    <div class="ph-icon">⚽</div>
+    <div class="ph-text">Lionel Messi · Argentina · 2026 World Cup</div>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <div class="vocab-legend">
+    <span class="vocab-legend-label">💡 Tip</span>
+    <span class="vocab-legend-text">Words in <span class="hl-sample">gold</span> are today's vocabulary. Hover or tap them to see the meaning!</span>
+  </div>
+
+  <div class="article">
+
+    <p>
+      This summer, the biggest sporting event on the planet arrives in North America.
+      The 2026 FIFA World Cup begins on June 11 in Mexico City and runs through July 19,
+      when the world's best teams will
+      <span class="kw">compete<span class="tt">To take part in a contest trying to win.</span></span>
+      for the most
+      <span class="kw">coveted<span class="tt">Strongly desired by many people; something everyone wants.</span></span>
+      trophy in football. But beyond the stadiums and the statistics, one question
+      <span class="kw">dominates<span class="tt">Is the most important or powerful thing in a situation.</span></span>
+      every conversation: will Lionel Messi play?
+    </p>
+
+    <p>
+      Messi is 38 years old. He turns 39 on June 24 — right in the middle of Argentina's
+      group stage. He has played in five World Cups already, starting in Germany in 2006
+      when he was just 18. He holds the all-time record for World Cup
+      <span class="kw">appearances<span class="tt">The number of times a player has played in official matches.</span></span>
+      — 26 games — surpassing Germany's Lothar Matthäus in 2022. And in Qatar that year,
+      he finally lifted the one
+      <span class="kw">trophy<span class="tt">A prize given to the winner of a competition, usually a cup or statue.</span></span>
+      that had escaped him his entire career.
+    </p>
+
+    <div class="pull-quote">
+      <p>"I would love to be there. I'm going to assess that day by day and see if I can really be 100 per cent."</p>
+      <cite>— Lionel Messi, on the 2026 World Cup</cite>
+    </div>
+
+    <p>
+      His coach, Lionel Scaloni, is doing everything he can to make it happen. This week,
+      Messi was
+      <span class="kw">named<span class="tt">Selected and officially included in a team or list.</span></span>
+      in Argentina's squad for friendly matches against Mauritania and Zambia at La Bombonera
+      in Buenos Aires. Scaloni confirmed Messi will play in both games — his last chance to
+      be assessed before the
+      <span class="kw">squad<span class="tt">The group of players selected to represent a team in a competition.</span></span>
+      is finalised for the tournament.
+    </p>
+
+    <div class="pull-quote">
+      <p>"I believe that, for the good of football, he should be there. I will do everything possible to make sure he is."</p>
+      <cite>— Lionel Scaloni, Argentina coach</cite>
+    </div>
+
+    <div class="section-divider"><span>✦</span></div>
+
+    <p>
+      If Messi steps onto the pitch at the World Cup, he will make history — becoming
+      the first man ever to play in six different World Cups. Only Brazil's Formiga and Marta,
+      both women, have
+      <span class="kw">achieved<span class="tt">Successfully reached a goal through effort and skill.</span></span>
+      that feat. For Argentina's fans, the idea of watching Messi
+      <span class="kw">defend<span class="tt">To try to keep a title or position that you already hold.</span></span>
+      the World Cup title on home soil — in the country where he now lives with his family
+      in Miami — feels almost too good to be true.
+    </p>
+
+    <div class="two-col">
+      <div class="stat-card">
+        <div class="stat-number">5</div>
+        <div class="stat-label">World Cups Messi has already played</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">26</div>
+        <div class="stat-label">World Cup appearances — all-time men's record</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">39</div>
+        <div class="stat-label">Age Messi turns during the tournament (June 24)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">8×</div>
+        <div class="stat-label">Ballon d'Or awards — more than any player in history</div>
+      </div>
+    </div>
+
+    <div class="section-divider"><span>✦</span></div>
+
+    <p>
+      But the World Cup in 2026 is historic for reasons far beyond Messi. This edition
+      is the largest in the tournament's 96-year history. For the first time ever,
+      <span class="kw">48 teams<span class="tt">The total number of national teams competing — up from 32 in 2022.</span></span>
+      will participate, divided into 12 groups of four. That means 104 matches in total —
+      40 more than in Qatar. The tournament is also the first ever to be
+      <span class="kw">hosted<span class="tt">Organised and held in a particular place or country.</span></span>
+      by three countries at the same time: the United States, Canada and Mexico.
+    </p>
+
+    <div class="fact-box">
+      <div class="fact-box-title">2026 World Cup — Key Facts</div>
+      <ul class="fact-list">
+        <li><strong>Dates:</strong> June 11 – July 19, 2026</li>
+        <li><strong>Hosts:</strong> USA (11 cities), Mexico (3 cities), Canada (2 cities) — first ever 3-nation host</li>
+        <li><strong>Teams:</strong> 48 teams — up from 32 in Qatar 2022</li>
+        <li><strong>Matches:</strong> 104 total — the most in World Cup history</li>
+        <li><strong>Opening match:</strong> Mexico vs. opponent at Estadio Azteca, Mexico City (June 11)</li>
+        <li><strong>Final:</strong> MetLife Stadium, East Rutherford, New Jersey (July 19)</li>
+        <li><strong>Official ball:</strong> Adidas Trionda — inspired by the three host nations</li>
+        <li><strong>Argentina's group:</strong> Group J — vs Algeria (June 16), Austria (June 22), Jordan (June 27)</li>
+      </ul>
+    </div>
+
+    <p>
+      Sixteen cities across three countries will host matches. The
+      <span class="kw">final<span class="tt">The last and most important match of a tournament, where the winner is decided.</span></span>
+      will be played at MetLife Stadium in New Jersey — the largest stadium in the United States,
+      with a capacity of 82,500 people. The opening ceremony will take place at the legendary
+      Estadio Azteca in Mexico City, the only stadium in the world to have hosted
+      three World Cup tournaments.
+    </p>
+
+    <p>
+      Argentina, the
+      <span class="kw">defending champions<span class="tt">The team that won the previous tournament and is trying to win again.</span></span>
+      after their unforgettable victory in Qatar 2022, begin their
+      <span class="kw">campaign<span class="tt">A series of organised efforts to achieve a goal — in sport, the full run of matches in a tournament.</span></span>
+      on June 16 against Algeria in Kansas City. Whether Messi is wearing the number 10
+      shirt that day is still uncertain. But the football world — from Buenos Aires to Bangkok —
+      is hoping the answer is yes.
+    </p>
+
+    <div class="pull-quote">
+      <p>"It's something extraordinary to be able to be in a World Cup. I would like to be there, to be well and be an important part of helping my team."</p>
+      <cite>— Lionel Messi</cite>
+    </div>
+
+    <p>
+      One thing is certain: whether Messi plays or watches from the stands, the 2026
+      World Cup will be a summer unlike any other. The biggest show on earth is coming
+      to North America — and the countdown has already begun.
+    </p>
+
+  </div>
+
+  <div class="section-divider"><span>✦</span></div>
+
+  <div class="vocab-recap">
+    <div class="vocab-recap-title">Today's vocabulary</div>
+    <div class="vocab-recap-sub">8 key words from this article — go back and find them all!</div>
+    <div class="vocab-list">
+      <div class="vocab-row"><div class="vocab-row-word">To compete</div><div class="vocab-row-def">To take part in a contest trying to win.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Coveted</div><div class="vocab-row-def">Strongly desired by many people — something everyone wants.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Appearances</div><div class="vocab-row-def">The number of times a player has played in official matches.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Trophy</div><div class="vocab-row-def">A prize given to the winner of a competition.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Squad</div><div class="vocab-row-def">The group of players selected to represent a team in a competition.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">To defend</div><div class="vocab-row-def">To try to keep a title or position that you already hold.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Defending champions</div><div class="vocab-row-def">The team that won the previous tournament and is trying to win again.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Campaign</div><div class="vocab-row-def">In sport, the full run of matches a team plays in a tournament.</div></div>
+    </div>
+  </div>
+
+  <div class="exercises-cta">
+    <h3>Ready to play?</h3>
+    <p>Test your vocabulary with the memotest and check your comprehension.</p>
+    <a href="../../exercises/day4_exercises.html">Go to exercises →</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 <strong>31 días de inglés real</strong> · con Camila Cabrera · Level B1</p>
+</footer>
+
+<script>
+  document.querySelectorAll('.kw').forEach(function(el){
+    el.addEventListener('click',function(e){
+      e.stopPropagation();
+      var isActive=this.classList.contains('active');
+      document.querySelectorAll('.kw').forEach(function(k){k.classList.remove('active');});
+      if(!isActive)this.classList.add('active');
+    });
+  });
+  document.addEventListener('click',function(){
+    document.querySelectorAll('.kw').forEach(function(k){k.classList.remove('active');});
+  });
+</script>
+</body>
+</html>
