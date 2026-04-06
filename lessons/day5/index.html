@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Day 5 · The Dopamine Menu | 31 días de inglés real</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --cream:#F5EFE6;--sand:#E8DDD0;--linen:#F0E9DF;
+    --mocha:#7C5C45;--espresso:#4A2E1A;--caramel:#B07D56;
+    --stone:#9E8C7E;--dark:#2C1A0E;--white:#FDFAF6;
+    --purple:#534AB7;--purple-light:#EEEDFE;--purple-border:#AFA9EC;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--dark);}
+
+  nav{background:var(--espresso);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .nav-brand{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--caramel);text-decoration:none;}
+  .nav-tag{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(245,239,230,0.45);}
+
+  .hero{background:var(--espresso);padding:60px 28px 0;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(83,74,183,0.18) 0%,transparent 65%);}
+  .hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--purple-border);margin-bottom:12px;}
+  .hero-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,3.4rem);font-weight:900;color:var(--cream);line-height:1.1;margin-bottom:14px;}
+  .hero-title em{color:var(--purple-border);font-style:italic;}
+  .hero-meta{font-size:12px;color:rgba(245,239,230,0.45);font-weight:300;letter-spacing:0.05em;margin-bottom:36px;}
+  .hero-img-placeholder{width:100%;max-width:680px;margin:0 auto;height:340px;border-radius:16px 16px 0 0;background:linear-gradient(135deg,rgba(83,74,183,0.35),rgba(74,46,26,0.55));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;}
+  .ph-icon{font-size:64px;opacity:0.55;}
+  .ph-text{font-family:'Playfair Display',serif;font-size:1.15rem;font-style:italic;color:rgba(245,239,230,0.4);}
+
+  .vocab-legend{background:var(--purple-light);border:1px solid var(--purple-border);border-radius:12px;padding:14px 20px;margin-bottom:28px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .vocab-legend-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--purple);}
+  .vocab-legend-text{font-size:13px;color:var(--mocha);font-weight:300;}
+  .hl-sample{background:rgba(83,74,183,0.12);color:var(--purple);border-radius:4px;padding:2px 7px;font-weight:600;font-size:13px;border-bottom:2px solid var(--purple-border);}
+
+  .content-wrap{max-width:720px;margin:0 auto;padding:48px 28px 64px;}
+  .article p{font-size:1.05rem;line-height:1.85;color:var(--dark);margin-bottom:1.4rem;font-weight:300;}
+  .article p:first-child::first-letter{font-family:'Playfair Display',serif;font-size:4rem;font-weight:900;color:var(--purple);float:left;line-height:0.8;margin:6px 10px 0 0;}
+
+  .kw{background:rgba(83,74,183,0.1);color:var(--purple);border-radius:4px;padding:1px 6px;font-weight:600;border-bottom:2px solid rgba(83,74,183,0.35);cursor:pointer;transition:all 0.15s;position:relative;display:inline-block;}
+  .kw:hover{background:rgba(83,74,183,0.18);}
+  .kw .tt{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--espresso);color:var(--cream);font-size:12px;font-weight:400;line-height:1.45;padding:8px 12px;border-radius:8px;white-space:normal;z-index:50;pointer-events:none;font-family:'Jost',sans-serif;max-width:220px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.2);min-width:160px;}
+  .kw .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--espresso);}
+  .kw:hover .tt,.kw.active .tt{display:block;}
+
+  .pull-quote{border-left:4px solid var(--purple);margin:28px 0;padding:16px 24px;background:var(--purple-light);border-radius:0 12px 12px 0;}
+  .pull-quote p{font-family:'Playfair Display',serif;font-size:1.15rem;font-style:italic;color:var(--espresso);line-height:1.5;margin:0!important;}
+  .pull-quote p::first-letter{all:unset;}
+  .pull-quote cite{display:block;margin-top:8px;font-size:12px;color:var(--purple);font-weight:600;letter-spacing:0.05em;font-style:normal;font-family:'Jost',sans-serif;}
+
+  .menu-card{background:var(--espresso);border-radius:20px;padding:28px 32px;margin:32px 0;color:var(--cream);}
+  .menu-card-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--cream);margin-bottom:6px;text-align:center;}
+  .menu-card-sub{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--purple-border);text-align:center;margin-bottom:20px;}
+  .menu-sections{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .menu-section{background:rgba(245,239,230,0.06);border-radius:12px;padding:14px 16px;border:1px solid rgba(175,169,236,0.2);}
+  .menu-section-title{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--purple-border);margin-bottom:8px;}
+  .menu-section-items{list-style:none;display:flex;flex-direction:column;gap:5px;}
+  .menu-section-items li{font-size:0.82rem;color:rgba(245,239,230,0.7);font-weight:300;padding-left:12px;position:relative;}
+  .menu-section-items li::before{content:'·';position:absolute;left:0;color:var(--purple-border);}
+
+  .section-divider{display:flex;align-items:center;gap:16px;margin:36px 0;}
+  .section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:rgba(83,74,183,0.2);}
+  .section-divider span{font-size:18px;color:var(--purple);opacity:0.5;}
+
+  .vocab-recap{background:var(--linen);border:1px solid rgba(83,74,183,0.15);border-radius:16px;padding:28px;margin:40px 0;}
+  .vocab-recap-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--espresso);margin-bottom:4px;}
+  .vocab-recap-sub{font-size:12px;color:var(--stone);font-weight:300;margin-bottom:20px;}
+  .vocab-list{display:flex;flex-direction:column;gap:10px;}
+  .vocab-row{display:flex;gap:12px;align-items:flex-start;padding:10px 14px;background:var(--white);border-radius:10px;border:1px solid rgba(124,92,69,0.15);}
+  .vocab-row-word{font-weight:600;color:var(--purple);min-width:160px;font-size:0.9rem;flex-shrink:0;}
+  .vocab-row-def{font-size:0.85rem;color:var(--dark);font-weight:300;line-height:1.5;}
+
+  .exercises-cta{background:var(--espresso);border-radius:20px;padding:32px 28px;text-align:center;margin:40px 0;}
+  .exercises-cta h3{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--cream);margin-bottom:8px;}
+  .exercises-cta p{font-size:0.88rem;color:rgba(245,239,230,0.6);font-weight:300;margin-bottom:20px;line-height:1.6;}
+  .exercises-cta a{display:inline-block;background:var(--purple);color:#fff;font-family:'Jost',sans-serif;font-weight:500;font-size:0.95rem;padding:13px 32px;border-radius:50px;text-decoration:none;letter-spacing:0.04em;transition:opacity 0.2s;}
+  .exercises-cta a:hover{opacity:0.85;}
+
+  footer{text-align:center;padding:24px;font-size:12px;color:var(--stone);font-weight:300;border-top:1px solid rgba(124,92,69,0.15);}
+  footer strong{color:var(--mocha);}
+
+  @media(max-width:600px){
+    .hero{padding:40px 20px 0;}
+    .content-wrap{padding:32px 20px 48px;}
+    .menu-sections{grid-template-columns:1fr;}
+    .vocab-row{flex-direction:column;gap:4px;}
+    .vocab-row-word{min-width:auto;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">31 días de inglés real</a>
+  <span class="nav-tag">Day 5 · Wellness</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Day 5 · Wellness · Level B1</div>
+  <h1 class="hero-title">What's On Your<br><em>Dopamine Menu?</em></h1>
+  <div class="hero-meta">31 días de inglés real · March 2026 · 4 min read</div>
+  <div class="hero-img-placeholder">
+    <div class="ph-icon">🧠</div>
+    <div class="ph-text">The Dopamine Menu — the wellness trend everyone is talking about</div>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <div class="vocab-legend">
+    <span class="vocab-legend-label">💡 Tip</span>
+    <span class="vocab-legend-text">Words in <span class="hl-sample">purple</span> are today's vocabulary. Hover or tap them to see the meaning!</span>
+  </div>
+
+  <div class="article">
+
+    <p>
+      Imagine you are having one of those days. You feel flat,
+      <span class="kw">unmotivated<span class="tt">Lacking the energy or desire to do things.</span></span>,
+      and you can not figure out why. You are not sick. Nothing terrible happened.
+      You are just… stuck. So you pick up your phone and start scrolling.
+      An hour later, you feel worse. Sound familiar?
+    </p>
+
+    <p>
+      This is the problem that the
+      <span class="kw">dopamine menu<span class="tt">A personalised list of activities designed to boost your mood in a healthy way.</span></span>
+      is trying to solve. The concept is simple: instead of reaching for your phone
+      the moment you feel bored or low, you consult a personal list of activities
+      — organised like a restaurant menu — that are designed to make you feel genuinely better.
+      Not for two minutes. Actually better.
+    </p>
+
+    <div class="section-divider"><span>✦</span></div>
+
+    <p>
+      The idea was first created in 2020 by Jessica McCabe, a YouTube creator with ADHD,
+      as a tool to help people with attention difficulties manage their energy and mood.
+      But it went
+      <span class="kw">viral<span class="tt">Spreading very quickly on social media, seen by millions of people.</span></span>
+      on TikTok in the years that followed, and by 2025 it had become one of the most
+      discussed wellness concepts online. The reason? It turns out the problem it was
+      designed to solve — struggling to feel good without a screen — is not just an ADHD problem.
+      It is a very human one.
+    </p>
+
+    <p>
+      The
+      <span class="kw">neurotransmitter<span class="tt">A chemical in the brain that sends signals between nerve cells. Dopamine is one of them.</span></span>
+      dopamine is often called the brain's "feel-good chemical." But that is a
+      <span class="kw">misconception<span class="tt">A wrong belief or idea about something.</span></span>.
+      Dopamine is not actually released when you feel pleasure — it is released in
+      <span class="kw">anticipation<span class="tt">The feeling of excitement or expectation about something that is going to happen.</span></span>
+      of it. It is the chemical of wanting, not having. This is why scrolling social media
+      is so addictive: every refresh is a tiny hit of dopamine, the brain asking
+      <em>"what will I find next?"</em> — and never quite getting satisfied.
+    </p>
+
+    <div class="pull-quote">
+      <p>"Social media apps can cause the release of large amounts of dopamine — just like heroin, meth, or alcohol. They amplify the feel-good properties that attract humans to each other."</p>
+      <cite>— Dr. Anna Lembke, author of Dopamine Nation, Stanford University</cite>
+    </div>
+
+    <div class="section-divider"><span>✦</span></div>
+
+    <p>
+      The dopamine menu works by giving you a
+      <span class="kw">curated<span class="tt">Carefully chosen and organised for a specific purpose.</span></span>
+      set of alternatives — activities that produce real, sustainable dopamine rather than
+      quick spikes followed by crashes. Like a restaurant menu, it is divided into sections
+      based on how much time and energy each activity requires.
+    </p>
+
+    <div class="menu-card">
+      <div class="menu-card-title">A dopamine menu — example</div>
+      <div class="menu-card-sub">Personalise yours with what actually brings you joy</div>
+      <div class="menu-sections">
+        <div class="menu-section">
+          <div class="menu-section-title">🥗 Starters — quick, under 5 mins</div>
+          <ul class="menu-section-items">
+            <li>Make a cup of coffee or tea</li>
+            <li>Look at a photo that makes you smile</li>
+            <li>Step outside for fresh air</li>
+            <li>Stretch for 2 minutes</li>
+          </ul>
+        </div>
+        <div class="menu-section">
+          <div class="menu-section-title">🍽️ Mains — need 20–60 mins</div>
+          <ul class="menu-section-items">
+            <li>Go for a walk without your phone</li>
+            <li>Cook something you enjoy</li>
+            <li>Call a friend or family member</li>
+            <li>Read a chapter of a book</li>
+          </ul>
+        </div>
+        <div class="menu-section">
+          <div class="menu-section-title">🥡 Sides — pair with other things</div>
+          <ul class="menu-section-items">
+            <li>Listen to a playlist you love</li>
+            <li>Light a candle while you work</li>
+            <li>Open a window, let in natural light</li>
+            <li>Doodle or colour while watching TV</li>
+          </ul>
+        </div>
+        <div class="menu-section">
+          <div class="menu-section-title">🍰 Specials — once in a while</div>
+          <ul class="menu-section-items">
+            <li>A day trip somewhere new</li>
+            <li>A concert or live event</li>
+            <li>A long dinner with people you love</li>
+            <li>Start a new creative project</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      The key
+      <span class="kw">distinction<span class="tt">An important difference between two things.</span></span>
+      between a dopamine menu and a simple to-do list is this: the activities are not
+      things you <em>have</em> to do. They are things you
+      <span class="kw">genuinely<span class="tt">Truly and sincerely — not just pretending.</span></span>
+      enjoy. The whole point is to design something that feels like a treat, not a chore.
+      You create it on a good day, when you have the energy to think clearly —
+      so that on a hard day, all you have to do is choose from the menu.
+    </p>
+
+    <p>
+      Critics point out that the concept is not exactly revolutionary — humans have always
+      known that going for a walk or calling a friend feels better than staring at a screen.
+      But supporters argue that the menu format does something useful: it removes the
+      <span class="kw">cognitive load<span class="tt">The mental effort needed to make decisions and think.</span></span>
+      of deciding what to do when your brain is already depleted. You do not have to think.
+      You just pick a dish.
+    </p>
+
+    <div class="pull-quote">
+      <p>"The best time to make your dopamine menu is when you don't feel like you need it — you'll be creative, you'll have energy, and you'll actually enjoy making it."</p>
+      <cite>— Quoted in The Good Trade, 2026</cite>
+    </div>
+
+    <p>
+      Whether or not you believe in the science behind it, the dopamine menu raises
+      a question worth sitting with: when was the last time you felt genuinely good —
+      not just distracted? And what, specifically, caused that feeling?
+      The answer, it turns out, might be more interesting than anything on your feed.
+    </p>
+
+  </div>
+
+  <div class="section-divider"><span>✦</span></div>
+
+  <div class="vocab-recap">
+    <div class="vocab-recap-title">Today's vocabulary</div>
+    <div class="vocab-recap-sub">8 key words from this article — go back and find them all!</div>
+    <div class="vocab-list">
+      <div class="vocab-row"><div class="vocab-row-word">Unmotivated</div><div class="vocab-row-def">Lacking the energy or desire to do things.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Dopamine menu</div><div class="vocab-row-def">A personalised list of activities designed to boost your mood in a healthy, sustainable way.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Viral</div><div class="vocab-row-def">Spreading very quickly on social media, seen by millions of people.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Neurotransmitter</div><div class="vocab-row-def">A chemical in the brain that sends signals between nerve cells.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Misconception</div><div class="vocab-row-def">A wrong belief or idea about something.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Anticipation</div><div class="vocab-row-def">The feeling of excitement or expectation about something that is going to happen.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Curated</div><div class="vocab-row-def">Carefully chosen and organised for a specific purpose.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Cognitive load</div><div class="vocab-row-def">The mental effort needed to make decisions and think.</div></div>
+    </div>
+  </div>
+
+  <div class="exercises-cta">
+    <h3>Ready to play?</h3>
+    <p>Test your vocabulary and comprehension with today's interactive exercises.</p>
+    <a href="../../exercises/day5_exercises.html">Go to exercises →</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 <strong>31 días de inglés real</strong> · con Camila Cabrera · Level B1</p>
+</footer>
+
+<script>
+  document.querySelectorAll('.kw').forEach(function(el){
+    el.addEventListener('click',function(e){
+      e.stopPropagation();
+      var isActive=this.classList.contains('active');
+      document.querySelectorAll('.kw').forEach(function(k){k.classList.remove('active');});
+      if(!isActive)this.classList.add('active');
+    });
+  });
+  document.addEventListener('click',function(){
+    document.querySelectorAll('.kw').forEach(function(k){k.classList.remove('active');});
+  });
+</script>
+</body>
+</html>
