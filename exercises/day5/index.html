@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Day 5 · Interactive Exercises</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --cream:#F5EFE6;--sand:#E8DDD0;--linen:#F0E9DF;
+    --mocha:#7C5C45;--espresso:#4A2E1A;--caramel:#B07D56;
+    --stone:#9E8C7E;--dark:#2C1A0E;--white:#FDFAF6;
+    --purple:#534AB7;--purple-light:#EEEDFE;--purple-border:#AFA9EC;
+    --green:#1A5C2A;--green-bg:#D4EDDA;--green-border:#9DC3A8;
+    --red:#721C24;--red-bg:#F8D7DA;--red-border:#E8A5A9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--dark);}
+  .topbar{background:var(--espresso);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .topbar-brand{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--caramel);}
+  .topbar-label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(245,239,230,0.5);}
+  .tabs{display:flex;background:var(--sand);border-bottom:2px solid rgba(124,92,69,0.2);}
+  .tab{flex:1;padding:16px;text-align:center;cursor:pointer;font-size:13px;font-weight:500;letter-spacing:0.04em;color:var(--stone);border:none;background:none;border-bottom:3px solid transparent;transition:all 0.2s;}
+  .tab.active{color:var(--espresso);border-bottom-color:var(--purple);background:var(--cream);}
+  .tab:hover:not(.active){color:var(--mocha);background:rgba(83,74,183,0.04);}
+  .panel{display:none;padding:36px 32px;max-width:760px;margin:0 auto;}
+  .panel.active{display:block;}
+  .section-eyebrow{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--purple);margin-bottom:6px;}
+  .section-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--espresso);margin-bottom:6px;}
+  .section-sub{font-size:0.88rem;color:var(--stone);font-weight:300;line-height:1.6;margin-bottom:24px;}
+  .instruction-box{background:var(--purple-light);border:1px solid rgba(83,74,183,0.25);border-radius:12px;padding:14px 18px;margin-bottom:24px;font-size:0.85rem;color:var(--purple);line-height:1.6;}
+
+  /* WORD BANK */
+  .word-bank{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;padding:16px;background:var(--linen);border-radius:12px;border:1px solid rgba(83,74,183,0.15);}
+  .word-bank-label{width:100%;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--purple);margin-bottom:4px;}
+  .word-chip{background:var(--purple);color:var(--cream);border-radius:20px;padding:5px 14px;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.15s;user-select:none;}
+  .word-chip:hover{opacity:0.8;transform:scale(1.04);}
+  .word-chip.used{background:var(--sand);color:var(--stone);cursor:default;transform:none;}
+
+  /* FILL IN BLANKS */
+  .sentence-block{background:var(--white);border:1px solid rgba(124,92,69,0.15);border-radius:14px;padding:18px 20px;margin-bottom:12px;}
+  .sentence-num{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--purple);margin-bottom:8px;}
+  .sentence-text{font-size:1rem;line-height:1.8;color:var(--dark);}
+  .blank{display:inline-block;min-width:160px;border-bottom:2px solid var(--purple-border);padding:2px 8px;cursor:pointer;color:var(--purple);font-weight:600;text-align:center;transition:all 0.15s;border-radius:4px 4px 0 0;}
+  .blank:hover{background:var(--purple-light);}
+  .blank.filled{background:var(--purple-light);border-bottom-color:var(--purple);}
+  .blank.correct{background:var(--green-bg);border-bottom-color:var(--green-border);color:var(--green);}
+  .blank.wrong{background:var(--red-bg);border-bottom-color:var(--red-border);color:var(--red);}
+  .sentence-feedback{font-size:12px;margin-top:8px;display:none;padding:6px 10px;border-radius:6px;}
+  .sentence-feedback.show{display:block;}
+  .sentence-feedback.ok{background:var(--green-bg);color:var(--green);}
+  .sentence-feedback.no{background:var(--red-bg);color:var(--red);}
+
+  .check-all-btn{background:var(--espresso);color:var(--cream);border:none;border-radius:50px;font-family:'Jost',sans-serif;font-size:0.88rem;font-weight:500;padding:11px 28px;cursor:pointer;letter-spacing:0.04em;transition:background 0.2s;margin-top:8px;}
+  .check-all-btn:hover{background:var(--mocha);}
+
+  /* MCQ */
+  .question-block{background:var(--white);border:1px solid rgba(124,92,69,0.18);border-radius:16px;padding:24px;margin-bottom:16px;}
+  .q-number{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--purple);margin-bottom:8px;}
+  .q-text{font-size:1rem;font-weight:500;color:var(--espresso);line-height:1.5;margin-bottom:16px;}
+  .options{display:flex;flex-direction:column;gap:8px;}
+  .option{padding:12px 16px;border-radius:10px;border:1px solid rgba(124,92,69,0.2);background:var(--white);cursor:pointer;font-size:0.88rem;color:var(--dark);transition:all 0.15s;text-align:left;}
+  .option:hover:not(:disabled){border-color:var(--purple);background:var(--purple-light);color:var(--purple);}
+  .option.correct{background:var(--green-bg);border-color:var(--green-border);color:var(--green);font-weight:500;}
+  .option.wrong{background:var(--red-bg);border-color:var(--red-border);color:var(--red);}
+  .option.reveal{background:var(--green-bg);border-color:var(--green-border);color:var(--green);}
+  .option:disabled{cursor:default;}
+  .feedback{margin-top:10px;padding:10px 14px;border-radius:8px;font-size:0.83rem;line-height:1.5;display:none;}
+  .feedback.show{display:block;}
+  .feedback.ok{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+  .feedback.no{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border);}
+
+  .result-screen{text-align:center;padding:40px 20px;display:none;}
+  .result-screen.show{display:block;}
+  .result-emoji{font-size:60px;margin-bottom:16px;}
+  .result-score{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:var(--espresso);margin-bottom:6px;}
+  .result-msg{font-size:1rem;color:var(--stone);font-weight:300;margin-bottom:24px;line-height:1.6;}
+  .restart-btn{background:var(--espresso);color:var(--cream);border:none;border-radius:50px;font-family:'Jost',sans-serif;font-size:0.9rem;font-weight:500;padding:12px 32px;cursor:pointer;letter-spacing:0.04em;transition:background 0.2s;}
+  .restart-btn:hover{background:var(--mocha);}
+
+  @media(max-width:500px){.panel{padding:24px 16px;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">31 días de inglés real</div>
+  <div class="topbar-label">Day 5 · Wellness · Interactive Exercises</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('fill',this)">📖 Fill in the Blanks</button>
+  <button class="tab" onclick="switchTab('mcq',this)">🎯 Comprehension Check</button>
+</div>
+
+<!-- FILL IN THE BLANKS -->
+<div class="panel active" id="panel-fill">
+  <div class="section-eyebrow">Exercise 1 of 2</div>
+  <div class="section-title">Fill in the blanks</div>
+  <div class="section-sub">Click a word from the bank below, then click the blank where it belongs.</div>
+  <div class="instruction-box">🧠 There are 6 sentences and 6 words. Each word is used only once!</div>
+
+  <div class="word-bank">
+    <div class="word-bank-label">Word bank</div>
+    <div class="word-chip" data-word="dopamine menu" onclick="selectWord(this)">dopamine menu</div>
+    <div class="word-chip" data-word="misconception" onclick="selectWord(this)">misconception</div>
+    <div class="word-chip" data-word="viral" onclick="selectWord(this)">viral</div>
+    <div class="word-chip" data-word="anticipation" onclick="selectWord(this)">anticipation</div>
+    <div class="word-chip" data-word="curated" onclick="selectWord(this)">curated</div>
+    <div class="word-chip" data-word="cognitive load" onclick="selectWord(this)">cognitive load</div>
+  </div>
+
+  <div id="sentences-container"></div>
+  <button class="check-all-btn" onclick="checkAll()">Check my answers ✓</button>
+
+  <div class="result-screen" id="fill-result">
+    <div class="result-emoji" id="fill-emoji">🎉</div>
+    <div class="result-score" id="fill-score">6 / 6</div>
+    <div class="result-msg" id="fill-msg"></div>
+    <button class="restart-btn" onclick="initFill()">Try again</button>
+  </div>
+</div>
+
+<!-- MCQ -->
+<div class="panel" id="panel-mcq">
+  <div class="section-eyebrow">Exercise 2 of 2</div>
+  <div class="section-title">Comprehension Check</div>
+  <div class="section-sub">Choose the best answer based on what you read in the article.</div>
+  <div id="mcq-questions"></div>
+  <div class="result-screen" id="mcq-result">
+    <div class="result-emoji" id="mcq-emoji">🌟</div>
+    <div class="result-score" id="mcq-score">4 / 4</div>
+    <div class="result-msg" id="mcq-msg"></div>
+    <button class="restart-btn" onclick="initMCQ()">Try again</button>
+  </div>
+</div>
+
+<script>
+function switchTab(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── FILL IN THE BLANKS ────────────────────────────────────────────────────
+var sentences=[
+  {before:'It went',blank:'viral',after:'on TikTok and was seen by millions of people around the world.'},
+  {before:'The idea that dopamine is the "feel-good" chemical is actually a',blank:'misconception',after:'— it is the chemical of wanting, not having.'},
+  {before:'She created a',blank:'dopamine menu',after:'— a personal list of activities that genuinely make her feel better.'},
+  {before:'The feeling of',blank:'anticipation',after:'is what drives us to keep scrolling — always hoping the next post will be interesting.'},
+  {before:'The menu is',blank:'curated',after:'by you, filled with activities that you personally enjoy and find meaningful.'},
+  {before:'On difficult days, having a ready-made list reduces',blank:'cognitive load',after:'and makes it easier to choose something good.'},
+];
+
+var selectedWordEl=null,fillAnswers={};
+
+function initFill(){
+  selectedWordEl=null;fillAnswers={};
+  document.getElementById('fill-result').classList.remove('show');
+  document.querySelectorAll('.word-chip').forEach(function(c){c.classList.remove('used');});
+  var container=document.getElementById('sentences-container');
+  container.style.display='';container.innerHTML='';
+  sentences.forEach(function(s,i){
+    fillAnswers[i]='';
+    var block=document.createElement('div');block.className='sentence-block';
+    block.innerHTML=
+      '<div class="sentence-num">Sentence '+(i+1)+'</div>'+
+      '<div class="sentence-text">'+
+        s.before+' '+
+        '<span class="blank" id="blank-'+i+'" onclick="fillBlank('+i+')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>'+
+        ' '+s.after+
+      '</div>'+
+      '<div class="sentence-feedback" id="sfb-'+i+'"></div>';
+    container.appendChild(block);
+  });
+}
+
+function selectWord(el){
+  if(el.classList.contains('used'))return;
+  document.querySelectorAll('.word-chip').forEach(function(c){c.style.outline='none';});
+  selectedWordEl=el;
+  el.style.outline='2px solid var(--purple)';
+}
+
+function fillBlank(idx){
+  if(!selectedWordEl)return;
+  var blank=document.getElementById('blank-'+idx);
+  var word=selectedWordEl.dataset.word;
+  if(fillAnswers[idx]){
+    document.querySelectorAll('.word-chip').forEach(function(c){
+      if(c.dataset.word===fillAnswers[idx])c.classList.remove('used');
+    });
+  }
+  fillAnswers[idx]=word;
+  blank.textContent=word;
+  blank.classList.add('filled');blank.classList.remove('correct','wrong');
+  selectedWordEl.classList.add('used');
+  selectedWordEl.style.outline='none';
+  selectedWordEl=null;
+}
+
+function checkAll(){
+  var correct=0;
+  sentences.forEach(function(s,i){
+    var blank=document.getElementById('blank-'+i);
+    var fb=document.getElementById('sfb-'+i);
+    if(fillAnswers[i]===s.blank){
+      blank.classList.remove('filled','wrong');blank.classList.add('correct');
+      fb.textContent='✓ Correct!';
+      fb.className='sentence-feedback ok show';
+      correct++;
+    } else {
+      blank.classList.remove('filled','correct');blank.classList.add('wrong');
+      fb.textContent='✗ The correct answer is: '+s.blank;
+      fb.className='sentence-feedback no show';
+    }
+  });
+  setTimeout(function(){
+    document.getElementById('sentences-container').style.display='none';
+    document.querySelector('.check-all-btn').style.display='none';
+    document.querySelector('.word-bank').style.display='none';
+    document.getElementById('fill-result').classList.add('show');
+    var e=correct===6?'🎉':correct>=4?'🌟':'💪';
+    document.getElementById('fill-emoji').textContent=e;
+    document.getElementById('fill-score').textContent=correct+' / 6';
+    var m={6:'Perfect! All 6 correct. You really understood the vocabulary!',
+           5:'Great job! One small slip — try again for a perfect score.',
+           4:'Good effort! Review the article and try again.',
+           3:'Keep going! Read the article once more and try again.'};
+    document.getElementById('fill-msg').textContent=m[correct]||'Practice makes perfect!';
+  },1200);
+}
+
+// ── MCQ ────────────────────────────────────────────────────────────────────
+var mcqData=[
+  {q:'Who originally created the concept of the dopamine menu?',
+   opts:['A neuroscientist at Stanford University','A YouTube creator with ADHD named Jessica McCabe','A wellness coach on TikTok'],
+   correct:1,
+   ok:'Correct! ✓ Jessica McCabe created the dopamine menu in 2020 on her YouTube channel "How to ADHD" as a tool for people with attention difficulties.',
+   no:'Not quite. The correct answer is B — Jessica McCabe, a YouTube creator with ADHD, invented the concept in 2020.'},
+  {q:'According to the article, what is a common misconception about dopamine?',
+   opts:['That it is a chemical in the brain','That it is released when you feel pleasure — when actually it is released in anticipation of it','That it causes addiction'],
+   correct:1,
+   ok:'Correct! ✓ The article explains that dopamine is not the "pleasure" chemical — it is the chemical of wanting and anticipation, released before pleasure, not during it.',
+   no:'Not quite. The correct answer is B — dopamine is released in anticipation of pleasure, not when you actually experience it.'},
+  {q:'What is the main advantage of a dopamine menu over a simple to-do list?',
+   opts:['It includes healthier foods for the brain','It reduces cognitive load — on hard days, you just pick from the list instead of thinking','It was designed by doctors and scientists'],
+   correct:1,
+   ok:'Correct! ✓ The key advantage is reducing cognitive load. You create the menu on a good day so that on a bad day, you just choose from it without needing to think.',
+   no:'Not quite. The correct answer is B — the menu removes the mental effort of deciding what to do when your brain is already tired.'},
+  {q:'When does the article recommend creating your dopamine menu?',
+   opts:['On a day when you feel low and need it most','On a good day, when you have energy and can think creatively','At night before you go to sleep'],
+   correct:1,
+   ok:'Correct! ✓ The article specifically says: create it on a good day, when you have the energy — so it is ready and waiting for harder days.',
+   no:'Not quite. The correct answer is B — you create it when you feel good, so it is ready when you need it.'},
+];
+
+var mcqAnswered=[],mcqScore=0;
+
+function initMCQ(){
+  mcqAnswered=[];mcqScore=0;
+  document.getElementById('mcq-result').classList.remove('show');
+  var container=document.getElementById('mcq-questions');
+  container.style.display='';container.innerHTML='';
+  mcqData.forEach(function(q,idx){
+    mcqAnswered[idx]=false;
+    var block=document.createElement('div');block.className='question-block';block.id='qb-'+idx;
+    var opts=q.opts.map(function(o,i){
+      return '<button class="option" onclick="checkMCQ('+idx+','+i+')" id="q'+idx+'o'+i+'">'+String.fromCharCode(65+i)+') '+o+'</button>';
+    }).join('');
+    block.innerHTML='<div class="q-number">Question '+(idx+1)+' of '+mcqData.length+'</div>'+
+      '<div class="q-text">'+q.q+'</div><div class="options">'+opts+'</div>'+
+      '<div class="feedback ok" id="fb-ok-'+idx+'">'+q.ok+'</div>'+
+      '<div class="feedback no" id="fb-no-'+idx+'">'+q.no+'</div>';
+    container.appendChild(block);
+  });
+}
+
+function checkMCQ(qIdx,optIdx){
+  if(mcqAnswered[qIdx])return;
+  mcqAnswered[qIdx]=true;
+  var q=mcqData[qIdx];
+  document.querySelectorAll('#qb-'+qIdx+' .option').forEach(function(o){o.disabled=true;});
+  if(optIdx===q.correct){
+    document.getElementById('q'+qIdx+'o'+optIdx).classList.add('correct');
+    document.getElementById('fb-ok-'+qIdx).classList.add('show');
+    mcqScore++;
+  } else {
+    document.getElementById('q'+qIdx+'o'+optIdx).classList.add('wrong');
+    document.getElementById('fb-no-'+qIdx).classList.add('show');
+    document.getElementById('q'+qIdx+'o'+q.correct).classList.add('reveal');
+  }
+  if(mcqAnswered.every(Boolean))setTimeout(showMCQResult,800);
+}
+
+function showMCQResult(){
+  document.getElementById('mcq-questions').style.display='none';
+  document.getElementById('mcq-result').classList.add('show');
+  var total=mcqData.length;
+  var e=mcqScore===total?'🏆':mcqScore>=total-1?'🌟':'💪';
+  document.getElementById('mcq-emoji').textContent=e;
+  document.getElementById('mcq-score').textContent=mcqScore+' / '+total;
+  var m={};
+  m[total]='Perfect score! You read the article carefully. ☕';
+  m[total-1]='Almost perfect! One small miss.';
+  m[total-2]='Good effort! Re-read the article and try once more.';
+  document.getElementById('mcq-msg').textContent=m[mcqScore]||'Keep going!';
+}
+
+initFill();
+initMCQ();
+</script>
+</body>
+</html>
