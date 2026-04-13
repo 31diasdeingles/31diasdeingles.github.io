@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Day 6 · The Office Is Calling | 31 días de inglés real</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --cream:#F5EFE6;--sand:#E8DDD0;--linen:#F0E9DF;
+    --mocha:#7C5C45;--espresso:#4A2E1A;--caramel:#B07D56;
+    --stone:#9E8C7E;--dark:#2C1A0E;--white:#FDFAF6;
+    --coral:#993C1D;--coral-light:#FAECE7;--coral-border:#F0997B;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--dark);}
+  nav{background:var(--espresso);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .nav-brand{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--caramel);text-decoration:none;}
+  .nav-tag{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(245,239,230,0.45);}
+  .hero{background:var(--espresso);padding:60px 28px 0;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(153,60,29,0.2) 0%,transparent 65%);}
+  .hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--coral-border);margin-bottom:12px;}
+  .hero-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,3.4rem);font-weight:900;color:var(--cream);line-height:1.1;margin-bottom:14px;}
+  .hero-title em{color:var(--coral-border);font-style:italic;}
+  .hero-meta{font-size:12px;color:rgba(245,239,230,0.45);font-weight:300;letter-spacing:0.05em;margin-bottom:36px;}
+  .hero-img-placeholder{width:100%;max-width:680px;margin:0 auto;height:340px;border-radius:16px 16px 0 0;background:linear-gradient(135deg,rgba(153,60,29,0.35),rgba(74,46,26,0.55));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;}
+  .ph-icon{font-size:64px;opacity:0.55;}
+  .ph-text{font-family:'Playfair Display',serif;font-size:1.15rem;font-style:italic;color:rgba(245,239,230,0.4);}
+  .vocab-legend{background:var(--coral-light);border:1px solid var(--coral-border);border-radius:12px;padding:14px 20px;margin-bottom:28px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .vocab-legend-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--coral);}
+  .vocab-legend-text{font-size:13px;color:var(--mocha);font-weight:300;}
+  .hl-sample{background:rgba(153,60,29,0.1);color:var(--coral);border-radius:4px;padding:2px 7px;font-weight:600;font-size:13px;border-bottom:2px solid var(--coral-border);}
+  .content-wrap{max-width:720px;margin:0 auto;padding:48px 28px 64px;}
+  .article p{font-size:1.05rem;line-height:1.85;color:var(--dark);margin-bottom:1.4rem;font-weight:300;}
+  .article p:first-child::first-letter{font-family:'Playfair Display',serif;font-size:4rem;font-weight:900;color:var(--coral);float:left;line-height:0.8;margin:6px 10px 0 0;}
+  .kw{background:rgba(153,60,29,0.09);color:var(--coral);border-radius:4px;padding:1px 6px;font-weight:600;border-bottom:2px solid rgba(153,60,29,0.32);cursor:pointer;transition:all 0.15s;position:relative;display:inline-block;}
+  .kw:hover{background:rgba(153,60,29,0.17);}
+  .kw .tt{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--espresso);color:var(--cream);font-size:12px;font-weight:400;line-height:1.45;padding:8px 12px;border-radius:8px;white-space:normal;z-index:50;pointer-events:none;font-family:'Jost',sans-serif;max-width:220px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.2);min-width:160px;}
+  .kw .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--espresso);}
+  .kw:hover .tt,.kw.active .tt{display:block;}
+  .pull-quote{border-left:4px solid var(--coral);margin:28px 0;padding:16px 24px;background:var(--coral-light);border-radius:0 12px 12px 0;}
+  .pull-quote p{font-family:'Playfair Display',serif;font-size:1.15rem;font-style:italic;color:var(--espresso);line-height:1.5;margin:0!important;}
+  .pull-quote p::first-letter{all:unset;}
+  .pull-quote cite{display:block;margin-top:8px;font-size:12px;color:var(--coral);font-weight:600;letter-spacing:0.05em;font-style:normal;font-family:'Jost',sans-serif;}
+  .sides-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0;}
+  .side-card{border-radius:14px;padding:20px;}
+  .side-card.pro{background:var(--coral-light);border:1px solid var(--coral-border);}
+  .side-card.con{background:var(--linen);border:1px solid rgba(124,92,69,0.2);}
+  .side-title{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;}
+  .side-card.pro .side-title{color:var(--coral);}
+  .side-card.con .side-title{color:var(--mocha);}
+  .side-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
+  .side-list li{font-size:0.85rem;color:var(--dark);font-weight:300;line-height:1.5;padding-left:14px;position:relative;}
+  .side-card.pro .side-list li::before{content:'→';position:absolute;left:0;color:var(--coral);font-size:12px;}
+  .side-card.con .side-list li::before{content:'→';position:absolute;left:0;color:var(--mocha);font-size:12px;}
+  .stat-strip{background:var(--espresso);border-radius:16px;padding:20px 24px;margin:32px 0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center;}
+  .stat-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--coral-border);line-height:1;}
+  .stat-lbl{font-size:11px;color:rgba(245,239,230,0.6);font-weight:300;margin-top:5px;line-height:1.4;}
+  .section-divider{display:flex;align-items:center;gap:16px;margin:36px 0;}
+  .section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:rgba(153,60,29,0.2);}
+  .section-divider span{font-size:18px;color:var(--coral);opacity:0.5;}
+  .vocab-recap{background:var(--linen);border:1px solid rgba(153,60,29,0.15);border-radius:16px;padding:28px;margin:40px 0;}
+  .vocab-recap-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--espresso);margin-bottom:4px;}
+  .vocab-recap-sub{font-size:12px;color:var(--stone);font-weight:300;margin-bottom:20px;}
+  .vocab-list{display:flex;flex-direction:column;gap:10px;}
+  .vocab-row{display:flex;gap:12px;align-items:flex-start;padding:10px 14px;background:var(--white);border-radius:10px;border:1px solid rgba(124,92,69,0.15);}
+  .vocab-row-word{font-weight:600;color:var(--coral);min-width:160px;font-size:0.9rem;flex-shrink:0;}
+  .vocab-row-def{font-size:0.85rem;color:var(--dark);font-weight:300;line-height:1.5;}
+  .exercises-cta{background:var(--espresso);border-radius:20px;padding:32px 28px;text-align:center;margin:40px 0;}
+  .exercises-cta h3{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--cream);margin-bottom:8px;}
+  .exercises-cta p{font-size:0.88rem;color:rgba(245,239,230,0.6);font-weight:300;margin-bottom:20px;line-height:1.6;}
+  .exercises-cta a{display:inline-block;background:var(--coral);color:#fff;font-family:'Jost',sans-serif;font-weight:500;font-size:0.95rem;padding:13px 32px;border-radius:50px;text-decoration:none;letter-spacing:0.04em;transition:opacity 0.2s;}
+  .exercises-cta a:hover{opacity:0.85;}
+  footer{text-align:center;padding:24px;font-size:12px;color:var(--stone);font-weight:300;border-top:1px solid rgba(124,92,69,0.15);}
+  footer strong{color:var(--mocha);}
+  @media(max-width:600px){
+    .sides-grid{grid-template-columns:1fr;}
+    .stat-strip{grid-template-columns:1fr 1fr;gap:12px;}
+    .hero{padding:40px 20px 0;}
+    .content-wrap{padding:32px 20px 48px;}
+    .vocab-row{flex-direction:column;gap:4px;}
+    .vocab-row-word{min-width:auto;}
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-brand">31 días de inglés real</a>
+  <span class="nav-tag">Day 6 · Reflection</span>
+</nav>
+<div class="hero">
+  <div class="hero-eyebrow">Day 6 · Reflection · Level B1</div>
+  <h1 class="hero-title">The Office Is Calling —<br><em>But Does Anyone Want to Answer?</em></h1>
+  <div class="hero-meta">31 días de inglés real · March 2026 · 5 min read</div>
+  <div class="hero-img-placeholder">
+    <div class="ph-icon">🏢</div>
+    <div class="ph-text">Remote work vs. return to office · 2026</div>
+  </div>
+</div>
+<div class="content-wrap">
+  <div class="vocab-legend">
+    <span class="vocab-legend-label">💡 Tip</span>
+    <span class="vocab-legend-text">Words in <span class="hl-sample">coral</span> are today's vocabulary. Hover or tap to see the meaning!</span>
+  </div>
+  <div class="article">
+
+    <p>
+      It is 8:47 on a Monday morning. Somewhere in Buenos Aires, a professional
+      is sitting at their kitchen table in pyjamas, laptop open, coffee in hand —
+      already in their second meeting of the day. Somewhere in New York, their colleague
+      is stuck in
+      <span class="kw">rush hour<span class="tt">The busy time of day when many people travel to or from work, causing traffic.</span></span>
+      traffic, forty minutes from the office, running late. Who has it better?
+      That question — simple on the surface — sits at the heart of one of the biggest
+      workplace
+      <span class="kw">debates<span class="tt">Discussions where people express different or opposing opinions about a topic.</span></span>
+      of our time.
+    </p>
+
+    <p>
+      Between 2020 and 2023, remote work went from being a rare privilege to the new
+      normal almost overnight. The COVID-19 pandemic forced companies to adapt, and
+      millions of people discovered something surprising: work, for many jobs, did not
+      require an office at all. Productivity stayed up. Commutes disappeared.
+      People reclaimed hours of their day.
+    </p>
+
+    <p>
+      But since 2023, the
+      <span class="kw">pendulum<span class="tt">A weight that swings back and forth — used figuratively to mean something that shifts between two extremes.</span></span>
+      has started to swing back. Major companies — Amazon, JPMorgan, Instagram, TikTok,
+      Microsoft — have issued
+      <span class="kw">mandates<span class="tt">Official orders or instructions that must be followed.</span></span>
+      requiring employees to return to the office, some for five full days a week.
+      The message from the top was clear: the remote work experiment is over.
+      Employees disagreed.
+    </p>
+
+    <div class="pull-quote">
+      <p>"85% of workers say remote work now matters more than salary when evaluating a job offer."</p>
+      <cite>— FlexJobs Future of Remote Work Report, 2026</cite>
+    </div>
+
+    <div class="stat-strip">
+      <div>
+        <div class="stat-num">75%</div>
+        <div class="stat-lbl">of companies now use a hybrid model</div>
+      </div>
+      <div>
+        <div class="stat-num">9%</div>
+        <div class="stat-lbl">of knowledge workers are back 5 days a week</div>
+      </div>
+      <div>
+        <div class="stat-num">85%</div>
+        <div class="stat-lbl">say flexibility matters more than salary</div>
+      </div>
+    </div>
+
+    <div class="section-divider"><span>✦</span></div>
+
+    <p>
+      The data is striking. In 2026, only 9% of
+      <span class="kw">knowledge workers<span class="tt">People whose jobs involve thinking, creating and managing information — not physical labour.</span></span>
+      — those in professional, office-based roles — are back in the office five days
+      a week. The most common arrangement is now
+      <span class="kw">hybrid<span class="tt">A mix of working from home and working in the office.</span></span>:
+      three days in, two days remote. And despite the headlines about
+      <span class="kw">return-to-office mandates<span class="tt">Company policies that require employees to come back to the office after working remotely.</span></span>,
+      remote work is actually <em>more</em> common in 2026 than it was in 2023.
+    </p>
+
+    <p>
+      So why are companies pushing so hard to bring people back? The arguments
+      on both sides are real — and they say something interesting about what we
+      value in work, and in life.
+    </p>
+
+    <div class="sides-grid">
+      <div class="side-card pro">
+        <div class="side-title">The case for the office</div>
+        <ul class="side-list">
+          <li>Spontaneous conversations spark creative ideas</li>
+          <li>Junior employees learn faster near senior colleagues</li>
+          <li>Relationships are easier to build face to face</li>
+          <li>Harder to feel isolated or disconnected</li>
+          <li>Clearer separation between work and home life</li>
+        </ul>
+      </div>
+      <div class="side-card con">
+        <div class="side-title">The case for remote</div>
+        <ul class="side-list">
+          <li>Workers save an average of 55 minutes per day — no commute</li>
+          <li>Remote workers are 10–15% more productive on focused tasks</li>
+          <li>Companies access talent from anywhere in the world</li>
+          <li>Better work-life balance, especially for parents and carers</li>
+          <li>Lower carbon footprint — fewer people travelling daily</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>
+      One of the most
+      <span class="kw">compelling<span class="tt">So convincing or interesting that it is hard to ignore.</span></span>
+      findings of recent research is this: the debate may be generational.
+      Gen Z workers — those born after 1996 — are <em>more</em> likely to want to
+      go to the office than Millennials or Gen X. They crave
+      <span class="kw">mentorship<span class="tt">Guidance and support from a more experienced person to help someone develop their skills.</span></span>,
+      structure and in-person connection. They grew up with screens and,
+      perhaps because of that, they value real-world interaction more than
+      their older colleagues do.
+    </p>
+
+    <div class="pull-quote">
+      <p>"After nearly six years of hybrid work, younger employees are coming to the office craving mentorship, connection and growth."</p>
+      <cite>— Built In, January 2026</cite>
+    </div>
+
+    <div class="section-divider"><span>✦</span></div>
+
+    <p>
+      What seems clear is that the binary question — office or home? — is the
+      wrong one. The real question is more nuanced: <em>what kind of work benefits
+      from being together, and what kind is better done alone?</em> Deep, focused work
+      — writing, coding, analysing — tends to go better at home. Creative
+      <span class="kw">collaboration<span class="tt">Working together with others to achieve something.</span></span>,
+      onboarding, and relationship-building tend to go better in person.
+    </p>
+
+    <p>
+      The future of work is not a location. It is a question about what we
+      actually need to do our best work — and whether anyone is brave enough
+      to ask it honestly.
+    </p>
+
+  </div>
+
+  <div class="section-divider"><span>✦</span></div>
+
+  <div class="vocab-recap">
+    <div class="vocab-recap-title">Today's vocabulary</div>
+    <div class="vocab-recap-sub">8 key words from this article — go back and find them all!</div>
+    <div class="vocab-list">
+      <div class="vocab-row"><div class="vocab-row-word">Rush hour</div><div class="vocab-row-def">The busy time of day when many people travel to or from work.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Debate</div><div class="vocab-row-def">A discussion where people express different or opposing opinions.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Mandate</div><div class="vocab-row-def">An official order or instruction that must be followed.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Knowledge worker</div><div class="vocab-row-def">Someone whose job involves thinking and managing information, not physical labour.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Hybrid</div><div class="vocab-row-def">A mix of working from home and working in the office.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Compelling</div><div class="vocab-row-def">So convincing or interesting that it is hard to ignore.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Mentorship</div><div class="vocab-row-def">Guidance and support from a more experienced person.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Collaboration</div><div class="vocab-row-def">Working together with others to achieve a shared goal.</div></div>
+    </div>
+  </div>
+
+  <div class="exercises-cta">
+    <h3>Ready to exercise?</h3>
+    <p>Test your vocabulary and comprehension with today's interactive activities.</p>
+    <a href="../../exercises/day6_exercises.html">Go to exercises →</a>
+  </div>
+</div>
+<footer><p>© 2026 <strong>31 días de inglés real</strong> · con Camila Cabrera · Level B1</p></footer>
+<script>
+  document.querySelectorAll('.kw').forEach(function(el){
+    el.addEventListener('click',function(e){
+      e.stopPropagation();
+      var isActive=this.classList.contains('active');
+      document.querySelectorAll('.kw').forEach(function(k){k.classList.remove('active');});
+      if(!isActive)this.classList.add('active');
+    });
+  });
+  document.addEventListener('click',function(){
+    document.querySelectorAll('.kw').forEach(function(k){k.classList.remove('active');});
+  });
+</script>
+</body>
+</html>
