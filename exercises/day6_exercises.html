@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Day 6 · Interactive Exercises</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --cream:#F5EFE6;--sand:#E8DDD0;--linen:#F0E9DF;
+    --mocha:#7C5C45;--espresso:#4A2E1A;--caramel:#B07D56;
+    --stone:#9E8C7E;--dark:#2C1A0E;--white:#FDFAF6;
+    --coral:#993C1D;--coral-light:#FAECE7;--coral-border:#F0997B;
+    --green:#1A5C2A;--green-bg:#D4EDDA;--green-border:#9DC3A8;
+    --red:#721C24;--red-bg:#F8D7DA;--red-border:#E8A5A9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--dark);}
+  .topbar{background:var(--espresso);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .topbar-brand{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--caramel);}
+  .topbar-label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(245,239,230,0.5);}
+  .tabs{display:flex;background:var(--sand);border-bottom:2px solid rgba(124,92,69,0.2);}
+  .tab{flex:1;padding:16px;text-align:center;cursor:pointer;font-size:13px;font-weight:500;letter-spacing:0.04em;color:var(--stone);border:none;background:none;border-bottom:3px solid transparent;transition:all 0.2s;}
+  .tab.active{color:var(--espresso);border-bottom-color:var(--coral);background:var(--cream);}
+  .tab:hover:not(.active){color:var(--mocha);background:rgba(153,60,29,0.04);}
+  .panel{display:none;padding:36px 32px;max-width:760px;margin:0 auto;}
+  .panel.active{display:block;}
+  .section-eyebrow{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--coral);margin-bottom:6px;}
+  .section-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--espresso);margin-bottom:6px;}
+  .section-sub{font-size:0.88rem;color:var(--stone);font-weight:300;line-height:1.6;margin-bottom:28px;}
+  .instruction-box{background:var(--coral-light);border:1px solid rgba(153,60,29,0.25);border-radius:12px;padding:14px 18px;margin-bottom:24px;font-size:0.85rem;color:var(--coral);line-height:1.6;}
+
+  /* VOCAB MATCHING */
+  .progress-wrap{margin-bottom:20px;}
+  .progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--stone);margin-bottom:5px;}
+  .progress-track{height:5px;background:var(--sand);border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--coral);border-radius:3px;transition:width 0.4s ease;}
+  .score-badge{display:inline-flex;align-items:center;gap:8px;background:var(--sand);border-radius:20px;padding:6px 16px;font-size:13px;font-weight:500;color:var(--espresso);margin-bottom:20px;}
+  .vocab-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
+  .vocab-word-card{background:var(--espresso);color:var(--cream);border-radius:12px;padding:14px 16px;cursor:pointer;font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;text-align:center;border:2px solid transparent;transition:all 0.18s;user-select:none;}
+  .vocab-word-card:hover{background:var(--mocha);transform:scale(1.02);}
+  .vocab-word-card.selected{border-color:var(--coral);background:var(--mocha);}
+  .vocab-word-card.correct{background:var(--green);border-color:var(--green-border);cursor:default;}
+  .vocab-word-card.wrong{background:var(--red);border-color:var(--red-border);animation:shake 0.3s;}
+  .vocab-defs-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+  .vocab-def-card{background:var(--white);border:1px solid rgba(124,92,69,0.2);border-radius:12px;padding:14px 16px;cursor:pointer;font-size:0.86rem;color:var(--dark);line-height:1.5;border-left:4px solid transparent;transition:all 0.18s;user-select:none;}
+  .vocab-def-card:hover{border-left-color:var(--coral);background:var(--coral-light);}
+  .vocab-def-card.selected{border-left-color:var(--coral);background:var(--coral-light);}
+  .vocab-def-card.correct{border-left-color:var(--green);background:var(--green-bg);cursor:default;}
+  .vocab-def-card.wrong{border-left-color:var(--red);background:var(--red-bg);animation:shake 0.3s;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+
+  /* OPINION SORT */
+  .sort-intro{font-size:0.9rem;color:var(--dark);line-height:1.7;margin-bottom:20px;font-weight:300;}
+  .sort-columns{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+  .sort-col{border-radius:14px;padding:16px;min-height:120px;}
+  .sort-col.office{background:var(--coral-light);border:1.5px dashed var(--coral-border);}
+  .sort-col.remote{background:var(--linen);border:1.5px dashed rgba(124,92,69,0.3);}
+  .sort-col-title{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;}
+  .sort-col.office .sort-col-title{color:var(--coral);}
+  .sort-col.remote .sort-col-title{color:var(--mocha);}
+  .dropped-items{display:flex;flex-direction:column;gap:6px;min-height:40px;}
+  .dropped-tag{font-size:12px;padding:6px 10px;border-radius:8px;font-weight:500;cursor:pointer;}
+  .sort-col.office .dropped-tag{background:rgba(153,60,29,0.12);color:var(--coral);}
+  .sort-col.remote .dropped-tag{background:rgba(124,92,69,0.12);color:var(--mocha);}
+  .statements-pool{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;}
+  .statement-chip{background:var(--white);border:1px solid rgba(124,92,69,0.2);border-radius:10px;padding:10px 14px;font-size:0.86rem;color:var(--dark);cursor:pointer;transition:all 0.15s;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  .statement-chip:hover{border-color:var(--coral);background:var(--coral-light);}
+  .statement-chip .chip-arrow{font-size:16px;color:var(--stone);flex-shrink:0;}
+  .statement-chip.used{opacity:0.35;pointer-events:none;}
+  .sort-check-btn{background:var(--espresso);color:var(--cream);border:none;border-radius:50px;font-family:'Jost',sans-serif;font-size:0.88rem;font-weight:500;padding:11px 28px;cursor:pointer;letter-spacing:0.04em;transition:background 0.2s;}
+  .sort-check-btn:hover{background:var(--mocha);}
+  .sort-feedback{margin-top:16px;padding:14px 18px;border-radius:12px;font-size:0.86rem;line-height:1.6;display:none;}
+  .sort-feedback.show{display:block;}
+  .sort-feedback.ok{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+  .sort-feedback.partial{background:var(--coral-light);color:var(--coral);border:1px solid var(--coral-border);}
+
+  .result-screen{text-align:center;padding:40px 20px;display:none;}
+  .result-screen.show{display:block;}
+  .result-emoji{font-size:60px;margin-bottom:16px;}
+  .result-score{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:var(--espresso);margin-bottom:6px;}
+  .result-msg{font-size:1rem;color:var(--stone);font-weight:300;margin-bottom:24px;line-height:1.6;}
+  .restart-btn{background:var(--espresso);color:var(--cream);border:none;border-radius:50px;font-family:'Jost',sans-serif;font-size:0.9rem;font-weight:500;padding:12px 32px;cursor:pointer;letter-spacing:0.04em;transition:background 0.2s;}
+  .restart-btn:hover{background:var(--mocha);}
+
+  @media(max-width:500px){
+    .panel{padding:24px 16px;}
+    .sort-columns{grid-template-columns:1fr;}
+    .vocab-grid{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-brand">31 días de inglés real</div>
+  <div class="topbar-label">Day 6 · Reflection · Interactive Exercises</div>
+</div>
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('vocab',this)">📖 Vocabulary Match</button>
+  <button class="tab" onclick="switchTab('sort',this)">🏢 Office or Remote?</button>
+</div>
+
+<!-- VOCAB MATCHING -->
+<div class="panel active" id="panel-vocab">
+  <div class="section-eyebrow">Exercise 1 of 2</div>
+  <div class="section-title">Vocabulary Match</div>
+  <div class="section-sub">Click a word, then click its correct definition.</div>
+  <div class="instruction-box">🏢 All 8 words appeared in today's article about the future of remote work.</div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progress</span><span id="vocab-progress-txt">0 / 8 matched</span></div>
+    <div class="progress-track"><div class="progress-fill" id="vocab-bar" style="width:0%"></div></div>
+  </div>
+  <div class="score-badge">Score: <strong id="vocab-score">0</strong> / 8</div>
+  <div id="vocab-game">
+    <div style="font-size:12px;color:var(--stone);margin-bottom:10px;font-weight:500;">WORDS</div>
+    <div class="vocab-grid" id="words-grid"></div>
+    <div style="font-size:12px;color:var(--stone);margin:16px 0 10px;font-weight:500;">DEFINITIONS</div>
+    <div class="vocab-defs-grid" id="defs-grid"></div>
+  </div>
+  <div class="result-screen" id="vocab-result">
+    <div class="result-emoji" id="vocab-emoji">🎉</div>
+    <div class="result-score" id="vocab-score-big">8 / 8</div>
+    <div class="result-msg" id="vocab-msg"></div>
+    <button class="restart-btn" onclick="initVocab()">Try again</button>
+  </div>
+</div>
+
+<!-- OPINION SORT -->
+<div class="panel" id="panel-sort">
+  <div class="section-eyebrow">Exercise 2 of 2</div>
+  <div class="section-title">Office or Remote?</div>
+  <div class="section-sub">Read each statement. Click it to assign it to the correct column — is it an argument FOR the office, or FOR remote work?</div>
+  <div class="instruction-box">💡 Some of these are tricky! Re-read the article if you need a hint.</div>
+
+  <div id="sort-game">
+    <div class="sort-columns">
+      <div class="sort-col office">
+        <div class="sort-col-title">🏢 For the office</div>
+        <div class="dropped-items" id="drop-office"></div>
+      </div>
+      <div class="sort-col remote">
+        <div class="sort-col-title">🏠 For remote</div>
+        <div class="dropped-items" id="drop-remote"></div>
+      </div>
+    </div>
+    <div class="statements-pool" id="statements-pool"></div>
+    <button class="sort-check-btn" onclick="checkSort()">Check my answers</button>
+    <div class="sort-feedback" id="sort-feedback"></div>
+  </div>
+
+  <div class="result-screen" id="sort-result">
+    <div class="result-emoji" id="sort-emoji">🌟</div>
+    <div class="result-score" id="sort-score-big">6 / 6</div>
+    <div class="result-msg" id="sort-msg"></div>
+    <button class="restart-btn" onclick="initSort()">Try again</button>
+  </div>
+</div>
+
+<script>
+function switchTab(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── VOCAB MATCHING ─────────────────────────────────────────────────────────
+var vocabPairs=[
+  {word:'Rush hour',      def:'The busy period when many people travel to or from work at the same time.'},
+  {word:'Debate',         def:'A discussion where people argue different or opposing points of view.'},
+  {word:'Mandate',        def:'An official order or instruction that must be followed.'},
+  {word:'Knowledge worker',def:'A professional whose job involves thinking and managing information.'},
+  {word:'Hybrid',         def:'A mix of working from home and working in the office.'},
+  {word:'Compelling',     def:'So convincing or interesting that it is very difficult to ignore.'},
+  {word:'Mentorship',     def:'Guidance and support from a more experienced person to help develop skills.'},
+  {word:'Collaboration',  def:'Working together with other people to achieve a shared goal.'},
+];
+var selectedWord=null,vocabScore=0,matched=0;
+function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function initVocab(){
+  selectedWord=null;vocabScore=0;matched=0;
+  document.getElementById('vocab-score').textContent='0';
+  document.getElementById('vocab-progress-txt').textContent='0 / 8 matched';
+  document.getElementById('vocab-bar').style.width='0%';
+  document.getElementById('vocab-result').classList.remove('show');
+  document.getElementById('vocab-game').style.display='';
+  var sw=shuffle(vocabPairs),sd=shuffle(vocabPairs.map(function(p){return p.def;}));
+  var wg=document.getElementById('words-grid');wg.innerHTML='';
+  sw.forEach(function(pair){
+    var btn=document.createElement('button');btn.className='vocab-word-card';
+    btn.textContent=pair.word;btn.dataset.word=pair.word;
+    btn.onclick=function(){selectWord(this);};wg.appendChild(btn);
+  });
+  var dg=document.getElementById('defs-grid');dg.innerHTML='';
+  sd.forEach(function(def){
+    var btn=document.createElement('button');btn.className='vocab-def-card';
+    btn.textContent=def;btn.dataset.def=def;
+    btn.onclick=function(){selectDef(this);};dg.appendChild(btn);
+  });
+}
+function selectWord(el){
+  if(el.classList.contains('correct')||el.disabled)return;
+  document.querySelectorAll('.vocab-word-card').forEach(function(c){c.classList.remove('selected');});
+  el.classList.add('selected');selectedWord=el.dataset.word;
+}
+function selectDef(el){
+  if(!selectedWord||el.classList.contains('correct')||el.disabled)return;
+  var correctDef=vocabPairs.find(function(p){return p.word===selectedWord;}).def;
+  if(el.dataset.def===correctDef){
+    el.classList.add('correct');el.disabled=true;
+    var we=document.querySelector('[data-word="'+selectedWord+'"]');
+    we.classList.remove('selected');we.classList.add('correct');we.disabled=true;
+    matched++;vocabScore++;
+    document.getElementById('vocab-score').textContent=vocabScore;
+    document.getElementById('vocab-progress-txt').textContent=matched+' / 8 matched';
+    document.getElementById('vocab-bar').style.width=Math.round((matched/8)*100)+'%';
+    selectedWord=null;
+    if(matched===8)setTimeout(showVocabResult,600);
+  } else {
+    el.classList.add('wrong');
+    var we=document.querySelector('[data-word="'+selectedWord+'"]');
+    we.classList.add('wrong');
+    setTimeout(function(){el.classList.remove('wrong','selected');we.classList.remove('wrong','selected');selectedWord=null;},700);
+  }
+}
+function showVocabResult(){
+  document.getElementById('vocab-game').style.display='none';
+  document.getElementById('vocab-result').classList.add('show');
+  var e={8:'🎉',7:'🌟',6:'👍',5:'💪'};
+  document.getElementById('vocab-emoji').textContent=e[vocabScore]||'☕';
+  document.getElementById('vocab-score-big').textContent=vocabScore+' / 8';
+  var m={8:'Perfect! All 8 matched. Ready for the Deep Dive!',7:'Almost! One more try.',6:'Good work! Review the ones you missed.',5:'Keep going!'};
+  document.getElementById('vocab-msg').textContent=m[vocabScore]||'Practice makes perfect!';
+}
+
+// ── OPINION SORT ───────────────────────────────────────────────────────────
+var sortStatements=[
+  {text:'Workers save an average of 55 minutes per day with no commute.',answer:'remote'},
+  {text:'Junior employees learn faster when they are near senior colleagues.',answer:'office'},
+  {text:'Companies can hire talent from anywhere in the world.',answer:'remote'},
+  {text:'Spontaneous conversations in hallways often spark the best ideas.',answer:'office'},
+  {text:'Remote workers are 10–15% more productive on focused, individual tasks.',answer:'remote'},
+  {text:'Face-to-face interaction makes it easier to build real relationships.',answer:'office'},
+  {text:'Working from home has a lower carbon footprint than commuting daily.',answer:'remote'},
+  {text:'Many employees feel isolated or disconnected when working alone at home.',answer:'office'},
+];
+var sortAssignments={};
+function initSort(){
+  sortAssignments={};
+  document.getElementById('sort-result').classList.remove('show');
+  document.getElementById('sort-game').style.display='';
+  document.getElementById('sort-feedback').classList.remove('show');
+  document.getElementById('drop-office').innerHTML='';
+  document.getElementById('drop-remote').innerHTML='';
+  var pool=document.getElementById('statements-pool');
+  pool.innerHTML='';
+  var shuffled=shuffle(sortStatements.slice());
+  shuffled.forEach(function(s,i){
+    var chip=document.createElement('div');
+    chip.className='statement-chip';
+    chip.dataset.idx=sortStatements.indexOf(s);
+    chip.innerHTML='<span>'+s.text+'</span><span class="chip-arrow">↕</span>';
+    chip.onclick=function(){cycleAssignment(this,s);};
+    pool.appendChild(chip);
+  });
+}
+function cycleAssignment(el,s){
+  var idx=parseInt(el.dataset.idx);
+  var current=sortAssignments[idx];
+  if(!current){
+    sortAssignments[idx]='office';
+    el.classList.add('used');
+    var tag=document.createElement('div');
+    tag.className='dropped-tag';tag.dataset.idx=idx;
+    tag.textContent=s.text;
+    tag.onclick=function(){removeAssignment(this,idx,el);};
+    document.getElementById('drop-office').appendChild(tag);
+  }
+}
+function removeAssignment(tag,idx,chipEl){
+  delete sortAssignments[idx];
+  tag.remove();
+  if(chipEl)chipEl.classList.remove('used');
+  var stmt=sortStatements[idx];
+  var other=document.querySelector('[data-idx="'+idx+'"].dropped-tag');
+  if(other)other.remove();
+  var chipInPool=document.querySelector('#statements-pool [data-idx="'+idx+'"]');
+  if(chipInPool)chipInPool.classList.remove('used');
+}
+
+var currentSelectIdx=null;
+function initSort(){
+  sortAssignments={};currentSelectIdx=null;
+  document.getElementById('sort-result').classList.remove('show');
+  document.getElementById('sort-game').style.display='';
+  document.getElementById('sort-feedback').classList.remove('show');
+  document.getElementById('drop-office').innerHTML='';
+  document.getElementById('drop-remote').innerHTML='';
+  var pool=document.getElementById('statements-pool');
+  pool.innerHTML='';
+  var shuffled=shuffle(sortStatements.slice());
+  shuffled.forEach(function(s){
+    var origIdx=sortStatements.indexOf(s);
+    var chip=document.createElement('div');
+    chip.className='statement-chip';
+    chip.dataset.idx=origIdx;
+    chip.innerHTML='<span>'+s.text+'</span><span class="chip-arrow" style="font-size:13px;color:var(--stone);">tap to place →</span>';
+    chip.onclick=function(){showPlaceMenu(this,origIdx,s.text);};
+    pool.appendChild(chip);
+  });
+}
+
+function showPlaceMenu(chipEl,idx,text){
+  if(chipEl.classList.contains('used')){
+    var existing=document.querySelector('.dropped-tag[data-idx="'+idx+'"]');
+    if(existing)existing.remove();
+    delete sortAssignments[idx];
+    chipEl.classList.remove('used');
+    return;
+  }
+  var col=prompt('Type "office" or "remote" to assign this statement:\n\n"'+text+'"');
+  if(col==='office'||col==='remote'){
+    sortAssignments[idx]=col;
+    chipEl.classList.add('used');
+    var tag=document.createElement('div');
+    tag.className='dropped-tag';tag.dataset.idx=idx;
+    tag.textContent=text+' ✕';
+    tag.onclick=function(){
+      this.remove();delete sortAssignments[idx];chipEl.classList.remove('used');
+    };
+    document.getElementById('drop-'+col).appendChild(tag);
+  }
+}
+
+function checkSort(){
+  var correct=0,total=sortStatements.length;
+  var assigned=Object.keys(sortAssignments).length;
+  if(assigned<total){
+    var fb=document.getElementById('sort-feedback');
+    fb.textContent='You still have '+(total-assigned)+' statement(s) to place. Assign all '+total+' before checking!';
+    fb.className='sort-feedback partial show';
+    return;
+  }
+  sortStatements.forEach(function(s,i){
+    if(sortAssignments[i]===s.answer)correct++;
+  });
+  document.getElementById('sort-game').style.display='none';
+  document.getElementById('sort-result').classList.add('show');
+  var emoji=correct===total?'🏆':correct>=total-1?'🌟':correct>=total/2?'💪':'📚';
+  document.getElementById('sort-emoji').textContent=emoji;
+  document.getElementById('sort-score-big').textContent=correct+' / '+total;
+  var m={};
+  m[total]='Perfect! You understood every argument in the article. ☕';
+  m[total-1]='Almost perfect! One statement slipped — try again.';
+  m[total-2]='Good effort! Re-read the article and try once more.';
+  document.getElementById('sort-msg').textContent=m[correct]||'Keep going — you\'ll get there!';
+}
+
+initVocab();
+initSort();
+</script>
+</body>
+</html>
