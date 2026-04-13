@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Day 7 · Ordering at a Restaurant | 31 días de inglés real</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --cream:#F5EFE6;--sand:#E8DDD0;--linen:#F0E9DF;
+    --mocha:#7C5C45;--espresso:#4A2E1A;--caramel:#B07D56;
+    --stone:#9E8C7E;--dark:#2C1A0E;--white:#FDFAF6;
+    --green:#3B6D11;--green-light:#EAF3DE;--green-border:#97C459;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--dark);}
+
+  nav{background:var(--espresso);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .nav-brand{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--caramel);text-decoration:none;}
+  .nav-tag{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(245,239,230,0.45);}
+
+  .hero{background:var(--espresso);padding:60px 28px 0;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(59,109,17,0.2) 0%,transparent 65%);}
+  .hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--green-border);margin-bottom:12px;}
+  .hero-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,3.4rem);font-weight:900;color:var(--cream);line-height:1.1;margin-bottom:14px;}
+  .hero-title em{color:var(--green-border);font-style:italic;}
+  .hero-meta{font-size:12px;color:rgba(245,239,230,0.45);font-weight:300;letter-spacing:0.05em;margin-bottom:36px;}
+  .hero-img-placeholder{width:100%;max-width:680px;margin:0 auto;height:340px;border-radius:16px 16px 0 0;background:linear-gradient(135deg,rgba(59,109,17,0.35),rgba(74,46,26,0.55));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;}
+  .ph-icon{font-size:64px;opacity:0.55;}
+  .ph-text{font-family:'Playfair Display',serif;font-size:1.15rem;font-style:italic;color:rgba(245,239,230,0.4);}
+
+  .content-wrap{max-width:720px;margin:0 auto;padding:48px 28px 64px;}
+
+  /* VIDEO BOX */
+  .video-box{background:var(--espresso);border-radius:16px;padding:22px 26px;margin-bottom:36px;display:flex;align-items:center;gap:18px;}
+  .video-icon{font-size:2.4rem;flex-shrink:0;opacity:0.85;}
+  .video-info h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--cream);margin-bottom:4px;}
+  .video-info p{font-size:0.83rem;color:rgba(245,239,230,0.6);font-weight:300;line-height:1.5;margin-bottom:8px;}
+  .video-link{display:inline-block;background:var(--green);color:#fff;font-size:12px;font-weight:600;letter-spacing:0.05em;padding:6px 16px;border-radius:20px;text-decoration:none;transition:opacity 0.2s;}
+  .video-link:hover{opacity:0.85;}
+
+  /* SECTION HEADERS */
+  .lesson-section{margin-bottom:40px;}
+  .lesson-section-label{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--green);margin-bottom:6px;}
+  .lesson-section-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--espresso);margin-bottom:16px;}
+
+  /* PHRASES TABLE */
+  .phrases-block{margin-bottom:28px;}
+  .phrases-context{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--green);margin-bottom:10px;}
+  .phrase-row{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:10px;overflow:hidden;margin-bottom:8px;border:1px solid rgba(59,109,17,0.15);}
+  .phrase-col{padding:10px 14px;font-size:0.88rem;line-height:1.5;}
+  .phrase-col.formal{background:var(--linen);color:var(--dark);font-weight:300;}
+  .phrase-col.natural{background:var(--green-light);color:#27500A;font-weight:500;}
+  .phrase-col.label{background:var(--espresso);color:var(--cream);font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+  .phrase-note{font-size:11.5px;color:var(--stone);margin-top:4px;margin-bottom:12px;padding-left:4px;font-style:italic;}
+
+  /* WATCH OUT BOX */
+  .watchout{background:rgba(59,109,17,0.08);border-left:4px solid var(--green);border-radius:0 12px 12px 0;padding:14px 18px;margin:20px 0;}
+  .watchout-title{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--green);margin-bottom:6px;}
+  .watchout p{font-size:0.88rem;color:var(--dark);line-height:1.6;font-weight:300;}
+  .watchout strong{font-weight:600;color:var(--green);}
+
+  /* DIALOGUE */
+  .dialogue-wrap{background:var(--white);border:1px solid rgba(59,109,17,0.15);border-radius:16px;padding:24px 26px;margin:28px 0;}
+  .dialogue-title{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:16px;}
+  .dialogue-line{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start;}
+  .dialogue-speaker{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;flex-shrink:0;min-width:80px;padding-top:2px;}
+  .dialogue-speaker.w{color:var(--mocha);}
+  .dialogue-speaker.c{color:var(--green);}
+  .dialogue-text{font-size:0.92rem;line-height:1.6;color:var(--dark);font-weight:300;}
+  .dialogue-text .hl{background:rgba(59,109,17,0.12);color:var(--green);border-radius:4px;padding:0 5px;font-weight:600;}
+  .dialogue-note{font-size:11px;color:var(--stone);font-style:italic;padding-left:90px;margin-top:-4px;margin-bottom:8px;}
+
+  /* CHEAT SHEET */
+  .cheatsheet{background:var(--espresso);border-radius:20px;padding:28px 30px;margin:36px 0;}
+  .cheatsheet-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--cream);margin-bottom:4px;}
+  .cheatsheet-sub{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--green-border);margin-bottom:20px;}
+  .cheatsheet-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .cheatsheet-col-title{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--green-border);margin-bottom:10px;}
+  .cheatsheet-item{font-size:0.82rem;color:rgba(245,239,230,0.75);font-weight:300;line-height:1.5;margin-bottom:7px;padding-left:12px;position:relative;}
+  .cheatsheet-item::before{content:'→';position:absolute;left:0;color:var(--green-border);font-size:11px;}
+
+  .section-divider{display:flex;align-items:center;gap:16px;margin:36px 0;}
+  .section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:rgba(59,109,17,0.2);}
+  .section-divider span{font-size:18px;color:var(--green);opacity:0.5;}
+
+  /* VOCAB RECAP */
+  .vocab-recap{background:var(--linen);border:1px solid rgba(59,109,17,0.15);border-radius:16px;padding:28px;margin:40px 0;}
+  .vocab-recap-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--espresso);margin-bottom:4px;}
+  .vocab-recap-sub{font-size:12px;color:var(--stone);font-weight:300;margin-bottom:20px;}
+  .vocab-list{display:flex;flex-direction:column;gap:10px;}
+  .vocab-row{display:flex;gap:12px;align-items:flex-start;padding:10px 14px;background:var(--white);border-radius:10px;border:1px solid rgba(124,92,69,0.15);}
+  .vocab-row-word{font-weight:600;color:var(--green);min-width:170px;font-size:0.9rem;flex-shrink:0;}
+  .vocab-row-def{font-size:0.85rem;color:var(--dark);font-weight:300;line-height:1.5;}
+
+  .exercises-cta{background:var(--espresso);border-radius:20px;padding:32px 28px;text-align:center;margin:40px 0;}
+  .exercises-cta h3{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--cream);margin-bottom:8px;}
+  .exercises-cta p{font-size:0.88rem;color:rgba(245,239,230,0.6);font-weight:300;margin-bottom:20px;line-height:1.6;}
+  .exercises-cta a{display:inline-block;background:var(--green);color:#fff;font-family:'Jost',sans-serif;font-weight:500;font-size:0.95rem;padding:13px 32px;border-radius:50px;text-decoration:none;letter-spacing:0.04em;transition:opacity 0.2s;}
+  .exercises-cta a:hover{opacity:0.85;}
+  footer{text-align:center;padding:24px;font-size:12px;color:var(--stone);font-weight:300;border-top:1px solid rgba(124,92,69,0.15);}
+  footer strong{color:var(--mocha);}
+  @media(max-width:600px){
+    .hero{padding:40px 20px 0;}
+    .content-wrap{padding:32px 20px 48px;}
+    .phrase-row{grid-template-columns:1fr;}
+    .cheatsheet-grid{grid-template-columns:1fr;}
+    .video-box{flex-direction:column;gap:10px;}
+    .vocab-row{flex-direction:column;gap:4px;}
+    .vocab-row-word{min-width:auto;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">31 días de inglés real</a>
+  <span class="nav-tag">Day 7 · Everyday English</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Day 7 · Everyday English · Level B1</div>
+  <h1 class="hero-title">"Can I get the bill?" —<br><em>Ordering at a Restaurant</em></h1>
+  <div class="hero-meta">31 días de inglés real · March 2026 · 5 min read</div>
+  <div class="hero-img-placeholder">
+    <div class="ph-icon">🍽️</div>
+    <div class="ph-text">The English you need — at the table, right now</div>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <!-- VIDEO -->
+  <div class="video-box">
+    <div class="video-icon">▶️</div>
+    <div class="video-info">
+      <h3>Watch first — 5 to 8 minutes</h3>
+      <p>Search on YouTube: <strong style="color:rgba(245,239,230,0.9);">"ordering food at a restaurant English PhraseCamp"</strong><br>
+      It covers arriving, ordering, asking questions and paying. Watch it once before reading the lesson below.</p>
+      <a class="video-link" href="https://www.youtube.com/results?search_query=ordering+food+restaurant+english+phrasecamp" target="_blank">Search on YouTube →</a>
+    </div>
+  </div>
+
+  <!-- SECTION 1: ARRIVING -->
+  <div class="lesson-section">
+    <div class="lesson-section-label">Step 1</div>
+    <div class="lesson-section-title">Arriving and getting a table</div>
+
+    <div class="phrases-block">
+      <div class="phrases-context">What you might say</div>
+      <div class="phrase-row">
+        <div class="phrase-col label">More formal</div>
+        <div class="phrase-col label">More natural ✓</div>
+      </div>
+      <div class="phrase-row">
+        <div class="phrase-col formal">I would like a table for two people, please.</div>
+        <div class="phrase-col natural">A table for two, please.</div>
+      </div>
+      <div class="phrase-row">
+        <div class="phrase-col formal">I have a reservation under the name of Smith.</div>
+        <div class="phrase-col natural">I have a reservation. It's under Smith.</div>
+      </div>
+      <div class="phrase-row">
+        <div class="phrase-col formal">Is it possible to sit near the window?</div>
+        <div class="phrase-col natural">Could we sit near the window?</div>
+      </div>
+    </div>
+
+    <div class="watchout">
+      <div class="watchout-title">💡 Note</div>
+      <p>You don't need to say <strong>"I would like a table"</strong> every time — in spoken English, shorter is more natural. The waiter will understand <strong>"Table for two, please"</strong> perfectly.</p>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>✦</span></div>
+
+  <!-- SECTION 2: ORDERING -->
+  <div class="lesson-section">
+    <div class="lesson-section-label">Step 2</div>
+    <div class="lesson-section-title">Ordering food and drinks</div>
+
+    <div class="phrases-block">
+      <div class="phrases-context">The most useful structures</div>
+      <div class="phrase-row">
+        <div class="phrase-col label">Structure</div>
+        <div class="phrase-col label">Example</div>
+      </div>
+      <div class="phrase-row">
+        <div class="phrase-col formal" style="font-weight:500;">I'll have...</div>
+        <div class="phrase-col natural">"I'll have the pasta, please."</div>
+      </div>
+      <div class="phrase-row">
+        <div class="phrase-col formal" style="font-weight:500;">I'd like...</div>
+        <div class="phrase-col natural">"I'd like a glass of sparkling water."</div>
+      </div>
+      <div class="phrase-row">
+        <div class="phrase-col formal" style="font-weight:500;">Can I get...</div>
+        <div class="phrase-col natural">"Can I get the steak, medium rare?"</div>
+      </div>
+      <div class="phrase-row">
+        <div class="phrase-col formal" style="font-weight:500;">Could I have...</div>
+        <div class="phrase-col natural">"Could I have the soup as a starter?"</div>
+      </div>
+    </div>
+    <p class="phrase-note">✓ All four are correct and natural. "I'll have" and "Can I get" are the most common in everyday conversation. Avoid "I want" — it can sound rude.</p>
+
+    <div class="phrases-block" style="margin-top:20px;">
+      <div class="phrases-context">Asking questions about the menu</div>
+      <div class="phrase-row">
+        <div class="phrase-col label">Situation</div>
+        <div class="phrase-col label">What to say</div>
+      </div>
+      <div class="phrase-row">
+        <div class="phrase-col formal">You don't know what something is</div>
+        <div class="phrase-col natural">"What is the risotto exactly?" / "What does it come with?"</div>
+      </div>
+      <div class="phrase-row">
+        <div class="phrase-col formal">You want a recommendation</div>
+        <div class="phrase-col natural">"What would you recommend?" / "What's popular here?"</div>
+      </div>
+      <div class="phrase-row">
+        <div class="phrase-col formal">You have dietary restrictions</div>
+        <div class="phrase-col natural">"Does this have gluten?" / "Is this dish vegetarian?"</div>
+      </div>
+      <div class="phrase-row">
+        <div class="phrase-col formal">You need more time</div>
+        <div class="phrase-col natural">"Could we have a few more minutes?" / "We're not quite ready yet."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>✦</span></div>
+
+  <!-- SECTION 3: DURING + PAYING -->
+  <div class="lesson-section">
+    <div class="lesson-section-label">Step 3</div>
+    <div class="lesson-section-title">During the meal and paying</div>
+
+    <div class="phrases-block">
+      <div class="phrases-context">Useful phrases at the table</div>
+      <div class="phrase-row">
+        <div class="phrase-col label">Situation</div>
+        <div class="phrase-col label">What to say</div>
+      </div>
+      <div class="phrase-row">
+        <div class="phrase-col formal">Something is missing</div>
+        <div class="phrase-col natural">"Excuse me, I think I ordered the salmon, not the chicken."</div>
+      </div>
+      <div class="phrase-row">
+        <div class="phrase-col formal">You want something extra</div>
+        <div class="phrase-col natural">"Could I get some more bread, please?" / "Can we get some extra napkins?"</div>
+      </div>
+      <div class="phrase-row">
+        <div class="phrase-col formal">Asking for the bill</div>
+        <div class="phrase-col natural">"Could we get the bill, please?" / "Can I have the check?"</div>
+      </div>
+      <div class="phrase-row">
+        <div class="phrase-col formal">Splitting the bill</div>
+        <div class="phrase-col natural">"Can we pay separately?" / "Could we split the bill?"</div>
+      </div>
+    </div>
+
+    <div class="watchout">
+      <div class="watchout-title">🇺🇸 US vs 🇬🇧 UK</div>
+      <p>In the US, people say <strong>"check"</strong> — "Can I get the check?" In the UK and most of the world, people say <strong>"bill"</strong> — "Could we have the bill?" Both are correct. If you travel, you'll hear both.</p>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>✦</span></div>
+
+  <!-- DIALOGUE -->
+  <div class="lesson-section">
+    <div class="lesson-section-label">Now read</div>
+    <div class="lesson-section-title">A full conversation — at the restaurant</div>
+    <p style="font-size:0.88rem;color:var(--stone);margin-bottom:20px;font-weight:300;">Read the dialogue below. The phrases in <span style="background:rgba(59,109,17,0.12);color:#27500A;border-radius:4px;padding:1px 6px;font-weight:600;">green</span> are the key structures from today's lesson.</p>
+
+    <div class="dialogue-wrap">
+      <div class="dialogue-title">📍 Scene: A restaurant. Sofia and Marco arrive for dinner.</div>
+
+      <div class="dialogue-line">
+        <div class="dialogue-speaker w">Waiter</div>
+        <div class="dialogue-text">Good evening! Do you have a reservation?</div>
+      </div>
+      <div class="dialogue-line">
+        <div class="dialogue-speaker c">Sofia</div>
+        <div class="dialogue-text">Yes, <span class="hl">we have a reservation</span> — it's under Rivera, for two.</div>
+      </div>
+      <div class="dialogue-line">
+        <div class="dialogue-speaker w">Waiter</div>
+        <div class="dialogue-text">Perfect. Right this way. Here are your menus. Can I get you anything to drink while you look?</div>
+      </div>
+      <div class="dialogue-line">
+        <div class="dialogue-speaker c">Marco</div>
+        <div class="dialogue-text"><span class="hl">I'll have</span> a sparkling water, please.</div>
+      </div>
+      <div class="dialogue-line">
+        <div class="dialogue-speaker c">Sofia</div>
+        <div class="dialogue-text">And <span class="hl">could I get</span> a glass of the house red?</div>
+      </div>
+      <div class="dialogue-line">
+        <div class="dialogue-speaker w">Waiter</div>
+        <div class="dialogue-text">Of course. I'll be back in a moment. *(returns)* Are you ready to order?</div>
+      </div>
+      <div class="dialogue-line">
+        <div class="dialogue-speaker c">Sofia</div>
+        <div class="dialogue-text">Almost — <span class="hl">what would you recommend</span> for the main course?</div>
+      </div>
+      <div class="dialogue-line">
+        <div class="dialogue-speaker w">Waiter</div>
+        <div class="dialogue-text">The sea bass is very popular tonight. It comes with roasted vegetables and a lemon butter sauce.</div>
+      </div>
+      <div class="dialogue-line">
+        <div class="dialogue-speaker c">Sofia</div>
+        <div class="dialogue-text">That sounds great. <span class="hl">I'll have</span> the sea bass, then. <span class="hl">Does it come with</span> any sides?</div>
+      </div>
+      <div class="dialogue-line">
+        <div class="dialogue-speaker w">Waiter</div>
+        <div class="dialogue-text">Yes, the vegetables are included. Would you like a starter?</div>
+      </div>
+      <div class="dialogue-line">
+        <div class="dialogue-speaker c">Sofia</div>
+        <div class="dialogue-text">No, thank you. <span class="hl">I'd like</span> the green salad on the side instead, if that's okay.</div>
+      </div>
+      <div class="dialogue-line">
+        <div class="dialogue-speaker w">Waiter</div>
+        <div class="dialogue-text">Of course. And for you, sir?</div>
+      </div>
+      <div class="dialogue-line">
+        <div class="dialogue-speaker c">Marco</div>
+        <div class="dialogue-text"><span class="hl">I'll have</span> the mushroom risotto. <span class="hl">Is it vegetarian?</span></div>
+      </div>
+      <div class="dialogue-line">
+        <div class="dialogue-speaker w">Waiter</div>
+        <div class="dialogue-text">Yes, completely. No meat or fish.</div>
+      </div>
+      <div class="dialogue-line">
+        <div class="dialogue-speaker c">Marco</div>
+        <div class="dialogue-text">Perfect. That's all for now, thank you.</div>
+      </div>
+
+      <div style="border-top:1px solid rgba(59,109,17,0.15);margin:16px 0;"></div>
+
+      <div class="dialogue-line">
+        <div class="dialogue-speaker w">Waiter</div>
+        <div class="dialogue-text">*(later)* Can I get you anything else? Dessert?</div>
+      </div>
+      <div class="dialogue-line">
+        <div class="dialogue-speaker c">Marco</div>
+        <div class="dialogue-text">Not for me, thanks. <span class="hl">Could we get the bill, please?</span></div>
+      </div>
+      <div class="dialogue-line">
+        <div class="dialogue-speaker c">Sofia</div>
+        <div class="dialogue-text">And <span class="hl">could we pay separately?</span></div>
+      </div>
+      <div class="dialogue-line">
+        <div class="dialogue-speaker w">Waiter</div>
+        <div class="dialogue-text">Of course! I'll bring two bills right away.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>✦</span></div>
+
+  <!-- CHEAT SHEET -->
+  <div class="cheatsheet">
+    <div class="cheatsheet-title">Your restaurant cheat sheet</div>
+    <div class="cheatsheet-sub">Keep this handy for your next trip</div>
+    <div class="cheatsheet-grid">
+      <div>
+        <div class="cheatsheet-col-title">Ordering</div>
+        <div class="cheatsheet-item">I'll have the... please.</div>
+        <div class="cheatsheet-item">I'd like the... / a...</div>
+        <div class="cheatsheet-item">Can I get the...?</div>
+        <div class="cheatsheet-item">Could I have...?</div>
+        <div class="cheatsheet-item">What would you recommend?</div>
+        <div class="cheatsheet-item">What does it come with?</div>
+        <div class="cheatsheet-item">Is this dish vegetarian / gluten-free?</div>
+        <div class="cheatsheet-item">Could we have a few more minutes?</div>
+      </div>
+      <div>
+        <div class="cheatsheet-col-title">During & after</div>
+        <div class="cheatsheet-item">Excuse me, I think I ordered the...</div>
+        <div class="cheatsheet-item">Could I get some more...?</div>
+        <div class="cheatsheet-item">Could we get the bill, please?</div>
+        <div class="cheatsheet-item">Can I have the check? (US)</div>
+        <div class="cheatsheet-item">Can we pay separately?</div>
+        <div class="cheatsheet-item">Could we split the bill?</div>
+        <div class="cheatsheet-item">Keep the change.</div>
+        <div class="cheatsheet-item">It was delicious, thank you!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VOCAB RECAP -->
+  <div class="vocab-recap">
+    <div class="vocab-recap-title">Today's vocabulary</div>
+    <div class="vocab-recap-sub">8 key words and phrases from this lesson</div>
+    <div class="vocab-list">
+      <div class="vocab-row"><div class="vocab-row-word">Reservation</div><div class="vocab-row-def">A booking made in advance to guarantee a table at a restaurant.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Starter / Main / Dessert</div><div class="vocab-row-def">The three courses of a meal: first dish, main dish, and sweet final dish.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">To come with</div><div class="vocab-row-def">To be served together with something. "Does it come with fries?"</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Side (dish)</div><div class="vocab-row-def">A small extra dish served alongside the main course.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Dietary restriction</div><div class="vocab-row-def">A food limitation for health, allergy, or personal reasons.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">The bill / the check</div><div class="vocab-row-def">The document showing how much you owe. "Bill" = UK, "check" = US.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">To split the bill</div><div class="vocab-row-def">To divide the total cost between the people at the table.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">To recommend</div><div class="vocab-row-def">To suggest something as being good. "What would you recommend?"</div></div>
+    </div>
+  </div>
+
+  <div class="exercises-cta">
+    <h3>Ready to practise?</h3>
+    <p>Do the interactive exercises — vocabulary and a role play challenge.</p>
+    <a href="../../exercises/day7_exercises.html">Go to exercises →</a>
+  </div>
+
+</div>
+<footer><p>© 2026 <strong>31 días de inglés real</strong> · con Camila Cabrera · Level B1</p></footer>
+<script>
+  document.querySelectorAll('.kw').forEach(function(el){
+    el.addEventListener('click',function(e){
+      e.stopPropagation();
+      var isActive=this.classList.contains('active');
+      document.querySelectorAll('.kw').forEach(function(k){k.classList.remove('active');});
+      if(!isActive)this.classList.add('active');
+    });
+  });
+  document.addEventListener('click',function(){
+    document.querySelectorAll('.kw').forEach(function(k){k.classList.remove('active');});
+  });
+</script>
+</body>
+</html>
