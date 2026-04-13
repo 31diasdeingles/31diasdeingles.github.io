@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Day 7 · Interactive Exercises</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --cream:#F5EFE6;--sand:#E8DDD0;--linen:#F0E9DF;
+    --mocha:#7C5C45;--espresso:#4A2E1A;--caramel:#B07D56;
+    --stone:#9E8C7E;--dark:#2C1A0E;--white:#FDFAF6;
+    --green:#3B6D11;--green-light:#EAF3DE;--green-border:#97C459;
+    --ok:#1A5C2A;--ok-bg:#D4EDDA;--ok-border:#9DC3A8;
+    --no:#721C24;--no-bg:#F8D7DA;--no-border:#E8A5A9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--dark);}
+  .topbar{background:var(--espresso);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .topbar-brand{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--caramel);}
+  .topbar-label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(245,239,230,0.5);}
+  .tabs{display:flex;background:var(--sand);border-bottom:2px solid rgba(124,92,69,0.2);}
+  .tab{flex:1;padding:14px;text-align:center;cursor:pointer;font-size:13px;font-weight:500;letter-spacing:0.04em;color:var(--stone);border:none;background:none;border-bottom:3px solid transparent;transition:all 0.2s;}
+  .tab.active{color:var(--espresso);border-bottom-color:var(--green);background:var(--cream);}
+  .tab:hover:not(.active){color:var(--mocha);background:rgba(59,109,17,0.04);}
+  .panel{display:none;padding:32px;max-width:760px;margin:0 auto;}
+  .panel.active{display:block;}
+  .section-eyebrow{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--green);margin-bottom:6px;}
+  .section-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--espresso);margin-bottom:6px;}
+  .section-sub{font-size:0.88rem;color:var(--stone);font-weight:300;line-height:1.6;margin-bottom:24px;}
+  .instruction-box{background:var(--green-light);border:1px solid rgba(59,109,17,0.25);border-radius:12px;padding:14px 18px;margin-bottom:24px;font-size:0.85rem;color:var(--green);line-height:1.6;}
+
+  /* SITUATION MATCH */
+  .situation-card{background:var(--white);border:1px solid rgba(124,92,69,0.18);border-radius:16px;padding:22px 24px;margin-bottom:14px;}
+  .sit-num{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:8px;}
+  .sit-scenario{background:var(--linen);border-radius:8px;padding:10px 14px;font-size:0.9rem;color:var(--espresso);font-weight:500;margin-bottom:14px;line-height:1.5;}
+  .sit-options{display:flex;flex-direction:column;gap:8px;}
+  .sit-option{padding:11px 16px;border-radius:10px;border:1px solid rgba(124,92,69,0.2);background:var(--white);cursor:pointer;font-size:0.87rem;color:var(--dark);transition:all 0.15s;text-align:left;}
+  .sit-option:hover:not(:disabled){border-color:var(--green);background:var(--green-light);color:var(--green);}
+  .sit-option.correct{background:var(--ok-bg);border-color:var(--ok-border);color:var(--ok);font-weight:500;}
+  .sit-option.wrong{background:var(--no-bg);border-color:var(--no-border);color:var(--no);}
+  .sit-option.reveal{background:var(--ok-bg);border-color:var(--ok-border);color:var(--ok);}
+  .sit-option:disabled{cursor:default;}
+  .sit-feedback{margin-top:8px;padding:8px 12px;border-radius:8px;font-size:0.82rem;line-height:1.5;display:none;}
+  .sit-feedback.show{display:block;}
+  .sit-feedback.ok{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok-border);}
+  .sit-feedback.no{background:var(--no-bg);color:var(--no);border:1px solid var(--no-border);}
+
+  /* DIALOGUE BUILD */
+  .dialogue-builder{margin-bottom:24px;}
+  .db-intro{font-size:0.88rem;color:var(--dark);line-height:1.7;margin-bottom:16px;font-weight:300;}
+  .db-line{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px;padding:12px 16px;background:var(--white);border:1px solid rgba(124,92,69,0.15);border-radius:12px;}
+  .db-speaker{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;flex-shrink:0;min-width:72px;padding-top:8px;}
+  .db-speaker.w{color:var(--mocha);}
+  .db-speaker.c{color:var(--green);}
+  .db-waiter-text{font-size:0.88rem;color:var(--dark);font-weight:300;line-height:1.6;padding-top:6px;}
+  .db-select{font-size:0.86rem;padding:6px 10px;border-radius:8px;border:1.5px solid rgba(59,109,17,0.3);background:var(--green-light);color:var(--green);font-weight:500;font-family:'Jost',sans-serif;cursor:pointer;outline:none;transition:border-color 0.15s;}
+  .db-select:focus{border-color:var(--green);}
+  .db-select.correct{background:var(--ok-bg);border-color:var(--ok-border);color:var(--ok);}
+  .db-select.wrong{background:var(--no-bg);border-color:var(--no-border);color:var(--no);}
+  .db-feedback{font-size:12px;margin-top:4px;padding:5px 10px;border-radius:6px;display:none;}
+  .db-feedback.show{display:block;}
+  .db-feedback.ok{background:var(--ok-bg);color:var(--ok);}
+  .db-feedback.no{background:var(--no-bg);color:var(--no);}
+
+  .check-btn{background:var(--espresso);color:var(--cream);border:none;border-radius:50px;font-family:'Jost',sans-serif;font-size:0.88rem;font-weight:500;padding:11px 28px;cursor:pointer;letter-spacing:0.04em;transition:background 0.2s;margin-top:8px;}
+  .check-btn:hover{background:var(--mocha);}
+
+  .result-screen{text-align:center;padding:40px 20px;display:none;}
+  .result-screen.show{display:block;}
+  .result-emoji{font-size:60px;margin-bottom:16px;}
+  .result-score{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:var(--espresso);margin-bottom:6px;}
+  .result-msg{font-size:1rem;color:var(--stone);font-weight:300;margin-bottom:24px;line-height:1.6;}
+  .restart-btn{background:var(--espresso);color:var(--cream);border:none;border-radius:50px;font-family:'Jost',sans-serif;font-size:0.9rem;font-weight:500;padding:12px 32px;cursor:pointer;letter-spacing:0.04em;transition:background 0.2s;}
+  .restart-btn:hover{background:var(--mocha);}
+  @media(max-width:500px){.panel{padding:20px 14px;}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-brand">31 días de inglés real</div>
+  <div class="topbar-label">Day 7 · Everyday English · Exercises</div>
+</div>
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('sit',this)">🍽️ What do you say?</button>
+  <button class="tab" onclick="switchTab('db',this)">💬 Build the dialogue</button>
+</div>
+
+<!-- SITUATION MATCH -->
+<div class="panel active" id="panel-sit">
+  <div class="section-eyebrow">Exercise 1 of 2</div>
+  <div class="section-title">What do you say?</div>
+  <div class="section-sub">Read each situation and choose the most natural response in English.</div>
+  <div class="instruction-box">🍽️ Imagine you are at a restaurant. Choose the phrase that sounds most natural — not just correct!</div>
+  <div id="sit-questions"></div>
+  <div class="result-screen" id="sit-result">
+    <div class="result-emoji" id="sit-emoji">🏆</div>
+    <div class="result-score" id="sit-score">6 / 6</div>
+    <div class="result-msg" id="sit-msg"></div>
+    <button class="restart-btn" onclick="initSit()">Try again</button>
+  </div>
+</div>
+
+<!-- DIALOGUE BUILDER -->
+<div class="panel" id="panel-db">
+  <div class="section-eyebrow">Exercise 2 of 2</div>
+  <div class="section-title">Build the dialogue</div>
+  <div class="section-sub">Complete the customer's lines by choosing the best phrase from each dropdown.</div>
+  <div class="instruction-box">💬 The waiter's lines are written for you. Your job is to respond naturally as the customer!</div>
+  <div id="db-container"></div>
+  <button class="check-btn" onclick="checkDB()">Check my answers ✓</button>
+  <div class="result-screen" id="db-result">
+    <div class="result-emoji" id="db-emoji">🎉</div>
+    <div class="result-score" id="db-score">5 / 5</div>
+    <div class="result-msg" id="db-msg"></div>
+    <button class="restart-btn" onclick="initDB()">Try again</button>
+  </div>
+</div>
+
+<script>
+function switchTab(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── SITUATION MATCH ────────────────────────────────────────────────────────
+var situations=[
+  {scenario:'You arrive at the restaurant with a friend. You want a table, but you don\'t have a reservation.',
+   options:['I desire a table for two humans, please.','A table for two, please.','We are two people who require seating.'],
+   correct:1,
+   ok:'Correct! ✓ "A table for two, please." is natural, direct and polite. Perfect.',
+   no:'That one sounds unnatural. "A table for two, please." is the most natural option.'},
+  {scenario:'The waiter asks what you want to drink. You want sparkling water.',
+   options:['I want sparkling water.','I am desiring some sparkling water.','I\'ll have a sparkling water, please.'],
+   correct:2,
+   ok:'Correct! ✓ "I\'ll have..." is the most natural and common way to order in English.',
+   no:'Close, but "I want..." can sound a bit blunt. "I\'ll have a sparkling water, please." is more natural.'},
+  {scenario:'You don\'t understand what "confit" means on the menu. You want to ask the waiter.',
+   options:['What is the confit, exactly?','I do not know the word confit.','Please explain confit to me.'],
+   correct:0,
+   ok:'Correct! ✓ "What is the confit, exactly?" is a natural, polite way to ask for clarification.',
+   no:'The most natural option is "What is the confit, exactly?" — direct and polite.'},
+  {scenario:'You\'re not ready to order yet. The waiter is waiting.',
+   options:['We are not ready. Come back later.','Could we have a few more minutes, please?','We need more time to decide our food choices.'],
+   correct:1,
+   ok:'Correct! ✓ "Could we have a few more minutes?" is polite, natural and very common.',
+   no:'"Could we have a few more minutes, please?" is the most natural and polite option here.'},
+  {scenario:'The waiter brought you chicken, but you ordered salmon. You need to say something.',
+   options:['You brought the wrong thing. I ordered salmon.','Excuse me, I think I ordered the salmon, not the chicken.','This is incorrect. Please bring salmon.'],
+   correct:1,
+   ok:'Correct! ✓ "Excuse me, I think I ordered..." is polite and natural — using "I think" softens the correction.',
+   no:'"Excuse me, I think I ordered the salmon, not the chicken." is the most natural — it\'s polite and clear.'},
+  {scenario:'The meal is finished and you want to pay. You\'re in a US restaurant.',
+   options:['Could we get the bill, please?','Can I have the check, please?','We would like to pay our financial obligation now.'],
+   correct:1,
+   ok:'Correct! ✓ In the US, "check" is the natural word. "Can I have the check?" is perfect.',
+   no:'In the US, people say "check" not "bill". "Can I have the check?" is the most natural here.'},
+];
+
+var sitAnswered=[],sitScore=0;
+
+function initSit(){
+  sitAnswered=[];sitScore=0;
+  document.getElementById('sit-result').classList.remove('show');
+  var container=document.getElementById('sit-questions');
+  container.style.display='';container.innerHTML='';
+  situations.forEach(function(q,idx){
+    sitAnswered[idx]=false;
+    var card=document.createElement('div');card.className='situation-card';card.id='sit-'+idx;
+    var opts=q.options.map(function(o,i){
+      return '<button class="sit-option" onclick="checkSit('+idx+','+i+')" id="so'+idx+'x'+i+'">'+String.fromCharCode(65+i)+') '+o+'</button>';
+    }).join('');
+    card.innerHTML='<div class="sit-num">Situation '+(idx+1)+' of '+situations.length+'</div>'+
+      '<div class="sit-scenario">'+q.scenario+'</div>'+
+      '<div class="sit-options">'+opts+'</div>'+
+      '<div class="sit-feedback ok" id="sfbok-'+idx+'">'+q.ok+'</div>'+
+      '<div class="sit-feedback no" id="sfbno-'+idx+'">'+q.no+'</div>';
+    container.appendChild(card);
+  });
+}
+
+function checkSit(qIdx,optIdx){
+  if(sitAnswered[qIdx])return;sitAnswered[qIdx]=true;
+  var q=situations[qIdx];
+  document.querySelectorAll('#sit-'+qIdx+' .sit-option').forEach(function(o){o.disabled=true;});
+  if(optIdx===q.correct){
+    document.getElementById('so'+qIdx+'x'+optIdx).classList.add('correct');
+    document.getElementById('sfbok-'+qIdx).classList.add('show');
+    sitScore++;
+  } else {
+    document.getElementById('so'+qIdx+'x'+optIdx).classList.add('wrong');
+    document.getElementById('sfbno-'+qIdx).classList.add('show');
+    document.getElementById('so'+qIdx+'x'+q.correct).classList.add('reveal');
+  }
+  if(sitAnswered.every(Boolean))setTimeout(showSitResult,800);
+}
+
+function showSitResult(){
+  document.getElementById('sit-questions').style.display='none';
+  document.getElementById('sit-result').classList.add('show');
+  var total=situations.length;
+  var emoji=sitScore===total?'🏆':sitScore>=total-1?'🌟':'💪';
+  document.getElementById('sit-emoji').textContent=emoji;
+  document.getElementById('sit-score').textContent=sitScore+' / '+total;
+  var m={};
+  m[total]='Perfect! You know exactly what to say in every situation. ☕';
+  m[total-1]='Almost! One small slip — try again for a perfect score.';
+  m[total-2]='Good effort! Review the article and try again.';
+  document.getElementById('sit-msg').textContent=m[sitScore]||'Keep going!';
+}
+
+// ── DIALOGUE BUILDER ────────────────────────────────────────────────────────
+var dialogueLines=[
+  {type:'waiter',text:'Good evening! Do you have a reservation?'},
+  {type:'customer',
+   opts:['We want a table.','We have a reservation — it\'s under Rivera, for two.','I am here.'],
+   correct:1,
+   ok:'✓ "We have a reservation — it\'s under Rivera, for two." Natural and complete.',
+   no:'The most natural response is "We have a reservation — it\'s under Rivera, for two."'},
+  {type:'waiter',text:'Of course. Here are your menus. Can I get you something to drink?'},
+  {type:'customer',
+   opts:['I want a water.','I\'ll have a sparkling water, please.','Give me sparkling water.'],
+   correct:1,
+   ok:'✓ "I\'ll have..." is the most natural structure for ordering in English.',
+   no:'"I\'ll have a sparkling water, please." is the most natural. Avoid "I want" or commands.'},
+  {type:'waiter',text:'Are you ready to order, or do you need a few more minutes?'},
+  {type:'customer',
+   opts:['Could we have a few more minutes, please?','We are not ready. Wait.','More time is required.'],
+   correct:0,
+   ok:'✓ Perfect! "Could we have a few more minutes?" is polite and natural.',
+   no:'"Could we have a few more minutes, please?" is the most polite and natural option.'},
+  {type:'waiter',text:'Of course! *(returns)* What would you like?'},
+  {type:'customer',
+   opts:['I desire the pasta.','I\'ll have the sea bass. Does it come with any sides?','Sea bass. Sides?'],
+   correct:1,
+   ok:'✓ Excellent! "I\'ll have..." to order, then "Does it come with...?" to ask a follow-up question.',
+   no:'The most natural response is "I\'ll have the sea bass. Does it come with any sides?"'},
+  {type:'waiter',text:'*(later)* Can I get you anything else tonight?'},
+  {type:'customer',
+   opts:['No. Bring the bill.','Not for me, thanks. Could we get the bill, please?','We want to pay now.'],
+   correct:1,
+   ok:'✓ Perfect ending! Polite, natural, and complete.',
+   no:'"Not for me, thanks. Could we get the bill, please?" is the most natural and polite.'},
+];
+
+var dbAnswers={};
+
+function initDB(){
+  dbAnswers={};
+  document.getElementById('db-result').classList.remove('show');
+  document.querySelector('.check-btn').style.display='inline-block';
+  var container=document.getElementById('db-container');
+  container.style.display='';container.innerHTML='';
+  var customerIdx=0;
+  dialogueLines.forEach(function(line,i){
+    var row=document.createElement('div');row.className='db-line';
+    if(line.type==='waiter'){
+      row.innerHTML='<div class="db-speaker w">Waiter</div><div class="db-waiter-text">'+line.text+'</div>';
+    } else {
+      var idx=customerIdx++;
+      dbAnswers[idx]='';
+      var opts=line.opts.map(function(o,j){
+        return '<option value="'+j+'">'+o+'</option>';
+      });
+      opts.unshift('<option value="">— choose your response —</option>');
+      row.innerHTML='<div class="db-speaker c">You</div>'+
+        '<div style="flex:1;">'+
+          '<select class="db-select" id="dbs-'+idx+'" data-idx="'+idx+'" data-correct="'+line.correct+'">'+opts.join('')+'</select>'+
+          '<div class="db-feedback ok" id="dbfbok-'+idx+'">'+line.ok+'</div>'+
+          '<div class="db-feedback no" id="dbfbno-'+idx+'">'+line.no+'</div>'+
+        '</div>';
+    }
+    container.appendChild(row);
+  });
+}
+
+function checkDB(){
+  var customerIdx=0, correct=0, total=0;
+  dialogueLines.forEach(function(line){
+    if(line.type==='customer'){
+      total++;
+      var idx=customerIdx++;
+      var sel=document.getElementById('dbs-'+idx);
+      sel.disabled=true;
+      var chosen=parseInt(sel.value);
+      var correctVal=parseInt(sel.dataset.correct);
+      if(chosen===correctVal){
+        sel.classList.add('correct');
+        document.getElementById('dbfbok-'+idx).classList.add('show');
+        correct++;
+      } else {
+        sel.classList.add('wrong');
+        document.getElementById('dbfbno-'+idx).classList.add('show');
+      }
+    } else { customerIdx; }
+  });
+
+  document.querySelector('.check-btn').style.display='none';
+  document.getElementById('db-container').style.display='none';
+  document.getElementById('db-result').classList.add('show');
+  var emoji=correct===total?'🎉':correct>=total-1?'🌟':'💪';
+  document.getElementById('db-emoji').textContent=emoji;
+  document.getElementById('db-score').textContent=correct+' / '+total;
+  var m={};
+  m[total]='Perfect dialogue! You handled every situation naturally. ☕';
+  m[total-1]='Almost perfect! One line to review.';
+  m[total-2]='Good work! Try again to get a perfect score.';
+  document.getElementById('db-msg').textContent=m[correct]||'Keep practising!';
+}
+
+// fix customer counter for checkDB
+(function(){
+  var origCheck=checkDB;
+  checkDB=function(){
+    var customerIdx=0,correct=0,total=0;
+    dialogueLines.forEach(function(line){
+      if(line.type==='customer'){
+        total++;
+        var sel=document.getElementById('dbs-'+customerIdx);
+        sel.disabled=true;
+        var chosen=parseInt(sel.value);
+        var correctVal=line.correct;
+        if(chosen===correctVal){
+          sel.classList.add('correct');
+          document.getElementById('dbfbok-'+customerIdx).classList.add('show');
+          correct++;
+        } else {
+          sel.classList.add('wrong');
+          document.getElementById('dbfbno-'+customerIdx).classList.add('show');
+        }
+        customerIdx++;
+      }
+    });
+    document.querySelector('.check-btn').style.display='none';
+    document.getElementById('db-container').style.display='none';
+    document.getElementById('db-result').classList.add('show');
+    var emoji=correct===total?'🎉':correct>=total-1?'🌟':'💪';
+    document.getElementById('db-emoji').textContent=emoji;
+    document.getElementById('db-score').textContent=correct+' / '+total;
+    var m={};
+    m[total]='Perfect dialogue! You handled every situation naturally. ☕';
+    m[total-1]='Almost perfect! One line to review.';
+    m[total-2]='Good work! Try again to get a perfect score.';
+    document.getElementById('db-msg').textContent=m[correct]||'Keep practising!';
+  };
+})();
+
+initSit();
+initDB();
+</script>
+</body>
+</html>
