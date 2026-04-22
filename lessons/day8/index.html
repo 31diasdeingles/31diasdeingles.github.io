@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Day 9 · The Devil Wears Prada 2 | 31 días de inglés real</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --cream:#F5EFE6;--sand:#E8DDD0;--linen:#F0E9DF;
+    --mocha:#7C5C45;--espresso:#4A2E1A;--caramel:#B07D56;
+    --stone:#9E8C7E;--dark:#2C1A0E;--white:#FDFAF6;
+    --pink:#993556;--pink-light:#FBEAF0;--pink-border:#ED93B1;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--dark);}
+  nav{background:var(--espresso);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .nav-brand{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--caramel);text-decoration:none;}
+  .nav-tag{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(245,239,230,0.45);}
+  .hero{background:var(--espresso);padding:60px 28px 0;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(153,53,86,0.18) 0%,transparent 65%);}
+  .hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--pink-border);margin-bottom:12px;}
+  .hero-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,3.4rem);font-weight:900;color:var(--cream);line-height:1.1;margin-bottom:14px;}
+  .hero-title em{color:var(--pink-border);font-style:italic;}
+  .hero-meta{font-size:12px;color:rgba(245,239,230,0.45);font-weight:300;letter-spacing:0.05em;margin-bottom:36px;}
+  .hero-img-placeholder{width:100%;max-width:680px;margin:0 auto;height:340px;border-radius:16px 16px 0 0;background:linear-gradient(135deg,rgba(153,53,86,0.35),rgba(74,46,26,0.55));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;}
+  .ph-icon{font-size:64px;opacity:0.55;}
+  .ph-text{font-family:'Playfair Display',serif;font-size:1.15rem;font-style:italic;color:rgba(245,239,230,0.4);}
+  .vocab-legend{background:var(--pink-light);border:1px solid var(--pink-border);border-radius:12px;padding:14px 20px;margin-bottom:28px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .vocab-legend-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--pink);}
+  .vocab-legend-text{font-size:13px;color:var(--mocha);font-weight:300;}
+  .hl-sample{background:rgba(153,53,86,0.1);color:var(--pink);border-radius:4px;padding:2px 7px;font-weight:600;font-size:13px;border-bottom:2px solid var(--pink-border);}
+  .content-wrap{max-width:720px;margin:0 auto;padding:48px 28px 64px;}
+  .article p{font-size:1.05rem;line-height:1.85;color:var(--dark);margin-bottom:1.4rem;font-weight:300;}
+  .article p:first-child::first-letter{font-family:'Playfair Display',serif;font-size:4rem;font-weight:900;color:var(--pink);float:left;line-height:0.8;margin:6px 10px 0 0;}
+  .kw{background:rgba(153,53,86,0.09);color:var(--pink);border-radius:4px;padding:1px 6px;font-weight:600;border-bottom:2px solid rgba(153,53,86,0.3);cursor:pointer;transition:all 0.15s;position:relative;display:inline-block;}
+  .kw:hover{background:rgba(153,53,86,0.17);}
+  .kw .tt{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--espresso);color:var(--cream);font-size:12px;font-weight:400;line-height:1.45;padding:8px 12px;border-radius:8px;white-space:normal;z-index:50;pointer-events:none;font-family:'Jost',sans-serif;max-width:220px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.2);min-width:160px;}
+  .kw .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--espresso);}
+  .kw:hover .tt,.kw.active .tt{display:block;}
+  .pull-quote{border-left:4px solid var(--pink);margin:28px 0;padding:16px 24px;background:var(--pink-light);border-radius:0 12px 12px 0;}
+  .pull-quote p{font-family:'Playfair Display',serif;font-size:1.15rem;font-style:italic;color:var(--espresso);line-height:1.5;margin:0!important;}
+  .pull-quote p::first-letter{all:unset;}
+  .pull-quote cite{display:block;margin-top:8px;font-size:12px;color:var(--pink);font-weight:600;letter-spacing:0.05em;font-style:normal;font-family:'Jost',sans-serif;}
+  .cast-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:28px 0;}
+  .cast-card{background:var(--white);border:1px solid rgba(153,53,86,0.15);border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;}
+  .cast-icon{font-size:1.8rem;flex-shrink:0;}
+  .cast-name{font-weight:600;color:var(--espresso);font-size:0.9rem;margin-bottom:2px;}
+  .cast-role{font-size:0.8rem;color:var(--pink);font-weight:500;margin-bottom:4px;}
+  .cast-desc{font-size:0.78rem;color:var(--stone);font-weight:300;line-height:1.4;}
+  .fact-box{background:var(--espresso);border-radius:16px;padding:24px 28px;margin:32px 0;}
+  .fact-box-title{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--pink-border);margin-bottom:14px;}
+  .fact-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .fact-list li{font-size:0.88rem;color:rgba(245,239,230,0.75);line-height:1.5;display:flex;gap:10px;align-items:flex-start;font-weight:300;}
+  .fact-list li::before{content:'★';color:var(--pink-border);font-size:10px;flex-shrink:0;margin-top:3px;}
+  .section-divider{display:flex;align-items:center;gap:16px;margin:36px 0;}
+  .section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:rgba(153,53,86,0.2);}
+  .section-divider span{font-size:18px;color:var(--pink);opacity:0.5;}
+  .vocab-recap{background:var(--linen);border:1px solid rgba(153,53,86,0.15);border-radius:16px;padding:28px;margin:40px 0;}
+  .vocab-recap-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--espresso);margin-bottom:4px;}
+  .vocab-recap-sub{font-size:12px;color:var(--stone);font-weight:300;margin-bottom:20px;}
+  .vocab-list{display:flex;flex-direction:column;gap:10px;}
+  .vocab-row{display:flex;gap:12px;align-items:flex-start;padding:10px 14px;background:var(--white);border-radius:10px;border:1px solid rgba(124,92,69,0.15);}
+  .vocab-row-word{font-weight:600;color:var(--pink);min-width:160px;font-size:0.9rem;flex-shrink:0;}
+  .vocab-row-def{font-size:0.85rem;color:var(--dark);font-weight:300;line-height:1.5;}
+  .exercises-cta{background:var(--espresso);border-radius:20px;padding:32px 28px;text-align:center;margin:40px 0;}
+  .exercises-cta h3{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--cream);margin-bottom:8px;}
+  .exercises-cta p{font-size:0.88rem;color:rgba(245,239,230,0.6);font-weight:300;margin-bottom:20px;line-height:1.6;}
+  .exercises-cta a{display:inline-block;background:var(--pink);color:#fff;font-family:'Jost',sans-serif;font-weight:500;font-size:0.95rem;padding:13px 32px;border-radius:50px;text-decoration:none;letter-spacing:0.04em;transition:opacity 0.2s;}
+  .exercises-cta a:hover{opacity:0.85;}
+  footer{text-align:center;padding:24px;font-size:12px;color:var(--stone);font-weight:300;border-top:1px solid rgba(124,92,69,0.15);}
+  footer strong{color:var(--mocha);}
+  @media(max-width:600px){
+    .hero{padding:40px 20px 0;}
+    .content-wrap{padding:32px 20px 48px;}
+    .cast-grid{grid-template-columns:1fr;}
+    .vocab-row{flex-direction:column;gap:4px;}
+    .vocab-row-word{min-width:auto;}
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-brand">31 días de inglés real</a>
+  <span class="nav-tag">Day 9 · Culture & Entertainment</span>
+</nav>
+<div class="hero">
+  <div class="hero-eyebrow">Day 9 · Culture & Entertainment · Level B1</div>
+  <h1 class="hero-title">She's Back —<br><em>And So Is Miranda Priestly</em></h1>
+  <div class="hero-meta">31 días de inglés real · April 2026 · 4 min read</div>
+  <div class="hero-img-placeholder">
+    <div class="ph-icon">👗</div>
+    <div class="ph-text">The Devil Wears Prada 2 · In cinemas May 1, 2026</div>
+  </div>
+</div>
+<div class="content-wrap">
+  <div class="vocab-legend">
+    <span class="vocab-legend-label">💡 Tip</span>
+    <span class="vocab-legend-text">Words in <span class="hl-sample">pink</span> are today's vocabulary. Hover or tap to see the meaning!</span>
+  </div>
+  <div class="article">
+
+    <p>
+      It has been nearly twenty years. Twenty years since Andy Sachs threw her phone
+      into a fountain in Paris. Twenty years since Miranda Priestly looked out of a
+      car window and smiled — that cold, terrifying smile — and drove away.
+      And yet, somehow, the world never stopped talking about them.
+      Now, in 2026, they are back. And the fashion world has never been more ready.
+    </p>
+
+    <p>
+      <em>The Devil Wears Prada 2</em> is one of the most
+      <span class="kw">anticipated<span class="tt">Expected and waited for with excitement — usually refers to something people are very eager to see.</span></span>
+      films of the year. The original, released in 2006, became a cultural phenomenon —
+      a film that was not just about fashion, but about ambition, identity, and the cost
+      of success. Now the
+      <span class="kw">sequel<span class="tt">A film, book or series that continues the story of an earlier one.</span></span>
+      arrives on May 1, 2026, with the same director, the same writer, and — most
+      importantly — the same four actors who made the original unforgettable.
+    </p>
+
+    <div class="pull-quote">
+      <p>"Took you long enough."</p>
+      <cite>— Miranda Priestly to Andy, in the first teaser trailer · November 2025</cite>
+    </div>
+
+    <div class="section-divider"><span>✦</span></div>
+
+    <p>
+      The story picks up nearly two decades later. Miranda Priestly is still
+      editor-in-chief of Runway magazine — but the world has changed dramatically
+      around her. Print media is in
+      <span class="kw">decline<span class="tt">The process of becoming smaller, weaker or less important over time.</span></span>.
+      Advertisers are leaving. Digital media has taken over. And Miranda, one of the most
+      powerful women in fashion, is now fighting to keep her magazine — and her
+      <span class="kw">legacy<span class="tt">Something that a person leaves behind that continues to have an impact after they are gone.</span></span>
+      — alive.
+    </p>
+
+    <p>
+      Andy Sachs, meanwhile, has become a respected journalist. She is recruited to
+      return to Runway as the new features editor — which means working with Miranda
+      again. And Emily Charlton, Miranda's former first assistant, has
+      <span class="kw">reinvented<span class="tt">Changed completely to become something new and different.</span></span>
+      herself as a powerful executive at a luxury fashion group. The tension between
+      the three women drives the entire film.
+    </p>
+
+    <div class="cast-grid">
+      <div class="cast-card">
+        <div class="cast-icon">👑</div>
+        <div>
+          <div class="cast-name">Meryl Streep</div>
+          <div class="cast-role">Miranda Priestly</div>
+          <div class="cast-desc">The iconic editor-in-chief, now fighting to save Runway from the digital age.</div>
+        </div>
+      </div>
+      <div class="cast-card">
+        <div class="cast-icon">✍️</div>
+        <div>
+          <div class="cast-name">Anne Hathaway</div>
+          <div class="cast-role">Andy Sachs</div>
+          <div class="cast-desc">Now a respected journalist, recruited back to Runway as features editor.</div>
+        </div>
+      </div>
+      <div class="cast-card">
+        <div class="cast-icon">💼</div>
+        <div>
+          <div class="cast-name">Emily Blunt</div>
+          <div class="cast-role">Emily Charlton</div>
+          <div class="cast-desc">Former assistant turned luxury executive — now Miranda's most powerful rival.</div>
+        </div>
+      </div>
+      <div class="cast-card">
+        <div class="cast-icon">✂️</div>
+        <div>
+          <div class="cast-name">Stanley Tucci</div>
+          <div class="cast-role">Nigel Kipling</div>
+          <div class="cast-desc">The beloved fashion director returns alongside the iconic core cast.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider"><span>✦</span></div>
+
+    <p>
+      The film also introduces an impressive group of new characters. Kenneth Branagh
+      plays Miranda's husband. Simone Ashley, Lucy Liu, Justin Theroux and Pauline
+      Chalamet join the
+      <span class="kw">cast<span class="tt">The group of actors who appear in a film, TV show or play.</span></span>.
+      And Lady Gaga — who has an original song in the film called
+      <em>"Runway"</em>, recorded with rapper Doechii — also
+      <span class="kw">makes a cameo<span class="tt">Makes a brief appearance in a film or show, usually as a surprise.</span></span>.
+    </p>
+
+    <div class="fact-box">
+      <div class="fact-box-title">By the numbers</div>
+      <ul class="fact-list">
+        <li>The first teaser trailer broke records with <strong>181.5 million views</strong> in its first 24 hours</li>
+        <li>The official trailer launched on February 1, 2026, got <strong>222 million views</strong> in one day — the most successful trailer debut ever</li>
+        <li>Filming took place in <strong>New York and Milan</strong>, from June to October 2025</li>
+        <li>The working title during filming was <strong>"Cerulean"</strong> — a nod to the iconic blue sweater monologue from the original</li>
+        <li>The world premiere was held on <strong>April 20, 2026</strong> at Lincoln Center, New York</li>
+      </ul>
+    </div>
+
+    <p>
+      What makes this sequel particularly interesting is its
+      <span class="kw">premise<span class="tt">The central idea or situation that a story is based on.</span></span>.
+      The original film was set in a world where print magazines were powerful and
+      glamorous. Today, that world barely exists. By setting the sequel in the age
+      of digital media, social media and streaming, the filmmakers are asking a
+      question that feels very real: what happens to powerful institutions —
+      and powerful people — when the world changes faster than they can?
+    </p>
+
+    <p>
+      It is a question that goes far beyond fashion. And that is exactly why, nearly
+      twenty years later, Miranda Priestly still feels
+      <span class="kw">relevant<span class="tt">Directly connected to and important in the present moment.</span></span>.
+    </p>
+
+  </div>
+
+  <div class="section-divider"><span>✦</span></div>
+
+  <div class="vocab-recap">
+    <div class="vocab-recap-title">Today's vocabulary</div>
+    <div class="vocab-recap-sub">8 key words from this article — all useful for talking about film and culture</div>
+    <div class="vocab-list">
+      <div class="vocab-row"><div class="vocab-row-word">Anticipated</div><div class="vocab-row-def">Expected and waited for with great excitement.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Sequel</div><div class="vocab-row-def">A film, book or series that continues the story of an earlier one.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Decline</div><div class="vocab-row-def">The process of becoming smaller, weaker or less important over time.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Legacy</div><div class="vocab-row-def">Something a person leaves behind that continues to have impact after they are gone.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Reinvented herself</div><div class="vocab-row-def">Changed completely to become something new and different.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Cast</div><div class="vocab-row-def">The group of actors who appear in a film, TV show or play.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Makes a cameo</div><div class="vocab-row-def">Makes a brief surprise appearance in a film or show.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Premise</div><div class="vocab-row-def">The central idea or situation that a story is based on.</div></div>
+    </div>
+  </div>
+
+  <div class="exercises-cta">
+    <h3>Ready to practise?</h3>
+    <p>Test your vocabulary and comprehension with today's interactive exercises.</p>
+    <a href="../../exercises/day9_exercises.html">Go to exercises →</a>
+  </div>
+</div>
+<footer><p>© 2026 <strong>31 días de inglés real</strong> · con Camila Cabrera · Level B1</p></footer>
+<script>
+  document.querySelectorAll('.kw').forEach(function(el){
+    el.addEventListener('click',function(e){
+      e.stopPropagation();
+      var isActive=this.classList.contains('active');
+      document.querySelectorAll('.kw').forEach(function(k){k.classList.remove('active');});
+      if(!isActive)this.classList.add('active');
+    });
+  });
+  document.addEventListener('click',function(){
+    document.querySelectorAll('.kw').forEach(function(k){k.classList.remove('active');});
+  });
+</script>
+</body>
+</html>
