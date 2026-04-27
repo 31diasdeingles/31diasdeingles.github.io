@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Day 10 · Interactive Exercises</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --cream:#F5EFE6;--sand:#E8DDD0;--linen:#F0E9DF;
+    --mocha:#7C5C45;--espresso:#4A2E1A;--caramel:#B07D56;
+    --stone:#9E8C7E;--dark:#2C1A0E;--white:#FDFAF6;
+    --brown:#7C5C45;--brown-light:#F0E9DF;--brown-border:#C4A882;
+    --ok:#1A5C2A;--ok-bg:#D4EDDA;--ok-border:#9DC3A8;
+    --no:#721C24;--no-bg:#F8D7DA;--no-border:#E8A5A9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--dark);}
+  .topbar{background:var(--espresso);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .topbar-brand{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--caramel);}
+  .topbar-label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(245,239,230,0.5);}
+  .tabs{display:flex;background:var(--sand);border-bottom:2px solid rgba(124,92,69,0.2);}
+  .tab{flex:1;padding:16px;text-align:center;cursor:pointer;font-size:13px;font-weight:500;letter-spacing:0.04em;color:var(--stone);border:none;background:none;border-bottom:3px solid transparent;transition:all 0.2s;}
+  .tab.active{color:var(--espresso);border-bottom-color:var(--brown);background:var(--cream);}
+  .tab:hover:not(.active){color:var(--mocha);background:rgba(124,92,69,0.05);}
+  .panel{display:none;padding:36px 32px;max-width:760px;margin:0 auto;}
+  .panel.active{display:block;}
+  .section-eyebrow{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--brown);margin-bottom:6px;}
+  .section-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--espresso);margin-bottom:6px;}
+  .section-sub{font-size:0.88rem;color:var(--stone);font-weight:300;line-height:1.6;margin-bottom:28px;}
+  .instruction-box{background:var(--brown-light);border:1px solid var(--brown-border);border-radius:12px;padding:14px 18px;margin-bottom:24px;font-size:0.85rem;color:var(--brown);line-height:1.6;}
+  .progress-wrap{margin-bottom:20px;}
+  .progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--stone);margin-bottom:5px;}
+  .progress-track{height:5px;background:var(--sand);border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--brown);border-radius:3px;transition:width 0.4s ease;}
+  .score-badge{display:inline-flex;align-items:center;gap:8px;background:var(--sand);border-radius:20px;padding:6px 16px;font-size:13px;font-weight:500;color:var(--espresso);margin-bottom:20px;}
+  .vocab-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
+  .vocab-word-card{background:var(--espresso);color:var(--cream);border-radius:12px;padding:14px 16px;cursor:pointer;font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;text-align:center;border:2px solid transparent;transition:all 0.18s;user-select:none;line-height:1.3;}
+  .vocab-word-card:hover{background:var(--mocha);transform:scale(1.02);}
+  .vocab-word-card.selected{border-color:var(--brown);background:var(--mocha);}
+  .vocab-word-card.correct{background:var(--ok);border-color:var(--ok-border);cursor:default;}
+  .vocab-word-card.wrong{background:var(--no);border-color:var(--no-border);animation:shake 0.3s;}
+  .vocab-defs-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+  .vocab-def-card{background:var(--white);border:1px solid rgba(124,92,69,0.2);border-radius:12px;padding:14px 16px;cursor:pointer;font-size:0.86rem;color:var(--dark);line-height:1.5;border-left:4px solid transparent;transition:all 0.18s;user-select:none;}
+  .vocab-def-card:hover{border-left-color:var(--brown);background:var(--brown-light);}
+  .vocab-def-card.selected{border-left-color:var(--brown);background:var(--brown-light);}
+  .vocab-def-card.correct{border-left-color:var(--ok);background:var(--ok-bg);cursor:default;}
+  .vocab-def-card.wrong{border-left-color:var(--no);background:var(--no-bg);animation:shake 0.3s;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+
+  /* AS...AS EXERCISE */
+  .asas-card{background:var(--white);border:1px solid rgba(124,92,69,0.18);border-radius:14px;padding:20px 22px;margin-bottom:14px;}
+  .asas-num{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--brown);margin-bottom:8px;}
+  .asas-sentence{font-size:1rem;line-height:1.9;color:var(--dark);margin-bottom:10px;}
+  .asas-input{font-size:14px;font-weight:600;border:none;border-bottom:2px solid var(--brown-border);background:var(--brown-light);color:var(--brown);padding:2px 8px;outline:none;border-radius:4px 4px 0 0;font-family:'Jost',sans-serif;min-width:140px;transition:border-color 0.15s;}
+  .asas-input:focus{border-bottom-color:var(--brown);}
+  .asas-input.correct{background:var(--ok-bg);border-bottom-color:var(--ok);color:var(--ok);}
+  .asas-input.wrong{background:var(--no-bg);border-bottom-color:var(--no);color:var(--no);}
+  .asas-feedback{font-size:12px;margin-top:6px;padding:6px 10px;border-radius:6px;display:none;}
+  .asas-feedback.show{display:block;}
+  .asas-feedback.ok{background:var(--ok-bg);color:var(--ok);}
+  .asas-feedback.no{background:var(--no-bg);color:var(--no);}
+
+  .check-btn{background:var(--espresso);color:var(--cream);border:none;border-radius:50px;font-family:'Jost',sans-serif;font-size:0.88rem;font-weight:500;padding:11px 28px;cursor:pointer;letter-spacing:0.04em;transition:background 0.2s;margin-top:8px;}
+  .check-btn:hover{background:var(--mocha);}
+  .result-screen{text-align:center;padding:40px 20px;display:none;}
+  .result-screen.show{display:block;}
+  .result-emoji{font-size:60px;margin-bottom:16px;}
+  .result-score{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:var(--espresso);margin-bottom:6px;}
+  .result-msg{font-size:1rem;color:var(--stone);font-weight:300;margin-bottom:24px;line-height:1.6;}
+  .restart-btn{background:var(--espresso);color:var(--cream);border:none;border-radius:50px;font-family:'Jost',sans-serif;font-size:0.9rem;font-weight:500;padding:12px 32px;cursor:pointer;letter-spacing:0.04em;transition:background 0.2s;}
+  .restart-btn:hover{background:var(--mocha);}
+  @media(max-width:500px){.panel{padding:24px 16px;}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-brand">31 días de inglés real</div>
+  <div class="topbar-label">Day 10 · Random & Lore · Exercises</div>
+</div>
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('vocab',this)">📖 Vocabulary Match</button>
+  <button class="tab" onclick="switchTab('asas',this)">🧠 As...as Grammar</button>
+</div>
+
+<!-- VOCAB -->
+<div class="panel active" id="panel-vocab">
+  <div class="section-eyebrow">Exercise 1 of 2</div>
+  <div class="section-title">Vocabulary Match</div>
+  <div class="section-sub">Match each word with its correct definition.</div>
+  <div class="instruction-box">🚢 All 8 words are from today's article about the captain who sank the MV Explorer.</div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progress</span><span id="vocab-progress-txt">0 / 8 matched</span></div>
+    <div class="progress-track"><div class="progress-fill" id="vocab-bar" style="width:0%"></div></div>
+  </div>
+  <div class="score-badge">Score: <strong id="vocab-score">0</strong> / 8</div>
+  <div id="vocab-game">
+    <div style="font-size:12px;color:var(--stone);margin-bottom:10px;font-weight:500;">WORDS</div>
+    <div class="vocab-grid" id="words-grid"></div>
+    <div style="font-size:12px;color:var(--stone);margin:16px 0 10px;font-weight:500;">DEFINITIONS</div>
+    <div class="vocab-defs-grid" id="defs-grid"></div>
+  </div>
+  <div class="result-screen" id="vocab-result">
+    <div class="result-emoji" id="vocab-emoji">🎉</div>
+    <div class="result-score" id="vocab-score-big">8 / 8</div>
+    <div class="result-msg" id="vocab-msg"></div>
+    <button class="restart-btn" onclick="initVocab()">Try again</button>
+  </div>
+</div>
+
+<!-- AS...AS -->
+<div class="panel" id="panel-asas">
+  <div class="section-eyebrow">Exercise 2 of 2</div>
+  <div class="section-title">As...as — Fill in the blanks</div>
+  <div class="section-sub">Complete each sentence using the adjective in brackets with the as...as structure.</div>
+  <div class="instruction-box">🧠 Remember: as + adjective + as. All sentences are about the MV Explorer and its captain!</div>
+  <div id="asas-container"></div>
+  <button class="check-btn" onclick="checkAsAs()">Check my answers ✓</button>
+  <div class="result-screen" id="asas-result">
+    <div class="result-emoji" id="asas-emoji">🎉</div>
+    <div class="result-score" id="asas-score">8 / 8</div>
+    <div class="result-msg" id="asas-msg"></div>
+    <button class="restart-btn" onclick="initAsAs()">Try again</button>
+  </div>
+</div>
+
+<script>
+function switchTab(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// VOCAB
+var vocabPairs=[
+  {word:'Iconic',       def:'Famous and highly respected, representing an important era or idea.'},
+  {word:'Ice field',    def:'A large area of floating sea ice in polar waters — dangerous for ships.'},
+  {word:'Excessive',    def:'More than is necessary, normal or reasonable — dangerously too much.'},
+  {word:'Watertight',   def:'Sealed so that no water can enter — used for ship compartments.'},
+  {word:'Evacuation',   def:'The organised movement of people away from a dangerous place.'},
+  {word:'Controversial',def:'Causing strong disagreement or debate among people.'},
+  {word:'Hull',         def:'The main body or outer shell of a ship.'},
+  {word:'Overconfident',def:'Too confident — so sure of yourself that you make dangerous mistakes.'},
+];
+var selectedWord=null,vocabScore=0,matched=0;
+function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function initVocab(){
+  selectedWord=null;vocabScore=0;matched=0;
+  document.getElementById('vocab-score').textContent='0';
+  document.getElementById('vocab-progress-txt').textContent='0 / 8 matched';
+  document.getElementById('vocab-bar').style.width='0%';
+  document.getElementById('vocab-result').classList.remove('show');
+  document.getElementById('vocab-game').style.display='';
+  var sw=shuffle(vocabPairs),sd=shuffle(vocabPairs.map(function(p){return p.def;}));
+  var wg=document.getElementById('words-grid');wg.innerHTML='';
+  sw.forEach(function(pair){
+    var btn=document.createElement('button');btn.className='vocab-word-card';
+    btn.textContent=pair.word;btn.dataset.word=pair.word;
+    btn.onclick=function(){selectWord(this);};wg.appendChild(btn);
+  });
+  var dg=document.getElementById('defs-grid');dg.innerHTML='';
+  sd.forEach(function(def){
+    var btn=document.createElement('button');btn.className='vocab-def-card';
+    btn.textContent=def;btn.dataset.def=def;
+    btn.onclick=function(){selectDef(this);};dg.appendChild(btn);
+  });
+}
+function selectWord(el){
+  if(el.classList.contains('correct')||el.disabled)return;
+  document.querySelectorAll('.vocab-word-card').forEach(function(c){c.classList.remove('selected');});
+  el.classList.add('selected');selectedWord=el.dataset.word;
+}
+function selectDef(el){
+  if(!selectedWord||el.classList.contains('correct')||el.disabled)return;
+  var correctDef=vocabPairs.find(function(p){return p.word===selectedWord;}).def;
+  if(el.dataset.def===correctDef){
+    el.classList.add('correct');el.disabled=true;
+    var we=document.querySelector('[data-word="'+selectedWord+'"]');
+    we.classList.remove('selected');we.classList.add('correct');we.disabled=true;
+    matched++;vocabScore++;
+    document.getElementById('vocab-score').textContent=vocabScore;
+    document.getElementById('vocab-progress-txt').textContent=matched+' / 8 matched';
+    document.getElementById('vocab-bar').style.width=Math.round((matched/8)*100)+'%';
+    selectedWord=null;
+    if(matched===8)setTimeout(showVocabResult,600);
+  } else {
+    el.classList.add('wrong');
+    var we=document.querySelector('[data-word="'+selectedWord+'"]');
+    we.classList.add('wrong');
+    setTimeout(function(){el.classList.remove('wrong','selected');we.classList.remove('wrong','selected');selectedWord=null;},700);
+  }
+}
+function showVocabResult(){
+  document.getElementById('vocab-game').style.display='none';
+  document.getElementById('vocab-result').classList.add('show');
+  var e={8:'🎉',7:'🌟',6:'👍',5:'💪'};
+  document.getElementById('vocab-emoji').textContent=e[vocabScore]||'☕';
+  document.getElementById('vocab-score-big').textContent=vocabScore+' / 8';
+  var m={8:'Perfect! All 8 matched. Now try the grammar exercise!',7:'Almost! One more try.',6:'Good work! Review and try again.',5:'Keep going!'};
+  document.getElementById('vocab-msg').textContent=m[vocabScore]||'Practice makes perfect!';
+}
+
+// AS...AS
+var asasData=[
+  {
+    before:'The conditions that morning were',
+    blank:'as calm as',
+    adjective:'calm',
+    after:'any captain could hope for — mild weather, flat seas, perfect visibility.',
+    feedback_ok:'✓ Correct! "As calm as any captain could hope for" — the conditions were ideal. The accident was entirely avoidable.',
+    feedback_no:'The correct answer is "as calm as". Structure: as + adjective + as.'
+  },
+  {
+    before:'The Explorer was',
+    blank:'as famous as',
+    adjective:'famous',
+    after:'any ship in Antarctic history — the very first cruise vessel to sail those waters.',
+    feedback_ok:'✓ Correct! "As famous as" — the Explorer had legendary status in polar exploration.',
+    feedback_no:'The correct answer is "as famous as". Use as + adjective + as to show equal status.'
+  },
+  {
+    before:'The ice was not',
+    blank:'as thin as',
+    adjective:'thin',
+    after:'the captain had assumed — it was older, harder glacial ice with huge underwater sections.',
+    feedback_ok:'✓ Correct! "Not as thin as" — the ice was much harder than Wiman thought. This was his fatal mistake.',
+    feedback_no:'The correct answer is "as thin as". With "not as...as" you show one thing is less than expected.'
+  },
+  {
+    before:'The investigation was',
+    blank:'as controversial as',
+    adjective:'controversial',
+    after:'the sinking itself — the company refused to accept responsibility.',
+    feedback_ok:'✓ Correct! "As controversial as" — both the accident and the investigation caused huge debate.',
+    feedback_no:'The correct answer is "as controversial as". The investigation sparked just as much debate as the sinking.'
+  },
+  {
+    before:'The captain\'s decision to evacuate early was',
+    blank:'as important as',
+    adjective:'important',
+    after:'any decision he made — it saved all 154 lives.',
+    feedback_ok:'✓ Correct! "As important as" — without the early evacuation, the story could have ended very differently.',
+    feedback_no:'The correct answer is "as important as". The evacuation was just as critical as any other factor.'
+  },
+  {
+    before:'The Explorer\'s wreck is now',
+    blank:'as unreachable as',
+    adjective:'unreachable',
+    after:'it is unforgettable — lying nearly 5,000 feet below the Southern Ocean.',
+    feedback_ok:'✓ Correct! "As unreachable as it is unforgettable" — a beautiful fixed structure using as...as twice.',
+    feedback_no:'The correct answer is "as unreachable as". The wreck is equally impossible to reach as it is impossible to forget.'
+  },
+  {
+    before:'Antarctic cruises today are',
+    blank:'as popular as',
+    adjective:'popular',
+    after:'ever — but the rules are much stricter after the Explorer sank.',
+    feedback_ok:'✓ Correct! "As popular as ever" is a common fixed expression meaning more popular than before.',
+    feedback_no:'The correct answer is "as popular as ever". This fixed expression means the popularity has not declined.'
+  },
+  {
+    before:'Every captain who sails south from Ushuaia knows the Explorer\'s story —',
+    blank:'as memorable as',
+    adjective:'memorable',
+    after:'any lesson the Southern Ocean has ever taught.',
+    feedback_ok:'✓ Perfect! "As memorable as" — the story is just as unforgettable as the harshest conditions Antarctica can offer.',
+    feedback_no:'The correct answer is "as memorable as". The story is equally unforgettable as any maritime lesson.'
+  },
+];
+
+function initAsAs(){
+  document.getElementById('asas-result').classList.remove('show');
+  document.querySelector('.check-btn').style.display='inline-block';
+  var container=document.getElementById('asas-container');
+  container.style.display='';container.innerHTML='';
+  asasData.forEach(function(item,i){
+    var card=document.createElement('div');card.className='asas-card';
+    card.innerHTML=
+      '<div class="asas-num">Sentence '+(i+1)+' of '+asasData.length+
+        ' <span style="color:var(--stone);font-weight:300;text-transform:none;letter-spacing:0;font-size:11px;">— adjective: <em>'+item.adjective+'</em></span></div>'+
+      '<div class="asas-sentence">'+
+        item.before+' <input class="asas-input" id="asas-'+i+'" type="text" placeholder="as ___ as" autocomplete="off"/> '+item.after+
+      '</div>'+
+      '<div class="asas-feedback ok" id="asfbok-'+i+'">'+item.feedback_ok+'</div>'+
+      '<div class="asas-feedback no" id="asfbno-'+i+'">'+item.feedback_no+'</div>';
+    container.appendChild(card);
+  });
+}
+
+function checkAsAs(){
+  var correct=0;
+  asasData.forEach(function(item,i){
+    var input=document.getElementById('asas-'+i);
+    input.disabled=true;
+    var val=input.value.trim().toLowerCase().replace(/\s+/g,' ');
+    var expected=item.blank.toLowerCase();
+    if(val===expected||val===expected.replace(/\s+/g,' ')){
+      input.classList.add('correct');
+      document.getElementById('asfbok-'+i).classList.add('show');
+      correct++;
+    } else {
+      input.classList.add('wrong');
+      document.getElementById('asfbno-'+i).classList.add('show');
+    }
+  });
+  document.querySelector('.check-btn').style.display='none';
+  document.getElementById('asas-container').style.display='none';
+  document.getElementById('asas-result').classList.add('show');
+  var emoji=correct===8?'🏆':correct>=6?'🌟':correct>=4?'💪':'📚';
+  document.getElementById('asas-emoji').textContent=emoji;
+  document.getElementById('asas-score').textContent=correct+' / 8';
+  var m={8:'Perfect! You mastered as...as with the Roanoke mystery. ☕',
+         7:'Almost perfect! One small slip.',
+         6:'Good work! Review the ones you missed.',
+         5:'Keep going — read the grammar box in the article and try again.'};
+  document.getElementById('asas-msg').textContent=m[correct]||'Practice makes perfect!';
+}
+
+initVocab();
+initAsAs();
+</script>
+</body>
+</html>
