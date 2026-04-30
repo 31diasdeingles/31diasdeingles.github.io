@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Day 11 · Colapinto Road Show | 31 días de inglés real</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --cream:#F5EFE6;--sand:#E8DDD0;--linen:#F0E9DF;
+    --mocha:#7C5C45;--espresso:#4A2E1A;--caramel:#B07D56;
+    --stone:#9E8C7E;--dark:#2C1A0E;--white:#FDFAF6;
+    --green:#3B6D11;--green-light:#EAF3DE;--green-border:#97C459;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--dark);}
+  nav{background:var(--espresso);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .nav-brand{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--caramel);text-decoration:none;}
+  .nav-tag{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(245,239,230,0.45);}
+  .hero{background:var(--espresso);padding:60px 28px 0;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(59,109,17,0.2) 0%,transparent 65%);}
+  .hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--green-border);margin-bottom:12px;}
+  .hero-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,3.4rem);font-weight:900;color:var(--cream);line-height:1.1;margin-bottom:14px;}
+  .hero-title em{color:var(--green-border);font-style:italic;}
+  .hero-meta{font-size:12px;color:rgba(245,239,230,0.45);font-weight:300;letter-spacing:0.05em;margin-bottom:36px;}
+  .hero-img-placeholder{width:100%;max-width:680px;margin:0 auto;height:340px;border-radius:16px 16px 0 0;background:linear-gradient(135deg,rgba(59,109,17,0.35),rgba(74,46,26,0.55));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;}
+  .ph-icon{font-size:64px;opacity:0.55;}
+  .ph-text{font-family:'Playfair Display',serif;font-size:1.15rem;font-style:italic;color:rgba(245,239,230,0.4);}
+  .vocab-legend{background:var(--green-light);border:1px solid var(--green-border);border-radius:12px;padding:14px 20px;margin-bottom:28px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .vocab-legend-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--green);}
+  .vocab-legend-text{font-size:13px;color:var(--mocha);font-weight:300;}
+  .hl-sample{background:rgba(59,109,17,0.12);color:var(--green);border-radius:4px;padding:2px 7px;font-weight:600;font-size:13px;border-bottom:2px solid var(--green-border);}
+  .content-wrap{max-width:720px;margin:0 auto;padding:48px 28px 64px;}
+  .article p{font-size:1.05rem;line-height:1.85;color:var(--dark);margin-bottom:1.4rem;font-weight:300;}
+  .article p:first-child::first-letter{font-family:'Playfair Display',serif;font-size:4rem;font-weight:900;color:var(--green);float:left;line-height:0.8;margin:6px 10px 0 0;}
+  .kw{background:rgba(59,109,17,0.1);color:var(--green);border-radius:4px;padding:1px 6px;font-weight:600;border-bottom:2px solid rgba(59,109,17,0.35);cursor:pointer;transition:all 0.15s;position:relative;display:inline-block;}
+  .kw:hover{background:rgba(59,109,17,0.18);}
+  .kw .tt{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--espresso);color:var(--cream);font-size:12px;font-weight:400;line-height:1.45;padding:8px 12px;border-radius:8px;white-space:normal;z-index:50;pointer-events:none;font-family:'Jost',sans-serif;max-width:220px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.2);min-width:160px;}
+  .kw .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--espresso);}
+  .kw:hover .tt,.kw.active .tt{display:block;}
+  .pull-quote{border-left:4px solid var(--green);margin:28px 0;padding:16px 24px;background:var(--green-light);border-radius:0 12px 12px 0;}
+  .pull-quote p{font-family:'Playfair Display',serif;font-size:1.15rem;font-style:italic;color:var(--espresso);line-height:1.5;margin:0!important;}
+  .pull-quote p::first-letter{all:unset;}
+  .pull-quote cite{display:block;margin-top:8px;font-size:12px;color:var(--green);font-weight:600;letter-spacing:0.05em;font-style:normal;font-family:'Jost',sans-serif;}
+  .stat-strip{background:var(--espresso);border-radius:16px;padding:20px 24px;margin:32px 0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;}
+  .stat-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--green-border);line-height:1;}
+  .stat-lbl{font-size:11px;color:rgba(245,239,230,0.6);font-weight:300;margin-top:5px;line-height:1.4;}
+  .fact-box{background:var(--espresso);border-radius:16px;padding:24px 28px;margin:32px 0;}
+  .fact-box-title{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--green-border);margin-bottom:14px;}
+  .fact-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .fact-list li{font-size:0.88rem;color:rgba(245,239,230,0.78);line-height:1.5;display:flex;gap:10px;align-items:flex-start;font-weight:300;}
+  .fact-list li::before{content:'★';color:var(--green-border);font-size:10px;flex-shrink:0;margin-top:3px;}
+  .section-divider{display:flex;align-items:center;gap:16px;margin:36px 0;}
+  .section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:rgba(59,109,17,0.2);}
+  .section-divider span{font-size:18px;color:var(--green);opacity:0.5;}
+  .vocab-recap{background:var(--linen);border:1px solid rgba(59,109,17,0.15);border-radius:16px;padding:28px;margin:40px 0;}
+  .vocab-recap-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--espresso);margin-bottom:4px;}
+  .vocab-recap-sub{font-size:12px;color:var(--stone);font-weight:300;margin-bottom:20px;}
+  .vocab-list{display:flex;flex-direction:column;gap:10px;}
+  .vocab-row{display:flex;gap:12px;align-items:flex-start;padding:10px 14px;background:var(--white);border-radius:10px;border:1px solid rgba(124,92,69,0.15);}
+  .vocab-row-word{font-weight:600;color:var(--green);min-width:160px;font-size:0.9rem;flex-shrink:0;}
+  .vocab-row-def{font-size:0.85rem;color:var(--dark);font-weight:300;line-height:1.5;}
+  .exercises-cta{background:var(--espresso);border-radius:20px;padding:32px 28px;text-align:center;margin:40px 0;}
+  .exercises-cta h3{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--cream);margin-bottom:8px;}
+  .exercises-cta p{font-size:0.88rem;color:rgba(245,239,230,0.6);font-weight:300;margin-bottom:20px;line-height:1.6;}
+  .exercises-cta a{display:inline-block;background:var(--green);color:#fff;font-family:'Jost',sans-serif;font-weight:500;font-size:0.95rem;padding:13px 32px;border-radius:50px;text-decoration:none;letter-spacing:0.04em;transition:opacity 0.2s;}
+  .exercises-cta a:hover{opacity:0.85;}
+  footer{text-align:center;padding:24px;font-size:12px;color:var(--stone);font-weight:300;border-top:1px solid rgba(124,92,69,0.15);}
+  footer strong{color:var(--mocha);}
+  @media(max-width:600px){
+    .hero{padding:40px 20px 0;}
+    .content-wrap{padding:32px 20px 48px;}
+    .stat-strip{grid-template-columns:1fr;}
+    .vocab-row{flex-direction:column;gap:4px;}
+    .vocab-row-word{min-width:auto;}
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-brand">31 días de inglés real</a>
+  <span class="nav-tag">Day 11 · Sports</span>
+</nav>
+<div class="hero">
+  <div class="hero-eyebrow">Day 11 · Sports · Level B1</div>
+  <h1 class="hero-title">600,000 People,<br><em>One Argentine, One Dream</em></h1>
+  <div class="hero-meta">31 días de inglés real · April 2026 · 4 min read</div>
+  <div class="hero-img-placeholder">
+    <div class="ph-icon">🏎️</div>
+    <div class="ph-text">Franco Colapinto Road Show · Buenos Aires · April 26, 2026</div>
+  </div>
+</div>
+
+<div class="content-wrap">
+  <div class="vocab-legend">
+    <span class="vocab-legend-label">💡 Tip</span>
+    <span class="vocab-legend-text">Words in <span class="hl-sample">green</span> are today's vocabulary. Hover or tap to see the meaning!</span>
+  </div>
+
+  <div class="article">
+
+    <p>
+      You heard the engine first. A deep, raw, unmistakable roar — the sound of a
+      Formula 1 car running at full power. Then came the
+      <span class="kw">smoke<span class="tt">Tyre smoke — created when a car spins its wheels at high speed on the road.</span></span>,
+      rising in thick white clouds above Palermo. And then, from every direction,
+      came the crowd. Six hundred thousand people. On the streets of Buenos Aires.
+      On a Sunday afternoon. All of them there for one reason: Franco Colapinto
+      had brought Formula 1 home.
+    </p>
+
+    <p>
+      On April 26, 2026, the
+      <span class="kw">road show<span class="tt">A public demonstration event where a racing driver performs in a car on city streets.</span></span>
+      officially called "Mercado Libre presents: Franco Colapinto Road Show Buenos Aires 2026"
+      transformed Palermo into the largest motorsport event Argentina had seen in decades.
+      Along a specially built 2-kilometre
+      <span class="kw">circuit<span class="tt">A track or route used for racing or demonstration driving.</span></span>
+      on Avenida del Libertador and Avenida Sarmiento, Colapinto drove a 2012 Lotus E20 —
+      painted in Alpine blue — at full speed, performing donuts, full-throttle runs
+      and crowd
+      <span class="kw">laps<span class="tt">One complete trip around a racing circuit or route.</span></span>
+      that left the entire city breathless.
+    </p>
+
+    <div class="stat-strip">
+      <div><div class="stat-num">600K</div><div class="stat-lbl">fans in the streets of Buenos Aires</div></div>
+      <div><div class="stat-num">2 km</div><div class="stat-lbl">specially built street circuit in Palermo</div></div>
+      <div><div class="stat-num">28</div><div class="stat-lbl">years since Argentina last hosted an F1 race (1998)</div></div>
+    </div>
+
+    <div class="section-divider"><span>✦</span></div>
+
+    <p>
+      But the event was more than just a show. Colapinto also drove a
+      <span class="kw">replica<span class="tt">An exact copy of something — made to look identical to the original.</span></span>
+      of the Mercedes W196 — the car in which Juan Manuel Fangio won his 1954 and
+      1955 Formula 1 World Championships. It was a moment loaded with meaning:
+      Argentina's greatest sporting legend, honoured by Argentina's newest hero.
+      Colapinto paused at several points around the route to acknowledge the crowd —
+      standing on the car, waving, smiling — before completing a final lap on a
+      support truck through the thousands of fans who had lined the streets for hours.
+    </p>
+
+    <div class="pull-quote">
+      <p>"Wow, what an amazing feeling to be able to drive at home and especially to enjoy the day with so many fans. I love Argentinians. We are the best fans in the world."</p>
+      <cite>— Franco Colapinto, after the Road Show · April 26, 2026</cite>
+    </div>
+
+    <p>
+      The event was
+      <span class="kw">sponsored<span class="tt">Financially supported by a company in exchange for publicity and association with the event.</span></span>
+      by Mercado Libre — one of Latin America's largest tech companies — and
+      organised by Alpine, Colapinto's Formula 1 team. The crowd of 600,000 made
+      it one of the largest Formula 1
+      <span class="kw">demonstrations<span class="tt">A public display or event showing something — in this case, a car performing on streets.</span></span>
+      ever held anywhere in the world. To put that in perspective: the entire
+      population of Rosario, Argentina's third-largest city, could have fit in
+      that crowd twice.
+    </p>
+
+    <div class="section-divider"><span>✦</span></div>
+
+    <p>
+      But beyond the spectacle, Colapinto used the moment to make a much larger point.
+      Argentina has not hosted a Formula 1 Grand Prix since 1998 — 28 years ago.
+      The Oscar y Juan Gálvez Autodrome in Buenos Aires, which last held an F1 race
+      that year, is already
+      <span class="kw">undergoing<span class="tt">In the process of experiencing or going through something — usually a change or development.</span></span>
+      redevelopment and is set to host MotoGP from 2027. The dream — shared by
+      Colapinto, millions of Argentine fans and Formula 1 itself — is that a Grand
+      Prix could follow.
+    </p>
+
+    <div class="pull-quote">
+      <p>"We are showing Formula 1 that we deserve to return to the calendar. We deserve to have a race again."</p>
+      <cite>— Franco Colapinto, Buenos Aires · April 26, 2026</cite>
+    </div>
+
+    <div class="fact-box">
+      <div class="fact-box-title">Franco Colapinto — who is he?</div>
+      <ul class="fact-list">
+        <li><strong>Born:</strong> May 27, 2003 in Pilar, Buenos Aires province</li>
+        <li><strong>Team:</strong> Alpine F1 · partner: Pierre Gasly</li>
+        <li><strong>F1 debut:</strong> 2024 Italian Grand Prix (Monza) with Williams — first Argentine in F1 for 23 years</li>
+        <li><strong>2025:</strong> Joined Alpine as reserve driver · replaced Jack Doohan from round 7 onwards</li>
+        <li><strong>2026:</strong> Confirmed as full Alpine race driver — scored his first points with the team in China (10th place)</li>
+        <li><strong>Next race:</strong> Miami Grand Prix — May 2, 2026</li>
+        <li><strong>Hero connection:</strong> Also drove a replica of Fangio's 1954–55 championship-winning Mercedes W196 at the event</li>
+      </ul>
+    </div>
+
+    <p>
+      For now, Colapinto heads to Miami for the next Formula 1 race — the sixth
+      round of the 2026 season. His 2026 has been a season of learning: strong
+      race
+      <span class="kw">pace<span class="tt">The consistent speed a driver maintains during a race.</span></span>
+      but still working on his qualifying speed on Saturdays, which has left him
+      starting further back than he would like. His teammate Gasly has outqualified
+      him in all three races so far. But in the Sunday races, Colapinto has shown
+      the raw talent that made Argentina fall in love with him in the first place.
+    </p>
+
+    <p>
+      Whatever happens on the track, the image of April 26 will not fade easily:
+      600,000 people in the streets of Buenos Aires, watching a 22-year-old kid
+      from Pilar make the sound of a Formula 1 engine echo down Avenida del
+      Libertador for the first time in a generation. A dream. A statement. And perhaps —
+      just perhaps — the beginning of Argentina's return to the Formula 1 calendar.
+    </p>
+
+  </div>
+
+  <div class="section-divider"><span>✦</span></div>
+
+  <div class="vocab-recap">
+    <div class="vocab-recap-title">Today's vocabulary</div>
+    <div class="vocab-recap-sub">8 key words from this article — motorsport and events vocabulary</div>
+    <div class="vocab-list">
+      <div class="vocab-row"><div class="vocab-row-word">Smoke</div><div class="vocab-row-def">Tyre smoke — created when a car spins its wheels at high speed.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Road show</div><div class="vocab-row-def">A public event where a driver performs in a car on city streets.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Circuit</div><div class="vocab-row-def">A track or route used for racing or demonstration driving.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Replica</div><div class="vocab-row-def">An exact copy of something — made to look identical to the original.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Sponsored</div><div class="vocab-row-def">Financially supported by a company in exchange for publicity.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Demonstration</div><div class="vocab-row-def">A public display or event showing something in action.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Undergoing</div><div class="vocab-row-def">In the process of experiencing or going through something.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Pace</div><div class="vocab-row-def">The consistent speed a driver maintains during a race.</div></div>
+    </div>
+  </div>
+
+  <div class="exercises-cta">
+    <h3>Ready to race?</h3>
+    <p>Test your vocabulary and comprehension with today's interactive exercises.</p>
+    <a href="../../exercises/day11_exercises.html">Go to exercises →</a>
+  </div>
+
+</div>
+<footer><p>© 2026 <strong>31 días de inglés real</strong> · con Camila Cabrera · Level B1</p></footer>
+<script>
+  document.querySelectorAll('.kw').forEach(function(el){
+    el.addEventListener('click',function(e){
+      e.stopPropagation();
+      var isActive=this.classList.contains('active');
+      document.querySelectorAll('.kw').forEach(function(k){k.classList.remove('active');});
+      if(!isActive)this.classList.add('active');
+    });
+  });
+  document.addEventListener('click',function(){
+    document.querySelectorAll('.kw').forEach(function(k){k.classList.remove('active');});
+  });
+</script>
+</body>
+</html>
