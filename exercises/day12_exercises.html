@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Day 12 · Interactive Exercises</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --cream:#F5EFE6;--sand:#E8DDD0;--linen:#F0E9DF;
+    --mocha:#7C5C45;--espresso:#4A2E1A;--caramel:#B07D56;
+    --stone:#9E8C7E;--dark:#2C1A0E;--white:#FDFAF6;
+    --pink:#C2185B;--pink-light:#FCE4EC;--pink-border:#F48FB1;
+    --ok:#1A5C2A;--ok-bg:#D4EDDA;--ok-border:#9DC3A8;
+    --no:#721C24;--no-bg:#F8D7DA;--no-border:#E8A5A9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--dark);}
+  .topbar{background:var(--espresso);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .topbar-brand{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--caramel);}
+  .topbar-label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(245,239,230,0.5);}
+  .tabs{display:flex;background:var(--sand);border-bottom:2px solid rgba(124,92,69,0.2);}
+  .tab{flex:1;padding:16px;text-align:center;cursor:pointer;font-size:13px;font-weight:500;letter-spacing:0.04em;color:var(--stone);border:none;background:none;border-bottom:3px solid transparent;transition:all 0.2s;}
+  .tab.active{color:var(--espresso);border-bottom-color:var(--pink);background:var(--cream);}
+  .tab:hover:not(.active){color:var(--mocha);background:rgba(194,24,91,0.04);}
+  .panel{display:none;padding:36px 32px;max-width:760px;margin:0 auto;}
+  .panel.active{display:block;}
+  .section-eyebrow{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--pink);margin-bottom:6px;}
+  .section-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--espresso);margin-bottom:6px;}
+  .section-sub{font-size:0.88rem;color:var(--stone);font-weight:300;line-height:1.6;margin-bottom:28px;}
+  .instruction-box{background:var(--pink-light);border:1px solid rgba(194,24,91,0.25);border-radius:12px;padding:14px 18px;margin-bottom:24px;font-size:0.85rem;color:var(--pink);line-height:1.6;}
+  .progress-wrap{margin-bottom:20px;}
+  .progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--stone);margin-bottom:5px;}
+  .progress-track{height:5px;background:var(--sand);border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--pink);border-radius:3px;transition:width 0.4s ease;}
+  .score-badge{display:inline-flex;align-items:center;gap:8px;background:var(--sand);border-radius:20px;padding:6px 16px;font-size:13px;font-weight:500;color:var(--espresso);margin-bottom:20px;}
+  /* VOCAB MATCH */
+  .vocab-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
+  .vocab-word-card{background:var(--espresso);color:var(--cream);border-radius:12px;padding:14px 16px;cursor:pointer;font-family:'Playfair Display',serif;font-size:0.92rem;font-weight:700;text-align:center;border:2px solid transparent;transition:all 0.18s;user-select:none;line-height:1.3;}
+  .vocab-word-card:hover{background:var(--mocha);transform:scale(1.02);}
+  .vocab-word-card.selected{border-color:var(--pink);background:var(--mocha);}
+  .vocab-word-card.correct{background:var(--ok);border-color:var(--ok-border);cursor:default;}
+  .vocab-word-card.wrong{background:var(--no);border-color:var(--no-border);animation:shake 0.3s;}
+  .vocab-defs-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+  .vocab-def-card{background:var(--white);border:1px solid rgba(124,92,69,0.18);border-radius:12px;padding:13px 16px;cursor:pointer;font-size:0.84rem;color:var(--dark);line-height:1.5;border-left:4px solid transparent;transition:all 0.18s;user-select:none;}
+  .vocab-def-card:hover{border-left-color:var(--pink);background:var(--pink-light);}
+  .vocab-def-card.selected{border-left-color:var(--pink);background:var(--pink-light);}
+  .vocab-def-card.correct{border-left-color:var(--ok);background:var(--ok-bg);cursor:default;}
+  .vocab-def-card.wrong{border-left-color:var(--no);background:var(--no-bg);animation:shake 0.3s;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+  /* MCQ */
+  .question-block{background:var(--white);border:1px solid rgba(124,92,69,0.15);border-radius:16px;padding:24px;margin-bottom:16px;}
+  .q-number{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--pink);margin-bottom:8px;}
+  .q-text{font-size:1rem;font-weight:500;color:var(--espresso);line-height:1.5;margin-bottom:16px;}
+  .options{display:flex;flex-direction:column;gap:8px;}
+  .option{padding:12px 16px;border-radius:10px;border:1px solid rgba(124,92,69,0.18);background:var(--white);cursor:pointer;font-size:0.88rem;color:var(--dark);transition:all 0.15s;text-align:left;}
+  .option:hover:not(:disabled){border-color:var(--pink);background:var(--pink-light);color:var(--pink);}
+  .option.correct{background:var(--ok-bg);border-color:var(--ok-border);color:var(--ok);font-weight:500;}
+  .option.wrong{background:var(--no-bg);border-color:var(--no-border);color:var(--no);}
+  .option.reveal{background:var(--ok-bg);border-color:var(--ok-border);color:var(--ok);}
+  .option:disabled{cursor:default;}
+  .feedback{margin-top:10px;padding:10px 14px;border-radius:8px;font-size:0.83rem;line-height:1.5;display:none;}
+  .feedback.show{display:block;}
+  .feedback.ok{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok-border);}
+  .feedback.no{background:var(--no-bg);color:var(--no);border:1px solid var(--no-border);}
+  /* RESULT */
+  .result-screen{text-align:center;padding:40px 20px;display:none;}
+  .result-screen.show{display:block;}
+  .result-emoji{font-size:60px;margin-bottom:16px;}
+  .result-score{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:var(--espresso);margin-bottom:6px;}
+  .result-msg{font-size:1rem;color:var(--stone);font-weight:300;margin-bottom:24px;line-height:1.6;}
+  .restart-btn{background:var(--espresso);color:var(--cream);border:none;border-radius:50px;font-family:'Jost',sans-serif;font-size:0.9rem;font-weight:500;padding:12px 32px;cursor:pointer;letter-spacing:0.04em;transition:background 0.2s;}
+  .restart-btn:hover{background:var(--mocha);}
+  /* WRITING */
+  .writing-box{background:var(--white);border:1px solid rgba(194,24,91,0.18);border-radius:16px;padding:28px;margin-bottom:20px;}
+  .writing-task{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--espresso);line-height:1.6;margin-bottom:16px;font-style:italic;}
+  .writing-reqs{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:20px;}
+  .writing-reqs li{font-size:0.88rem;color:var(--dark);font-weight:300;line-height:1.5;padding:8px 12px;background:var(--linen);border-radius:8px;border-left:3px solid var(--pink);}
+  .writing-reqs li strong{color:var(--pink);}
+  textarea{width:100%;min-height:180px;font-family:'Jost',sans-serif;font-size:14px;color:var(--dark);background:var(--cream);border:1.5px solid var(--sand);border-radius:10px;padding:14px;resize:vertical;outline:none;transition:border-color 0.2s;line-height:1.6;}
+  textarea:focus{border-color:var(--pink);}
+  .word-count{font-size:11px;color:var(--stone);margin-top:6px;text-align:right;}
+  .starters{background:var(--pink-light);border:1px solid var(--pink-border);border-radius:12px;padding:16px 18px;margin-top:16px;}
+  .starters-title{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--pink);margin-bottom:10px;}
+  .starter-item{font-size:12.5px;font-family:'Playfair Display',serif;font-style:italic;color:var(--espresso);margin-bottom:6px;cursor:pointer;padding:4px 0;border-bottom:1px dashed rgba(194,24,91,0.2);}
+  .starter-item:last-child{border-bottom:none;margin-bottom:0;}
+  .starter-item:hover{color:var(--pink);}
+  @media(max-width:500px){.panel{padding:24px 16px;}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-brand">31 días de inglés real</div>
+  <div class="topbar-label">Day 12 · Cultura · Exercises</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('vocab',this)">🧸 Vocab Match</button>
+  <button class="tab" onclick="switchTab('cp',this)">🎯 Did You Get It?</button>
+  <button class="tab" onclick="switchTab('writing',this)">✍️ Writing</button>
+</div>
+
+<!-- TAB 1: VOCAB MATCH -->
+<div class="panel active" id="panel-vocab">
+  <div class="section-eyebrow">Exercise 1 of 3</div>
+  <div class="section-title">Vocabulary Match</div>
+  <div class="section-sub">Match each word with its correct definition.</div>
+  <div class="instruction-box">🧸 All 10 words are from today's article about Toy Story 5 and the future of play.</div>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Progress</span><span id="vocab-progress-txt">0 / 10 matched</span></div>
+    <div class="progress-track"><div class="progress-fill" id="vocab-bar" style="width:0%"></div></div>
+  </div>
+  <div class="score-badge">Score: <strong id="vocab-score">0</strong> / 10</div>
+  <div id="vocab-game">
+    <div style="font-size:12px;color:var(--stone);margin-bottom:10px;font-weight:500;">WORDS</div>
+    <div class="vocab-grid" id="words-grid"></div>
+    <div style="font-size:12px;color:var(--stone);margin:16px 0 10px;font-weight:500;">DEFINITIONS</div>
+    <div class="vocab-defs-grid" id="defs-grid"></div>
+  </div>
+  <div class="result-screen" id="vocab-result">
+    <div class="result-emoji" id="vocab-emoji">🎉</div>
+    <div class="result-score" id="vocab-score-big">10 / 10</div>
+    <div class="result-msg" id="vocab-msg"></div>
+    <button class="restart-btn" onclick="initVocab()">Try again</button>
+  </div>
+</div>
+
+<!-- TAB 2: COMPREHENSION -->
+<div class="panel" id="panel-cp">
+  <div class="section-eyebrow">Exercise 2 of 3</div>
+  <div class="section-title">Did You Get It?</div>
+  <div class="section-sub">Answer the questions based on today's article.</div>
+  <div id="cp-questions"></div>
+  <div class="result-screen" id="cp-result">
+    <div class="result-emoji" id="cp-emoji">🏆</div>
+    <div class="result-score" id="cp-score-big">5 / 5</div>
+    <div class="result-msg" id="cp-msg"></div>
+    <button class="restart-btn" onclick="initCP()">Try again</button>
+  </div>
+</div>
+
+<!-- TAB 3: WRITING -->
+<div class="panel" id="panel-writing">
+  <div class="section-eyebrow">Exercise 3 of 3</div>
+  <div class="section-title">Your Turn — Writing Task</div>
+  <div class="section-sub">Express your opinion in English. Aim for 80–120 words.</div>
+
+  <div class="writing-box">
+    <div class="writing-task">
+      "Think about the toys you played with as a child. Do you think screens and tablets have changed childhood for better or for worse? Write your opinion — and connect it to today's article or to what we discussed about gender roles in play."
+    </div>
+    <ul class="writing-reqs">
+      <li><strong>Present Perfect:</strong> describe what has changed → "Technology has transformed the way children play..."</li>
+      <li><strong>Conditional Type 1:</strong> talk about consequences → "If children stop playing with physical toys, they will..."</li>
+      <li><strong>Gerund as subject:</strong> give your opinion → "Playing with dolls or action figures taught me..."</li>
+    </ul>
+    <textarea id="writing-area" placeholder="Start writing here..." oninput="updateWordCount()"></textarea>
+    <div class="word-count" id="word-count">0 words</div>
+
+    <div class="starters">
+      <div class="starters-title">💡 Starter sentences — tap to use</div>
+      <div class="starter-item" onclick="useStarter(this)">When I was a child, I used to play with... and it taught me...</div>
+      <div class="starter-item" onclick="useStarter(this)">Playing with physical toys has always been important because...</div>
+      <div class="starter-item" onclick="useStarter(this)">Technology has changed childhood dramatically. Children today have...</div>
+      <div class="starter-item" onclick="useStarter(this)">If screens completely replace traditional toys, children will lose...</div>
+      <div class="starter-item" onclick="useStarter(this)">I think the debate between toys and technology is nuanced. On one hand...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── VOCAB MATCH ──────────────────────────────────────────────────
+var vocabPairs=[
+  {word:'Anticipated', def:'Expected with excitement — looked forward to.'},
+  {word:'Rival',       def:'A competitor — something competing for the same thing.'},
+  {word:'Abandoned',   def:'Left behind completely — stopped using or caring about.'},
+  {word:'Jealous',     def:'Upset because something else is getting the attention you want.'},
+  {word:'Transformed', def:'Changed completely — become something very different.'},
+  {word:'Nuanced',     def:'Subtle and complex — not simply one thing or another.'},
+  {word:'Debate',      def:'A discussion in which people express different points of view.'},
+  {word:'Imagination', def:'The ability to form ideas and images in the mind — creative thinking.'},
+  {word:'Gender roles',def:'The behaviours society considers appropriate for men or women.'},
+  {word:'Erasing',     def:'Removing completely — making something disappear.'},
+];
+var selectedWord=null,vocabScore=0,matched=0;
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b;}
+function initVocab(){
+  selectedWord=null;vocabScore=0;matched=0;
+  document.getElementById('vocab-score').textContent='0';
+  document.getElementById('vocab-progress-txt').textContent='0 / 10 matched';
+  document.getElementById('vocab-bar').style.width='0%';
+  document.getElementById('vocab-result').classList.remove('show');
+  document.getElementById('vocab-game').style.display='';
+  var sw=shuffle(vocabPairs),sd=shuffle(vocabPairs.map(function(p){return p.def;}));
+  var wg=document.getElementById('words-grid');wg.innerHTML='';
+  sw.forEach(function(pair){
+    var btn=document.createElement('button');btn.className='vocab-word-card';
+    btn.textContent=pair.word;btn.dataset.word=pair.word;
+    btn.onclick=function(){selectWord(this);};wg.appendChild(btn);
+  });
+  var dg=document.getElementById('defs-grid');dg.innerHTML='';
+  sd.forEach(function(def){
+    var btn=document.createElement('button');btn.className='vocab-def-card';
+    btn.textContent=def;btn.dataset.def=def;
+    btn.onclick=function(){selectDef(this);};dg.appendChild(btn);
+  });
+}
+function selectWord(el){
+  if(el.classList.contains('correct')||el.disabled)return;
+  document.querySelectorAll('.vocab-word-card').forEach(function(c){c.classList.remove('selected');});
+  el.classList.add('selected');selectedWord=el.dataset.word;
+}
+function selectDef(el){
+  if(!selectedWord||el.classList.contains('correct')||el.disabled)return;
+  var correctDef=vocabPairs.find(function(p){return p.word===selectedWord;}).def;
+  if(el.dataset.def===correctDef){
+    el.classList.add('correct');el.disabled=true;
+    var we=document.querySelector('[data-word="'+selectedWord+'"]');
+    we.classList.remove('selected');we.classList.add('correct');we.disabled=true;
+    matched++;vocabScore++;
+    document.getElementById('vocab-score').textContent=vocabScore;
+    document.getElementById('vocab-progress-txt').textContent=matched+' / 10 matched';
+    document.getElementById('vocab-bar').style.width=Math.round((matched/10)*100)+'%';
+    selectedWord=null;
+    if(matched===10)setTimeout(showVocabResult,600);
+  } else {
+    el.classList.add('wrong');
+    var we=document.querySelector('[data-word="'+selectedWord+'"]');
+    we.classList.add('wrong');
+    setTimeout(function(){el.classList.remove('wrong','selected');we.classList.remove('wrong','selected');selectedWord=null;},700);
+  }
+}
+function showVocabResult(){
+  document.getElementById('vocab-game').style.display='none';
+  document.getElementById('vocab-result').classList.add('show');
+  var emojis={10:'🎉',9:'🌟',8:'👍',7:'💪'};
+  document.getElementById('vocab-emoji').textContent=emojis[vocabScore]||'☕';
+  document.getElementById('vocab-score-big').textContent=vocabScore+' / 10';
+  var msgs={10:'Perfect! All 10 matched. Now try the comprehension questions!',9:'Almost! One more try.',8:'Really good! Review and try again.',7:'Keep going!'};
+  document.getElementById('vocab-msg').textContent=msgs[vocabScore]||'Practice makes perfect!';
+}
+
+// ── COMPREHENSION ────────────────────────────────────────────────
+var cpData=[
+  {q:'What is Lilypad in Toy Story 5?',
+   opts:['A new cowgirl toy that joins Jessie and Woody','A frog-shaped tablet that becomes Bonnie\'s new favourite','A villain who wants to destroy all traditional toys'],
+   correct:1,
+   ok:'✓ Correct! Lilypad is a frog-shaped smart tablet that arrives in Bonnie\'s room and competes for her attention.',
+   no:'Not quite. Lilypad is a frog-shaped tablet — not a toy villain or a cowgirl.'},
+  {q:'According to the article, how many hours per day do children aged 6–12 spend on digital devices?',
+   opts:['An average of 2.5 hours per day','An average of 3 hours per day','An average of 4.5 hours per day'],
+   correct:2,
+   ok:'✓ Correct! The 2025 NPD Group report cited in the article found that children aged 6–12 now spend an average of 4.5 hours per day on digital devices.',
+   no:'Not quite. The correct figure is 4.5 hours per day — more than sleeping, eating and playing with toys combined.'},
+  {q:'Which toy brand has reported RECORD PROFITS in 2024 and 2025?',
+   opts:['Barbie','Lego','Both Barbie and Lego'],
+   correct:1,
+   ok:'✓ Correct! The article states that Lego reported record profits in both 2024 and 2025. Barbie saw a 22% increase in sales — but not record profits specifically.',
+   no:'Not quite. It was Lego that reported record profits. Barbie saw a 22% increase in sales, which is great but different.'},
+  {q:'How does the article describe Lilypad as a character in the film?',
+   opts:['As the main villain — she wants to destroy playtime','As a complex character who genuinely wants to help Bonnie make friends','As an unimportant background character'],
+   correct:1,
+   ok:'✓ Correct! The article says the film refuses to make Lilypad a simple villain — she genuinely wants to help Bonnie connect with friends.',
+   no:'Not quite. The article specifically says Lilypad is NOT a villain — she genuinely wants to help Bonnie.'},
+  {q:'What question does the article raise about technology and gender roles?',
+   opts:['Whether boys like technology more than girls','Whether tablets and screens are erasing gendered toys — or simply replacing them with a different kind of influence','Whether Pixar should stop making films about female characters'],
+   correct:1,
+   ok:'✓ Perfect! The article connects Toy Story 5 to yesterday\'s discussion — asking whether genderless tech is erasing gendered toys, or just creating a different kind of influence.',
+   no:'Not quite. The article asks whether technology is erasing the gendered toy, or replacing it with something different.'},
+];
+var cpAnswered=[],cpScore=0;
+function initCP(){
+  cpAnswered=[];cpScore=0;
+  document.getElementById('cp-result').classList.remove('show');
+  var container=document.getElementById('cp-questions');
+  container.style.display='';container.innerHTML='';
+  cpData.forEach(function(q,idx){
+    cpAnswered[idx]=false;
+    var block=document.createElement('div');block.className='question-block';block.id='qb-'+idx;
+    var opts=q.opts.map(function(o,i){
+      return '<button class="option" onclick="checkCP('+idx+','+i+')" id="q'+idx+'o'+i+'">'+String.fromCharCode(65+i)+') '+o+'</button>';
+    }).join('');
+    block.innerHTML='<div class="q-number">Question '+(idx+1)+' of '+cpData.length+'</div>'+
+      '<div class="q-text">'+q.q+'</div><div class="options">'+opts+'</div>'+
+      '<div class="feedback ok" id="fb-ok-'+idx+'">'+q.ok+'</div>'+
+      '<div class="feedback no" id="fb-no-'+idx+'">'+q.no+'</div>';
+    container.appendChild(block);
+  });
+}
+function checkCP(qIdx,optIdx){
+  if(cpAnswered[qIdx])return;cpAnswered[qIdx]=true;
+  var q=cpData[qIdx];
+  document.querySelectorAll('#qb-'+qIdx+' .option').forEach(function(o){o.disabled=true;});
+  if(optIdx===q.correct){
+    document.getElementById('q'+qIdx+'o'+optIdx).classList.add('correct');
+    document.getElementById('fb-ok-'+qIdx).classList.add('show');cpScore++;
+  } else {
+    document.getElementById('q'+qIdx+'o'+optIdx).classList.add('wrong');
+    document.getElementById('fb-no-'+qIdx).classList.add('show');
+    document.getElementById('q'+qIdx+'o'+q.correct).classList.add('reveal');
+  }
+  if(cpAnswered.every(Boolean))setTimeout(showCPResult,800);
+}
+function showCPResult(){
+  document.getElementById('cp-questions').style.display='none';
+  document.getElementById('cp-result').classList.add('show');
+  var total=cpData.length;
+  var emoji=cpScore===total?'🏆':cpScore>=total-1?'🌟':'💪';
+  document.getElementById('cp-emoji').textContent=emoji;
+  document.getElementById('cp-score-big').textContent=cpScore+' / '+total;
+  var m={};m[total]='Perfect! You read every detail. ☕';m[total-1]='Almost perfect!';m[total-2]='Good effort — re-read the article and try again.';
+  document.getElementById('cp-msg').textContent=m[cpScore]||'Keep going!';
+}
+
+// ── WRITING ──────────────────────────────────────────────────────
+function updateWordCount(){
+  var text=document.getElementById('writing-area').value.trim();
+  var words=text===''?0:text.split(/\s+/).length;
+  var el=document.getElementById('word-count');
+  el.textContent=words+' words';
+  el.style.color=words>=80&&words<=120?'#1A5C2A':words>120?'#721C24':'#9E8C7E';
+}
+function useStarter(el){
+  var ta=document.getElementById('writing-area');
+  var current=ta.value.trim();
+  ta.value=current?(current+' '+el.textContent):el.textContent+' ';
+  ta.focus();updateWordCount();
+}
+
+initVocab();initCP();
+</script>
+</body>
+</html>
