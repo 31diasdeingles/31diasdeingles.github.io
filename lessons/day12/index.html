@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Day 12 · Toy Story 5 & The End of Toys? | 31 días de inglés real</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --cream:#F5EFE6;--sand:#E8DDD0;--linen:#F0E9DF;
+    --mocha:#7C5C45;--espresso:#4A2E1A;--caramel:#B07D56;
+    --stone:#9E8C7E;--dark:#2C1A0E;--white:#FDFAF6;
+    --pink:#C2185B;--pink-light:#FCE4EC;--pink-border:#F48FB1;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--dark);}
+  nav{background:var(--espresso);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .nav-brand{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--caramel);text-decoration:none;}
+  .nav-tag{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(245,239,230,0.45);}
+  .hero{background:var(--espresso);padding:60px 28px 0;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(194,24,91,0.18) 0%,transparent 65%);}
+  .hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--pink-border);margin-bottom:12px;}
+  .hero-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,3.4rem);font-weight:900;color:var(--cream);line-height:1.1;margin-bottom:14px;}
+  .hero-title em{color:var(--pink-border);font-style:italic;}
+  .hero-meta{font-size:12px;color:rgba(245,239,230,0.45);font-weight:300;letter-spacing:0.05em;margin-bottom:36px;}
+  .hero-img-placeholder{width:100%;max-width:680px;margin:0 auto;height:300px;border-radius:16px 16px 0 0;background:linear-gradient(135deg,rgba(194,24,91,0.3),rgba(74,46,26,0.55));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;}
+  .ph-icon{font-size:64px;opacity:0.6;}
+  .ph-text{font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:rgba(245,239,230,0.45);}
+  .vocab-legend{background:var(--pink-light);border:1px solid var(--pink-border);border-radius:12px;padding:14px 20px;margin-bottom:28px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .vocab-legend-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--pink);}
+  .vocab-legend-text{font-size:13px;color:var(--mocha);font-weight:300;}
+  .hl-sample{background:rgba(194,24,91,0.1);color:var(--pink);border-radius:4px;padding:2px 7px;font-weight:600;font-size:13px;border-bottom:2px solid var(--pink-border);}
+  .content-wrap{max-width:720px;margin:0 auto;padding:48px 28px 64px;}
+  .article p{font-size:1.05rem;line-height:1.85;color:var(--dark);margin-bottom:1.4rem;font-weight:300;}
+  .article p:first-child::first-letter{font-family:'Playfair Display',serif;font-size:4rem;font-weight:900;color:var(--pink);float:left;line-height:0.8;margin:6px 10px 0 0;}
+  .kw{background:rgba(194,24,91,0.09);color:var(--pink);border-radius:4px;padding:1px 6px;font-weight:600;border-bottom:2px solid rgba(194,24,91,0.3);cursor:pointer;transition:all 0.15s;position:relative;display:inline-block;}
+  .kw:hover{background:rgba(194,24,91,0.16);}
+  .kw .tt{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--espresso);color:var(--cream);font-size:12px;font-weight:400;line-height:1.45;padding:8px 12px;border-radius:8px;white-space:normal;z-index:50;pointer-events:none;font-family:'Jost',sans-serif;max-width:220px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.2);min-width:160px;}
+  .kw .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--espresso);}
+  .kw:hover .tt,.kw.active .tt{display:block;}
+  .pull-quote{border-left:4px solid var(--pink);margin:28px 0;padding:16px 24px;background:var(--pink-light);border-radius:0 12px 12px 0;}
+  .pull-quote p{font-family:'Playfair Display',serif;font-size:1.15rem;font-style:italic;color:var(--espresso);line-height:1.5;margin:0!important;}
+  .pull-quote p::first-letter{all:unset;}
+  .pull-quote cite{display:block;margin-top:8px;font-size:12px;color:var(--pink);font-weight:600;letter-spacing:0.05em;font-style:normal;font-family:'Jost',sans-serif;}
+  .vs-box{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:28px 0;}
+  .vs-card{border-radius:14px;padding:18px 20px;}
+  .vs-card.old{background:var(--linen);border:1px solid var(--caramel);}
+  .vs-card.new{background:var(--pink-light);border:1px solid var(--pink-border);}
+  .vs-label{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
+  .vs-card.old .vs-label{color:var(--mocha);}
+  .vs-card.new .vs-label{color:var(--pink);}
+  .vs-list{list-style:none;display:flex;flex-direction:column;gap:6px;}
+  .vs-list li{font-size:0.88rem;color:var(--dark);font-weight:300;padding-left:14px;position:relative;}
+  .vs-list li::before{content:'→';position:absolute;left:0;font-size:11px;}
+  .vs-card.old .vs-list li::before{color:var(--mocha);}
+  .vs-card.new .vs-list li::before{color:var(--pink);}
+  .section-divider{display:flex;align-items:center;gap:16px;margin:36px 0;}
+  .section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:rgba(194,24,91,0.18);}
+  .section-divider span{font-size:18px;color:var(--pink);opacity:0.5;}
+  .grammar-box{background:var(--espresso);border-radius:16px;padding:24px 28px;margin:32px 0;}
+  .grammar-box-title{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--pink-border);margin-bottom:14px;}
+  .grammar-rows{display:flex;flex-direction:column;gap:10px;}
+  .grammar-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .grammar-cell{background:rgba(245,239,230,0.06);border-radius:10px;padding:12px 14px;font-size:0.87rem;color:rgba(245,239,230,0.82);line-height:1.5;}
+  .grammar-cell strong{color:var(--pink-border);}
+  .grammar-cell em{color:rgba(245,239,230,0.5);font-style:italic;font-size:0.82rem;}
+  .vocab-recap{background:var(--linen);border:1px solid rgba(194,24,91,0.12);border-radius:16px;padding:28px;margin:40px 0;}
+  .vocab-recap-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--espresso);margin-bottom:4px;}
+  .vocab-recap-sub{font-size:12px;color:var(--stone);font-weight:300;margin-bottom:20px;}
+  .vocab-list{display:flex;flex-direction:column;gap:10px;}
+  .vocab-row{display:flex;gap:12px;align-items:flex-start;padding:10px 14px;background:var(--white);border-radius:10px;border:1px solid rgba(124,92,69,0.12);}
+  .vocab-row-word{font-weight:600;color:var(--pink);min-width:170px;font-size:0.9rem;flex-shrink:0;}
+  .vocab-row-def{font-size:0.85rem;color:var(--dark);font-weight:300;line-height:1.5;}
+  .exercises-cta{background:var(--espresso);border-radius:20px;padding:32px 28px;text-align:center;margin:40px 0;}
+  .exercises-cta h3{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--cream);margin-bottom:8px;}
+  .exercises-cta p{font-size:0.88rem;color:rgba(245,239,230,0.6);font-weight:300;margin-bottom:20px;line-height:1.6;}
+  .exercises-cta a{display:inline-block;background:var(--pink);color:#fff;font-family:'Jost',sans-serif;font-weight:500;font-size:0.95rem;padding:13px 32px;border-radius:50px;text-decoration:none;letter-spacing:0.04em;transition:opacity 0.2s;}
+  .exercises-cta a:hover{opacity:0.85;}
+  footer{text-align:center;padding:24px;font-size:12px;color:var(--stone);font-weight:300;border-top:1px solid rgba(124,92,69,0.15);}
+  footer strong{color:var(--mocha);}
+  @media(max-width:600px){
+    .hero{padding:40px 20px 0;}
+    .content-wrap{padding:32px 20px 48px;}
+    .vs-box{grid-template-columns:1fr;}
+    .grammar-row{grid-template-columns:1fr;}
+    .vocab-row{flex-direction:column;gap:4px;}
+    .vocab-row-word{min-width:auto;}
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-brand">31 días de inglés real</a>
+  <span class="nav-tag">Day 12 · Cultura</span>
+</nav>
+<div class="hero">
+  <div class="hero-eyebrow">Day 12 · Cultura · Level B1/B2</div>
+  <h1 class="hero-title">"The Age of Toys<br><em>Is Over" — Or Is It?</em></h1>
+  <div class="hero-meta">31 días de inglés real · June 2026 · 5 min read</div>
+  <div class="hero-img-placeholder">
+    <div class="ph-icon">🧸📱</div>
+    <div class="ph-text">Toy Story 5 · Pixar · In cinemas June 19, 2026</div>
+  </div>
+</div>
+
+<div class="content-wrap">
+  <div class="vocab-legend">
+    <span class="vocab-legend-label">💡 Tip</span>
+    <span class="vocab-legend-text">Words in <span class="hl-sample">pink</span> are today's vocabulary. Hover or tap to see the meaning!</span>
+  </div>
+
+  <div class="article">
+
+    <p>
+      Picture this: a little girl sits on her bedroom floor, surrounded by a cowboy doll, a space ranger, a cowgirl and a
+      <span class="kw">whole<span class="tt">Entire — used to emphasise the full amount or number of something.</span></span>
+      cast of plastic characters. She knows all their names, their stories, their voices. Now picture her two years later — same girl, same room, but the floor is empty. She is staring at a
+      <span class="kw">tablet<span class="tt">A flat, portable touchscreen device — like an iPad.</span></span>
+      screen. This is the world Toy Story 5, Pixar's most
+      <span class="kw">anticipated<span class="tt">Expected with excitement — looked forward to.</span></span>
+      film of 2026, asks us to think about.
+    </p>
+
+    <p>
+      Released on June 19, 2026, <em>Toy Story 5</em> picks up where the fourth film left off. Woody, Buzz and Jessie are back — but this time they are not fighting another toy. They are fighting a
+      <span class="kw">rival<span class="tt">A competitor — something or someone competing for the same thing.</span></span>
+      that cannot be defeated in a toy box: a frog-shaped tablet called Lilypad. Bonnie, now eight years old, has
+      <span class="kw">abandoned<span class="tt">Left behind completely — stopped using or caring about.</span></span>
+      her traditional toys in favour of a screen. And the toys — understandably — are not happy about it.
+    </p>
+
+    <div class="pull-quote">
+      <p>"The age of toys is over," says a disheartened doll in the film — abandoned in a backyard among forgotten playthings.</p>
+      <cite>— Toy Story 5, Pixar · 2026</cite>
+    </div>
+
+    <div class="section-divider"><span>✦</span></div>
+
+    <p>
+      But here is the thing — this is not just a film about toys feeling
+      <span class="kw">jealous<span class="tt">Upset because someone or something else is getting the attention or love you want.</span></span>.
+      It is a film about something real. In the last decade, the toy industry has
+      <span class="kw">transformed<span class="tt">Changed completely — become something very different.</span></span>
+      dramatically. Traditional toys — action figures, dolls, construction sets, board games — have seen sales fall as children spend more time on screens. According to a 2025 report by the NPD Group, children aged 6 to 12 now spend an average of 4.5 hours per day on digital devices. That is more time than they spend sleeping, eating and playing with physical toys combined.
+    </p>
+
+    <p>
+      And yet — not everyone agrees that physical play is
+      <span class="kw">disappearing<span class="tt">Becoming less visible, less common — slowly going away.</span></span>.
+      Lego, one of the world's most iconic toy brands, has reported record profits in both 2024 and 2025. Barbie, following the enormous success of the 2023 film, saw a 22% increase in global sales. The data
+      <span class="kw">suggests<span class="tt">Indicates — shows as a possibility based on evidence.</span></span>
+      something more
+      <span class="kw">nuanced<span class="tt">Subtle and complex — not simply one thing or another.</span></span>:
+      toys are not disappearing. They are changing. And so is the way children play with them.
+    </p>
+
+    <div class="vs-box">
+      <div class="vs-card old">
+        <div class="vs-label">Traditional toys</div>
+        <ul class="vs-list">
+          <li>Action figures & dolls</li>
+          <li>Construction sets (Lego)</li>
+          <li>Board games</li>
+          <li>Outdoor toys (bikes, skateboards)</li>
+          <li>Role-play sets</li>
+        </ul>
+      </div>
+      <div class="vs-card new">
+        <div class="vs-label">New rivals</div>
+        <ul class="vs-list">
+          <li>Tablets & smartphones</li>
+          <li>Gaming consoles</li>
+          <li>AI-powered "smart" toys</li>
+          <li>Apps & digital games</li>
+          <li>YouTube & streaming</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-divider"><span>✦</span></div>
+
+    <p>
+      What makes <em>Toy Story 5</em> particularly interesting is its
+      <span class="kw">nuanced<span class="tt">Subtle and complex — not simply black or white.</span></span>
+      approach to this
+      <span class="kw">debate<span class="tt">A discussion in which people express different points of view.</span></span>.
+      Lilypad — the tablet — is not a villain. She genuinely wants to help Bonnie make friends. Jessie — the cowgirl — is not wrong to feel threatened. The film
+      <span class="kw">refuses<span class="tt">Decides not to do something — says no.</span></span>
+      to give us a simple answer, because there is no simple answer. Technology and
+      <span class="kw">imagination<span class="tt">The ability to form ideas and images in the mind — creative thinking.</span></span>
+      are not enemies. But they do compete for our time — and for our children's attention.
+    </p>
+
+    <div class="pull-quote">
+      <p>"Accusing the film of tech hysteria would be easy. But I found myself impressed by how forcefully the script charges at an issue that adults might actually want to talk to their children about."</p>
+      <cite>— Film critic review, Rotten Tomatoes · 2026</cite>
+    </div>
+
+    <p>
+      And then there is the gender angle — which connects directly to what we discussed yesterday. Look at the toys in Bonnie's room: a cowboy (Woody), a space ranger (Buzz) and a cowgirl (Jessie).
+      These are the same
+      <span class="kw">gender roles<span class="tt">The behaviours and activities society considers appropriate for men or women.</span></span>
+      we talked about — brave cowboy, brave astronaut, brave cowgirl. Now Bonnie is
+      <span class="kw">drawn to<span class="tt">Attracted to — feeling pulled towards something.</span></span>
+      a tablet that has no gender at all. Is technology
+      <span class="kw">erasing<span class="tt">Removing completely — making something disappear.</span></span>
+      the gendered toy? Or just replacing it with a different kind of influence?
+    </p>
+
+    <p>
+      There are no easy answers. But <em>Toy Story 5</em> — in cinemas right now — gives us something rare: a Hollywood blockbuster that takes children's play
+      <span class="kw">seriously<span class="tt">With full attention and respect — not treating it as unimportant.</span></span>.
+      And that, perhaps, is the most important thing of all.
+    </p>
+
+  </div>
+
+  <div class="section-divider"><span>✦</span></div>
+
+  <div class="grammar-box">
+    <div class="grammar-box-title">🧠 Grammar in the article — Present Perfect + Gerunds + Conditional Type 1</div>
+    <div class="grammar-rows">
+      <div class="grammar-row">
+        <div class="grammar-cell"><strong>Present Perfect:</strong><br><em>"Sales have fallen." "Lego has reported record profits." → past action, result still matters now.</em></div>
+        <div class="grammar-cell"><strong>Gerund as subject:</strong><br><em>"Playing with physical toys..." "Fighting a rival that cannot be defeated..." → -ing form as a noun.</em></div>
+      </div>
+      <div class="grammar-row">
+        <div class="grammar-cell"><strong>Conditional Type 1:</strong><br><em>"If tablets replace toys, children will lose something important." → If + Present Simple, will + base verb.</em></div>
+        <div class="grammar-cell"><strong>Key contrast:</strong><br><em>"Toys are not disappearing." (Present Simple — general fact) vs "Sales have fallen." (Present Perfect — change over time)</em></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="vocab-recap">
+    <div class="vocab-recap-title">Today's vocabulary</div>
+    <div class="vocab-recap-sub">10 key words from this article</div>
+    <div class="vocab-list">
+      <div class="vocab-row"><div class="vocab-row-word">Anticipated</div><div class="vocab-row-def">Expected with excitement — looked forward to.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Rival</div><div class="vocab-row-def">A competitor — something or someone competing for the same thing.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Abandoned</div><div class="vocab-row-def">Left behind completely — stopped using or caring about.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Jealous</div><div class="vocab-row-def">Upset because someone or something else is getting attention you want.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Transformed</div><div class="vocab-row-def">Changed completely — become something very different.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Nuanced</div><div class="vocab-row-def">Subtle and complex — not simply one thing or another.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Debate</div><div class="vocab-row-def">A discussion in which people express different points of view.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Imagination</div><div class="vocab-row-def">The ability to form ideas and images in the mind — creative thinking.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Gender roles</div><div class="vocab-row-def">The behaviours and activities society considers appropriate for men or women.</div></div>
+      <div class="vocab-row"><div class="vocab-row-word">Erasing</div><div class="vocab-row-def">Removing completely — making something disappear.</div></div>
+    </div>
+  </div>
+
+  <div class="exercises-cta">
+    <h3>Ready to play?</h3>
+    <p>Test your vocabulary and comprehension with today's interactive exercises.</p>
+    <a href="../../exercises/day12_exercises.html">Go to exercises →</a>
+  </div>
+</div>
+
+<footer><p>© 2026 <strong>31 días de inglés real</strong> · con Camila Cabrera · Level B1/B2</p></footer>
+
+<script>
+  document.querySelectorAll('.kw').forEach(function(el){
+    el.addEventListener('click',function(e){
+      e.stopPropagation();
+      var isActive=this.classList.contains('active');
+      document.querySelectorAll('.kw').forEach(function(k){k.classList.remove('active');});
+      if(!isActive)this.classList.add('active');
+    });
+  });
+  document.addEventListener('click',function(){
+    document.querySelectorAll('.kw').forEach(function(k){k.classList.remove('active');});
+  });
+</script>
+</body>
+</html>
